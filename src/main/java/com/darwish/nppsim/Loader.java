@@ -21,19 +21,35 @@ public class Loader extends javax.swing.JFrame {
     protected static SteamTables tables;
     protected static SoundProvider soundProvider;
     private boolean loading = false;
-    
+
+    private static void setLookAndFeelWithFallback() {
+        String[] lafPreferences = {
+            "javax.swing.plaf.nimbus.NimbusLookAndFeel",
+            javax.swing.UIManager.getSystemLookAndFeelClassName(),
+            "com.sun.java.swing.plaf.motif.MotifLookAndFeel",
+            javax.swing.UIManager.getCrossPlatformLookAndFeelClassName()
+        };
+
+        for (String laf : lafPreferences) {
+            try {
+                javax.swing.UIManager.setLookAndFeel(laf);
+                System.out.println("Successfully set LAF: " + laf);
+                return;
+            } catch (Exception e) {
+                System.out.println("Failed to set LAF '" + laf + "': " + e.getMessage());
+            }
+        }
+
+        System.err.println("WARNING: Could not set any Look and Feel!");
+    }
+
     /**
      * Creates new form Loader
      */
     public Loader() {
-        try {
-            javax.swing.UIManager.setLookAndFeel(new DarkMetalLookAndFeel());
-            //UI.BACKGROUND = new Color(115, 53, 0); //TODO
-            //javax.swing.UIManager.setLookAndFeel(new MetalLookAndFeel()); //TODO
-        } catch (UnsupportedLookAndFeelException e) {
-            e.printStackTrace();
-        }
+        setLookAndFeelWithFallback();
         initComponents();
+
         try {
             Image image = ImageIO.read(getClass().getResource("/res/ignalina.jpg"));
             image = image.getScaledInstance(507, 318, 1);
@@ -42,9 +58,18 @@ public class Loader extends javax.swing.JFrame {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         try {
             String uriString = getClass().getProtectionDomain().getCodeSource().getLocation().toURI().toString();
-            PrintStream logStream = new PrintStream(new BufferedOutputStream(new FileOutputStream(new File(new URI(uriString.substring(0, uriString.lastIndexOf("RBMK-1500-Simulator.jar")) + "/log.txt")))), true);
+            File jarFile = new File(Loader.class.getProtectionDomain()
+                .getCodeSource()
+                .getLocation()
+                .toURI());
+
+            File logFile = new File(jarFile.getParent(), "log.txt");
+            PrintStream logStream = new PrintStream(
+                new BufferedOutputStream(new FileOutputStream(logFile)), true);
+
             System.setErr(logStream);
             System.setOut(logStream);
         } catch (Exception e) {
@@ -59,12 +84,17 @@ public class Loader extends javax.swing.JFrame {
             }
         }
     }
-    
+
     public static void main(String args[]) {
+        System.out.println("pre init");
         loader = new Loader();
+        System.out.println("init");
         new Thread(() -> {
+            System.out.println("Loading SteamTables");
             tables = new SteamTables();
+            System.out.println("Loading SoundProvider");
             soundProvider = new SoundProvider();
+            System.out.println("Change Load state");
             loader.setLoading(false);
         }).start();
         loader.pack();
@@ -79,7 +109,7 @@ public class Loader extends javax.swing.JFrame {
         jButton2.setEnabled(!loading);
         //jButton5.setEnabled(!loading); //TODO
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
