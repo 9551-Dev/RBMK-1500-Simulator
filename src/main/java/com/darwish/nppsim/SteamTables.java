@@ -18,10 +18,10 @@ public class SteamTables {
     private HashMap<Integer, Double> steamDensityByPressureMap = new HashMap<>();
     private HashMap<Integer, Double> waterTemperatureByEnthalpyMap = new HashMap<>();
     private boolean error = false;
-    
+
     public SteamTables() {
         try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader((getClass().getResourceAsStream("/res/saturated_by_temperature_V1.4.json"))));
+            BufferedReader reader = new BufferedReader(new InputStreamReader((getClass().getResourceAsStream("/data/saturated_by_temperature_V1.4.json"))));
             String jsonString = "";
             String line;
             while ((line = reader.readLine()) != null) {
@@ -88,9 +88,9 @@ public class SteamTables {
             int lower = (int)(pressure * 10000.0);
             int higher = (int)(pressure * 10000.0 + 1);
             double lowerValue = steamTemperatureByPressureMap.get(lower);
-            double higherValue = steamTemperatureByPressureMap.get(higher);  
+            double higherValue = steamTemperatureByPressureMap.get(higher);
             double perDensity = higherValue - lowerValue;
-            return lowerValue + ((pressure * 10000.0 - lower) * perDensity); 
+            return lowerValue + ((pressure * 10000.0 - lower) * perDensity);
         }
         if (!error) {
             error = !error;
@@ -111,9 +111,9 @@ public class SteamTables {
             int lower = (int)tempC;
             int higher = (int)tempC + 1;
             double lowerValue = steamPressureByTempMap.get(lower);
-            double higherValue = steamPressureByTempMap.get(higher);  
+            double higherValue = steamPressureByTempMap.get(higher);
             double perDegree = higherValue - lowerValue;
-            return lowerValue + ((tempC - lower) * perDegree); 
+            return lowerValue + ((tempC - lower) * perDegree);
         }
         if (!error) {
             error = !error;
@@ -134,9 +134,9 @@ public class SteamTables {
             int lower = (int)(density * 10000.0);
             int higher = (int)(density * 10000.0 + 1);
             double lowerValue = steamPressureByDensityMap.get(lower);
-            double higherValue = steamPressureByDensityMap.get(higher);  
+            double higherValue = steamPressureByDensityMap.get(higher);
             double perDensity = higherValue - lowerValue;
-            return lowerValue + ((density * 10000.0 - lower) * perDensity); 
+            return lowerValue + ((density * 10000.0 - lower) * perDensity);
         }
         if (!error) {
             error = !error;
@@ -157,9 +157,9 @@ public class SteamTables {
             int lower = (int)(pressure * 10000.0);
             int higher = (int)(pressure * 10000.0 + 1);
             double lowerValue = steamDensityByPressureMap.get(lower);
-            double higherValue = steamDensityByPressureMap.get(higher);  
+            double higherValue = steamDensityByPressureMap.get(higher);
             double perDensity = higherValue - lowerValue;
-            return lowerValue + ((pressure * 10000.0 - lower) * perDensity); 
+            return lowerValue + ((pressure * 10000.0 - lower) * perDensity);
         }
         if (!error) {
             error = !error;
@@ -180,9 +180,9 @@ public class SteamTables {
             int lower = (int)tempC;
             int higher = (int)tempC + 1;
             double lowerValue = waterDensityByTempMap.get(lower);
-            double higherValue = waterDensityByTempMap.get(higher);  
+            double higherValue = waterDensityByTempMap.get(higher);
             double perDegree = higherValue - lowerValue;
-            return lowerValue + ((tempC - lower) * perDegree); 
+            return lowerValue + ((tempC - lower) * perDegree);
         }
         if (!error) {
             error = !error;
@@ -203,9 +203,9 @@ public class SteamTables {
             int lower = (int)tempC;
             int higher = (int)tempC + 1;
             double lowerValue = vaporizationEnthalpyByTempMap.get(lower);
-            double higherValue = vaporizationEnthalpyByTempMap.get(higher);  
+            double higherValue = vaporizationEnthalpyByTempMap.get(higher);
             double perDegree = higherValue - lowerValue;
-            return lowerValue + ((tempC - lower) * perDegree); 
+            return lowerValue + ((tempC - lower) * perDegree);
         }
         if (!error) {
             error = !error;
@@ -226,9 +226,9 @@ public class SteamTables {
             int lower = (int)tempC;
             int higher = (int)tempC + 1;
             double lowerValue = waterEnthalpyByTempMap.get(lower);
-            double higherValue = waterEnthalpyByTempMap.get(higher);  
+            double higherValue = waterEnthalpyByTempMap.get(higher);
             double perDegree = higherValue - lowerValue;
-            return lowerValue + ((tempC - lower) * perDegree); 
+            return lowerValue + ((tempC - lower) * perDegree);
         }
         if (!error) {
             error = !error;
@@ -249,9 +249,9 @@ public class SteamTables {
             int lower = (int)tempC;
             int higher = (int)tempC + 1;
             double lowerValue = steamEnthalpyByTempMap.get(lower);
-            double higherValue = steamEnthalpyByTempMap.get(higher);  
+            double higherValue = steamEnthalpyByTempMap.get(higher);
             double perDegree = higherValue - lowerValue;
-            return lowerValue + ((tempC - lower) * perDegree); 
+            return lowerValue + ((tempC - lower) * perDegree);
         }
         if (!error) {
             error = !error;
@@ -272,9 +272,9 @@ public class SteamTables {
             int lower = (int)(enthalpy * 10.0);
             int higher = (int)(enthalpy * 10.0 + 1);
             double lowerValue = waterTemperatureByEnthalpyMap.get(lower);
-            double higherValue = waterTemperatureByEnthalpyMap.get(higher);  
+            double higherValue = waterTemperatureByEnthalpyMap.get(higher);
             double perDegree = higherValue - lowerValue;
-            return lowerValue + ((enthalpy * 10.0 - lower) * perDegree); 
+            return lowerValue + ((enthalpy * 10.0 - lower) * perDegree);
         }
         if (!error) {
             error = !error;

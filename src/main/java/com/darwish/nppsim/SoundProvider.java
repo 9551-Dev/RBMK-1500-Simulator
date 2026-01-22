@@ -14,15 +14,15 @@ public class SoundProvider {
 
     public SoundProvider() {
         try {
-            ALARM_1 = loadAsset("alarm1.wav");
+            ALARM_1 = loadAsset("/audio/alarm_1.wav");
             ALARM_1.setLoopPoints(0, ALARM_1.getFrameLength() - 1000);
-            ALARM_2 = loadAsset("alarm2.wav");
+            ALARM_2 = loadAsset("/audio/alarm_2.wav");
             ALARM_2.setLoopPoints(0, ALARM_2.getFrameLength() - 1000);
         } catch (Exception e) {
             new ErrorWindow("An error occured loading audio assets", ExceptionUtils.getStackTrace(e), false).setVisible(true);
         }
     }
-    
+
     public void playContinuously(Clip clip) {
         if (currentlyPlaying.contains(clip)) {
             return;
@@ -30,7 +30,7 @@ public class SoundProvider {
         clip.loop(Clip.LOOP_CONTINUOUSLY);
         currentlyPlaying.add(clip);
     }
-    
+
     public void stop(Clip clip) {
         if (!currentlyPlaying.contains(clip)) {
             return;
@@ -38,30 +38,30 @@ public class SoundProvider {
         clip.stop();
         currentlyPlaying.remove(clip);
     }
-    
+
     public void stopAll() {
         currentlyPlaying.forEach(playingClip -> {
             playingClip.stop();
         });
         currentlyPlaying.clear();
     }
-    
+
     public void pause() {
         currentlyPlaying.forEach(playingClip -> {
             playingClip.stop();
         });
     }
-    
+
     public void resume() {
         currentlyPlaying.forEach(playingClip -> {
             playingClip.loop(Clip.LOOP_CONTINUOUSLY);
         });
     }
-    
+
     private Clip loadAsset(String asset) throws Exception {
         Clip loadedAsset;
         try {
-            InputStream input = getClass().getResourceAsStream("/res/" + asset);
+            InputStream input = getClass().getResourceAsStream(asset);
             InputStream bufferedInput = new BufferedInputStream(input);
             AudioInputStream audioStream = AudioSystem.getAudioInputStream(bufferedInput);
             loadedAsset = AudioSystem.getClip();

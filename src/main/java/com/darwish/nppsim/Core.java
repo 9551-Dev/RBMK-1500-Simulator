@@ -11,7 +11,7 @@ public class Core extends Component {
         private final ArrayList<ArrayList<Double[]>> nextGenerationCount = new ArrayList<>();
         private double neutronCount = 0, previousNeutronCount, kEff, reactivity, period, thermalPower;
         private double fcNeutronCount;
-        
+
         public Core() {
             ArrayList<List<String>> coreData = getCoreData();
             for (int y = 0; y < 56; y++) {
@@ -43,7 +43,7 @@ public class Core extends Component {
             for (short x = 0; x < coreArray.size(); x++) {
                 for (short y = 0; y < coreArray.get(x).size(); y++) {
                     Channel channel = coreArray.get(x).get(y);
-                    
+
                     Double fastNeutronCount = channel.getNeutronPopulation()[0];
                     Double thermalNeutronCount = channel.getNeutronPopulation()[1];
                     neutronCount += fastNeutronCount;
@@ -93,9 +93,9 @@ public class Core extends Component {
                 }
             }
         }
-        
+
         /**
-         * 
+         *
          * @param x
          * @param y
          * @param c relative position
@@ -136,9 +136,9 @@ public class Core extends Component {
             }
             return new short[] {neighborX, neighborY};
         }
-        
+
         private Channel initializeChannelByIdentifier(String channelIdentifier) {
-            switch (channelIdentifier) { 
+            switch (channelIdentifier) {
                 case "\\": //PDMS-A Channel
                     return new PDMSChannel();
                 case "^": //fission chamber
@@ -158,7 +158,7 @@ public class Core extends Component {
                 case "R": //axial control sar
                     return new SACRChannel();
                 case "%": //FASR
-                    return new FASRChannel(); 
+                    return new FASRChannel();
                 case "#": //fuel channel
                     return new FuelChannel();
                 case "*": //reflector cooling channel
@@ -170,13 +170,13 @@ public class Core extends Component {
                 default:
                     return null;
             }
-            
+
         }
-        
+
         private ArrayList<List<String>> getCoreData() {
             ArrayList<List<String>> result = new ArrayList<>();
             try {
-                BufferedReader reader = new BufferedReader(new InputStreamReader((getClass().getResourceAsStream("/res/coreMap.csv"))));
+                BufferedReader reader = new BufferedReader(new InputStreamReader((getClass().getResourceAsStream("/data/core_map.csv"))));
                 ArrayList<String> dataStringArray = new ArrayList<>();
                 String line;
                 while ((line=reader.readLine())!=null) {
@@ -200,7 +200,7 @@ public class Core extends Component {
                 e.printStackTrace();
             }
             return result;
-        }       
+        }
 
         public double getThermalPower() {
             return thermalPower;
@@ -209,11 +209,11 @@ public class Core extends Component {
         public double getReactivity() {
             return reactivity;
         }
-        
+
         public double getNeutronCount() {
             return previousNeutronCount;
         }
-        
+
         public double getPeriod() {
             return period;
         }

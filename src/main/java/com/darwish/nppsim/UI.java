@@ -23,13 +23,13 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 public class UI extends javax.swing.JFrame implements Serializable {
     static Color BACKGROUND = new Color(170, 130, 40);
     static ArrayList<ControlRodChannel> selectedControlRods;
-    static ArrayList<UIUpdateable> elementsToUpdate; 
+    static ArrayList<UIUpdateable> elementsToUpdate;
     static final ArrayList<Thread> uiThreads = new ArrayList<>();
     final Annunciator annunciator;
     private boolean debounce = false;
     private static long uiUpdateRate = 50;
     static boolean hush = true;
-    
+
     public UI() {
         hush = true;
         try {
@@ -62,10 +62,10 @@ public class UI extends javax.swing.JFrame implements Serializable {
                 return Annunciator.BLUEON_COLOR;
             }
         });
-        
+
         initializeDialUpdateThread();
         precisionController();
-        
+
         //set values
         toggleAR1.getModel().setSelected(autoControl.automaticRodController.isEnabled()[1]);
         toggleAR2.getModel().setSelected(autoControl.automaticRodController.isEnabled()[2]);
@@ -78,7 +78,7 @@ public class UI extends javax.swing.JFrame implements Serializable {
         createOrContinue(DearatorUI.class, true, true);
         createOrContinue(MCPUI.class, true, true);
     }
-    
+
     public void update() {
         setTitle(NPPMath.formatSecondsToDaysAndTime(autoControl.getSimulationTime(), true));
         for (UIUpdateable i: elementsToUpdate) {
@@ -110,7 +110,7 @@ public class UI extends javax.swing.JFrame implements Serializable {
             press1.setLcdValue(mcc.drum1.getPressure());
             press2.setLcdValue(mcc.drum2.getPressure());
         });
-        
+
         checkAlarms();
         //reset flow rates for all elements that implement the UIUpdateable interface
         core.coreArray.forEach(row -> {
@@ -123,7 +123,7 @@ public class UI extends javax.swing.JFrame implements Serializable {
         mcc.drum2.resetFlowRates();
         hush = false;
     }
-    
+
     public void initializeDialUpdateThread() {
         UI.uiThreads.add(
             new Thread(() -> {
@@ -205,8 +205,8 @@ public class UI extends javax.swing.JFrame implements Serializable {
         );
         UI.uiThreads.get(UI.uiThreads.size() - 1).start();
     }
-    
-    private void checkAlarms() { 
+
+    private void checkAlarms() {
         boolean sdvA = false;
         boolean msvI = false;
         boolean msvII = false;
@@ -251,7 +251,7 @@ public class UI extends javax.swing.JFrame implements Serializable {
         annunciator.setTrigger(core.getThermalPower() > 5000, power);
         annunciator.setTrigger(core.getReactivity() > 0.01, nRate);
     }
-    
+
     private void precisionController() {
         UI.uiThreads.add(
             new Thread(() -> {
@@ -298,7 +298,7 @@ public class UI extends javax.swing.JFrame implements Serializable {
                         if (!sequenceBlock[0]) {
                             rodSeq.setBackground(Annunciator.YELLOWOFF_COLOR);
                         }
-                        
+
                         if (debounce) {
                             Thread.sleep(50);
                             debounce = false;
@@ -308,7 +308,7 @@ public class UI extends javax.swing.JFrame implements Serializable {
                         } else if (precisionDecrement2.getModel().isPressed()) {
                             precisionDecrement2ActionPerformed(null);
                         }
-                        
+
                         Thread.sleep(50);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -343,11 +343,11 @@ public class UI extends javax.swing.JFrame implements Serializable {
             new ErrorWindow("Error loading UI element class" , ExceptionUtils.getStackTrace(e), false).setVisible(true);
         }
     }
-    
+
     public static long getUpdateRate() {
         return uiUpdateRate;
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -1941,7 +1941,7 @@ public class UI extends javax.swing.JFrame implements Serializable {
         limit1AR.setBackground(Annunciator.YELLOWOFF_COLOR);
         error1AR.setBackground(Annunciator.YELLOWOFF_COLOR);
         busy1AR.setBackground(Annunciator.GREENOFF_COLOR);
-        
+
     }//GEN-LAST:event_toggleAR1ActionPerformed
 
     private void toggleAR2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toggleAR2ActionPerformed
@@ -1953,7 +1953,7 @@ public class UI extends javax.swing.JFrame implements Serializable {
         limit2AR.setBackground(Annunciator.YELLOWOFF_COLOR);
         error2AR.setBackground(Annunciator.YELLOWOFF_COLOR);
         busy2AR.setBackground(Annunciator.GREENOFF_COLOR);
-        
+
     }//GEN-LAST:event_toggleAR2ActionPerformed
 
     private void toggleLACActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toggleLACActionPerformed
@@ -2050,7 +2050,7 @@ public class UI extends javax.swing.JFrame implements Serializable {
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {
         createOrContinue(CoreMap.class, false, false);
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel annunciatorPanel;
     private javax.swing.JTextField arINOP;

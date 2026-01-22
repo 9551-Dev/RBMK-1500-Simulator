@@ -10,9 +10,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.net.URI;
 import javax.imageio.ImageIO;
-import javax.swing.UnsupportedLookAndFeelException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.netbeans.swing.laf.dark.*;
 
 public class Loader extends javax.swing.JFrame {
     static Color BACKGROUND = new Color(180, 140, 40);
@@ -24,6 +22,7 @@ public class Loader extends javax.swing.JFrame {
 
     private static void setLookAndFeelWithFallback() {
         String[] lafPreferences = {
+            "org.netbeans.swing.laf.dark.DarkMetalLookAndFeel",
             "javax.swing.plaf.nimbus.NimbusLookAndFeel",
             javax.swing.UIManager.getSystemLookAndFeelClassName(),
             "com.sun.java.swing.plaf.motif.MotifLookAndFeel",
@@ -51,7 +50,7 @@ public class Loader extends javax.swing.JFrame {
         initComponents();
 
         try {
-            Image image = ImageIO.read(getClass().getResource("/res/ignalina.jpg"));
+            Image image = ImageIO.read(getClass().getResource("/image/ignalina.jpg"));
             image = image.getScaledInstance(507, 318, 1);
             jXImagePanel1.setImage(image);
             jXImagePanel1.setPreferredSize(jXImagePanel1.getPreferredSize());
@@ -60,13 +59,13 @@ public class Loader extends javax.swing.JFrame {
         }
 
         try {
-            String uriString = getClass().getProtectionDomain().getCodeSource().getLocation().toURI().toString();
             File jarFile = new File(Loader.class.getProtectionDomain()
                 .getCodeSource()
                 .getLocation()
                 .toURI());
 
-            File logFile = new File(jarFile.getParent(), "log.txt");
+            File logFile = new File(jarFile.getParent(),"log.txt");
+
             PrintStream logStream = new PrintStream(
                 new BufferedOutputStream(new FileOutputStream(logFile)), true);
 
@@ -105,8 +104,8 @@ public class Loader extends javax.swing.JFrame {
     public void setLoading(boolean loading) {
         this.loading = loading;
         jLabel3.setVisible(loading);
-        jButton1.setEnabled(!loading);
-        jButton2.setEnabled(!loading);
+        j_button_start.setEnabled(!loading);
+        j_button_load_saved.setEnabled(!loading);
         //jButton5.setEnabled(!loading); //TODO
     }
 
@@ -122,13 +121,13 @@ public class Loader extends javax.swing.JFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        j_button_start = new javax.swing.JButton();
+        j_button_load_saved = new javax.swing.JButton();
         jXImagePanel1 = new org.jdesktop.swingx.JXImagePanel();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        j_button_github = new javax.swing.JButton();
+        j_button_discord = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jButton5 = new javax.swing.JButton();
+        j_button_load_ic = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
 
@@ -148,19 +147,19 @@ public class Loader extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Welcome to RBMK-1500 Simulator!");
 
-        jButton1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jButton1.setText("Start");
-        jButton1.setEnabled(false);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        j_button_start.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        j_button_start.setText("Start");
+        j_button_start.setEnabled(false);
+        j_button_start.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jButton2.setText("Load Saved IC");
-        jButton2.setEnabled(false);
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        j_button_load_saved.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        j_button_load_saved.setText("Load Saved IC");
+        j_button_load_saved.setEnabled(false);
+        j_button_load_saved.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
@@ -180,31 +179,31 @@ public class Loader extends javax.swing.JFrame {
             .addGap(0, 314, Short.MAX_VALUE)
         );
 
-        jButton3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jButton3.setText("GitHub");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        j_button_github.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        j_button_github.setText("GitHub");
+        j_button_github.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                github_open_button_trigger(evt);
             }
         });
 
-        jButton4.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jButton4.setText("Discord");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        j_button_discord.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        j_button_discord.setText("Discord");
+        j_button_discord.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                discord_button_trigger(evt);
             }
         });
 
         jLabel2.setFont(new java.awt.Font("Dialog", 2, 12)); // NOI18N
         jLabel2.setText("Version 1.2.1 Alpha");
 
-        jButton5.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jButton5.setText("Load Standard IC");
-        jButton5.setEnabled(false);
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        j_button_load_ic.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        j_button_load_ic.setText("Load Standard IC");
+        j_button_load_ic.setEnabled(false);
+        j_button_load_ic.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                ic_load_button_trigger(evt);
             }
         });
 
@@ -228,11 +227,11 @@ public class Loader extends javax.swing.JFrame {
                         .addGroup(jPanel3Layout.createSequentialGroup()
                             .addGap(21, 21, 21)
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(j_button_load_saved, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(j_button_start, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(j_button_github, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(j_button_discord, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(j_button_load_ic, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(jXImagePanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -256,15 +255,15 @@ public class Loader extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(j_button_start, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(j_button_load_saved, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(j_button_load_ic, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(j_button_github, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(j_button_discord, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jXImagePanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(113, Short.MAX_VALUE))
         );
@@ -310,7 +309,7 @@ public class Loader extends javax.swing.JFrame {
         new LoadDialog().setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void github_open_button_trigger(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
             try {
             Desktop.getDesktop().browse(new URI("https://github.com/AliDarwish786/RBMK-1500-Simulator"));
@@ -320,7 +319,7 @@ public class Loader extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void discord_button_trigger(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
             try {
             Desktop.getDesktop().browse(new URI("https://discord.gg/DDKX5qVW8W"));
@@ -330,17 +329,17 @@ public class Loader extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void ic_load_button_trigger(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton j_button_start;
+    private javax.swing.JButton j_button_load_saved;
+    private javax.swing.JButton j_button_github;
+    private javax.swing.JButton j_button_discord;
+    private javax.swing.JButton j_button_load_ic;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
