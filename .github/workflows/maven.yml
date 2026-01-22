@@ -1,31 +1,53 @@
-# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
-
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
-name: Java CI with Maven
+name: Java CI with Latest Release
 
 on:
   push:
     branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
+    
     steps:
     - uses: actions/checkout@v4
+    
     - name: Set up JDK 21
       uses: actions/setup-java@v4
       with:
         java-version: '21'
         distribution: 'temurin'
         cache: maven
+    
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+    
+    - name: Delete Old Latest Tag
+      run: |
+        git fetch --tags
+        git tag -d latest 2>/dev/null || true
+        git push --delete origin latest 2>/dev/null || true
+    
+    - name: Create Latest Tag
+      run: |
+        git config user.name "github-actions"
+        git config user.email "github-actions@github.com"
+        git tag -a "latest" -m "Latest build from ${{ github.sha }}"
+        git push origin latest
+    
+    - name: Create Latest Release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: latest
+        name: "Latest Build"
+        body: |
+          **Latest build from master branch**
+          Commit: ${{ github.sha }}
+          Built: ${{ github.event.head_commit.timestamp }}
+          
+          This release is automatically updated with every successful build.
+        files: target/*.jar
+        draft: false
+        prerelease: false
+        overwrite: true  # This updates the existing "latest" release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
