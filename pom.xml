@@ -6,7 +6,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.darwish.nppsim</groupId>
 	<artifactId>RBMK-1500-Simulator</artifactId>
-	<version>1.2.1</version>
+	<version>1.2.2</version>
 	<name>RBMK-1500-Simulator</name>
 	<url>https://github.com/AliDarwish786/RBMK-1500-Simulator</url>
 
