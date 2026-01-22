@@ -195,7 +195,7 @@ public class Loader extends javax.swing.JFrame {
         });
 
         jLabel2.setFont(new java.awt.Font("Dialog", 2, 12)); // NOI18N
-        jLabel2.setText("Version 1.2.1 Alpha");
+        jLabel2.setText("Version 1.2.1 Alpha - Meow!");
 
         j_button_load_ic.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         j_button_load_ic.setText("Load Standard IC");
