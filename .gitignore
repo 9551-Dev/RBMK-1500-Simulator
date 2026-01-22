@@ -2,6 +2,9 @@
 *.log
 log.txt
 
+# linking
+latest-simulator.jar
+
 # ============================================
 # MAVEN BUILD OUTPUTS (EXCLUDED)
 # ============================================
