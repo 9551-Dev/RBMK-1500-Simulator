@@ -141,25 +141,25 @@ class TG extends WaterSteamComponent implements Connectable {
 
     @Override
     public double getSteamDensity() {
-        // TODO Auto-generated method stub
+        
         throw new UnsupportedOperationException("Unimplemented method 'getSteamDensity'");
     }
 
     @Override
     public double getWaterDensity() {
-        // TODO Auto-generated method stub
+        
         throw new UnsupportedOperationException("Unimplemented method 'getWaterDensity'");
     }
 
     @Override
     public double getSteamMass() {
-        // TODO Auto-generated method stub
+        
         throw new UnsupportedOperationException("Unimplemented method 'getSteamMass'");
     }
 
     @Override
     public double getSteamVolume() {
-        // TODO Auto-generated method stub
+        
         throw new UnsupportedOperationException("Unimplemented method 'getSteamVolume'");
     }
 
@@ -170,7 +170,7 @@ class TG extends WaterSteamComponent implements Connectable {
     
     @Override
     public void updateSteamOutflow(double flow, double tempC) {
-        // TODO Auto-generated method stub
+        
         throw new UnsupportedOperationException("Unimplemented method 'updateSteamOutFlow'");
     }
 
@@ -183,13 +183,13 @@ class TG extends WaterSteamComponent implements Connectable {
 
     @Override
     public void updateWaterOutflow(double flow, double tempC) {
-        // TODO Auto-generated method stub
+        
         throw new UnsupportedOperationException("Unimplemented method 'updateWaterOutFlow'");
     }
 
     @Override
     public void updateWaterInflow(double flow, double tempC) {
-        // TODO Auto-generated method stub
+        
         throw new UnsupportedOperationException("Unimplemented method 'updateWaterInFlow'");
     }
     
@@ -423,7 +423,7 @@ class Condenser extends WaterSteamSubComponent implements Connectable, UIReadabl
 
     @Override
     public void updateWaterInflow(double flow, double tempC) {
-        // TODO Auto-generated method stub
+        
         throw new UnsupportedOperationException("Unimplemented method 'getWaterInflowRate'");
     }
 

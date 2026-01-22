@@ -459,19 +459,19 @@ class OneWaySteamHeader extends WaterSteamComponent implements Connectable, UIRe
 
     @Override
     public double getWaterDensity() {
-        // TODO Auto-generated method stub
+        
         throw new UnsupportedOperationException("Unimplemented method 'getWaterDensity'");
     }
 
     @Override
     public double getSteamMass() {
-        // TODO Auto-generated method stub
+        
         throw new UnsupportedOperationException("Unimplemented method 'getSteamMass'");
     }
 
     @Override
     public double getSteamVolume() {
-        // TODO Auto-generated method stub
+        
         throw new UnsupportedOperationException("Unimplemented method 'getSteamVolume'");
     }
 
@@ -482,19 +482,19 @@ class OneWaySteamHeader extends WaterSteamComponent implements Connectable, UIRe
 
     @Override
     public void updateSteamInflow(double flow, double tempC) {
-        // TODO Auto-generated method stub
+        
         throw new UnsupportedOperationException("Unimplemented method 'updateSteamInFlow'");
     }
 
     @Override
     public void updateWaterOutflow(double flow, double tempC) {
-        // TODO Auto-generated method stub
+        
         throw new UnsupportedOperationException("Unimplemented method 'updateWaterOutFlow'");
     }
 
     @Override
     public void updateWaterInflow(double flow, double tempC) {
-        // TODO Auto-generated method stub
+        
         throw new UnsupportedOperationException("Unimplemented method 'updateWaterInFlow'");
     }
 

@@ -332,49 +332,49 @@ public class MCC extends Component {
 
         @Override
         public double getPressure() {
-            // TODO Auto-generated method stub
+            
             return 0;
         }
 
         @Override
         public double getSteamDensity() {
-            // TODO Auto-generated method stub
+            
             return 0;
         }
 
         @Override
         public double getWaterDensity() {
-            // TODO Auto-generated method stub
+            
             return 0;
         }
 
         @Override
         public double getSteamMass() {
-            // TODO Auto-generated method stub
+            
             return 0;
         }
 
         @Override
         public double getSteamVolume() {
-            // TODO Auto-generated method stub
+            
             return 0;
         }
 
         @Override
         public double getSteamTemperature() {
-            // TODO Auto-generated method stub
+            
             return 0;
         }
 
         @Override
         public void updateSteamOutflow(double flow, double tempC) {
-            // TODO Auto-generated method stub
+            
 
         }
 
         @Override
         public void updateSteamInflow(double flow, double tempC) {
-            // TODO Auto-generated method stub
+            
 
         }
 

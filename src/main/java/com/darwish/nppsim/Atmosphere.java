@@ -8,19 +8,19 @@ public class Atmosphere extends WaterSteamComponent implements Connectable {
 
     @Override
     public double getSteamDensity() {
-        // TODO Auto-generated method stub
+        
         return 0;
     }
 
     @Override
     public void updateSteamOutflow(double flow, double tempC) {
-        // TODO Auto-generated method stub
+        
         
     }
 
     @Override
     public void updateWaterInflow(double flow, double tempC) {
-        // TODO Auto-generated method stub
+        
         
     }
 
@@ -31,25 +31,25 @@ public class Atmosphere extends WaterSteamComponent implements Connectable {
 
     @Override
     public double getSteamMass() {
-        // TODO Auto-generated method stub
+        
         return 0;
     }
 
     @Override
     public double getSteamVolume() {
-        // TODO Auto-generated method stub
+        
         return 0;
     }
 
     @Override
     public void updateSteamInflow(double flow, double tempC) {
-        // TODO Auto-generated method stub
+        
         
     }
 
     @Override
     public void updateWaterOutflow(double flow, double tempC) {
-        // TODO Auto-generated method stub
+        
         
     }
 

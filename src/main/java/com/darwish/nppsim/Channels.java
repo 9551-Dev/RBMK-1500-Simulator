@@ -24,7 +24,7 @@ class ChannelUIData implements Serializable {
         this.UIBackgroundColor = background;
         this.UISelectedColor = selected;
     }
-    
+
     public void setSelsynColors(Color selsyn) {
         this.UISelsynColor = selsyn;
     }
@@ -41,9 +41,9 @@ abstract class Channel implements ChannelUIUpdatable, Serializable {
     protected double thermalFissionFactor = 1, thermalUtilizationFactor = 1, resonanceEscapeProb = 0.87, fastFissionFactor = 1, fastNonLeakageProb = 0.97, thermalNonLeakageProb = 0.99;
 
     public void update() {
-        
+
     }
-    
+
     public void updateNeutronPopulation() {
         fastNeutronCount *= thermalFissionFactor * fastNonLeakageProb * resonanceEscapeProb * thermalNonLeakageProb * thermalUtilizationFactor;
     }
@@ -54,13 +54,13 @@ abstract class Channel implements ChannelUIUpdatable, Serializable {
     public ChannelUIData getUIData() {
         return uiData;
     }
-    
+
     public void setPositionString(String positionString) {
         this.uiData.positionString = positionString;
     }
 
     /**
-     * 
+     *
      * @return array of {fastNeutronCount, thermalNeutronCount}
      */
     public Double[] getNeutronPopulation() {
@@ -81,7 +81,7 @@ abstract class CPSChannel extends Channel {
     protected double waterInflowTemperature = 0.0;
     protected double waterInflowRate = 0.0;
     protected double pressure = 0.0;
-    
+
     @Override
     public void updateTableValues() {
         uiData.setTableData(new Object[][] {
@@ -102,7 +102,7 @@ abstract class ControlRodChannel extends CPSChannel {
     protected float fastScramSpeed = scramSpeed;
     private int state = 1, autoState = 1;
     private boolean scram = false, fastScram = false;
-    
+
     @Override
     public void updateTableValues() {
         uiData.setTableData(new Object[][] {
@@ -114,7 +114,7 @@ abstract class ControlRodChannel extends CPSChannel {
 //                { "Outlet Temperature:", NPPMath.round(waterTemperature), "C" }
         });
     }
-    
+
     @Override
     public void update() {
         if (scram) {
@@ -128,7 +128,7 @@ abstract class ControlRodChannel extends CPSChannel {
         }
         thermalUtilizationFactor = 1.0 - position;
     }
-    
+
     public float getPosition() {
         return position;
     }
@@ -136,19 +136,19 @@ abstract class ControlRodChannel extends CPSChannel {
     public void setPosition(float position) {
         this.position = position;
     }
-    
+
     public void setState(int state) {
         this.state = state;
     }
-    
+
     public void setAutoState(int autoState) {
         this.autoState = autoState;
     }
-    
+
     public void setScram(boolean scram) {
         this.scram = scram;
     }
-    
+
     public void setFastScram(boolean scram) {
         this.fastScram = scram;
     }
@@ -237,7 +237,7 @@ class VoidChannel extends Channel {
 
     @Override
     public void updateTableValues() {
-        // TODO Auto-generated method stub
+
         // throw new UnsupportedOperationException("Unimplemented method
         // 'upateTableValues'");
     }
@@ -245,13 +245,13 @@ class VoidChannel extends Channel {
 }
 
 class ReflectorChannel extends Channel {
-    
+
     public ReflectorChannel() {
         resonanceEscapeProb = 0.95;
     }
     @Override
     public void updateTableValues() {
-        // TODO Auto-generated method stub
+
         // throw new UnsupportedOperationException("Unimplemented method
         // 'upateTableValues'");
     }
@@ -265,7 +265,7 @@ class ReflectorCoolingChannel extends ReflectorChannel {
     }
     @Override
     public void updateTableValues() {
-        // TODO Auto-generated method stub
+
         // throw new UnsupportedOperationException("Unimplemented method
         // 'upateTableValues'");
     }
@@ -305,7 +305,7 @@ class FuelChannel extends Channel implements Connectable, UIReadable {
     private double i135Count = 0, xe135Count = 0; //atoms per channel
     private final double nominalFeedWaterVolume;
     private final double resonanceEscapeProbInitial, thermalUtilizationFactorInitial;
-    
+
     private final double I135DECAY_MULTIPLIER = NPPMath.calculateDecayMultiplierPerUpdate(6.57);
     private final double XE135DECAY_MULTIPLIER = NPPMath.calculateDecayMultiplierPerUpdate(9.14);
 
@@ -351,7 +351,7 @@ class FuelChannel extends Channel implements Connectable, UIReadable {
             steamMass += deltaSteamMass;
             waterMass -= deltaSteamMass;
         }
-        
+
         specificDensityWater = Loader.tables.getWaterDensityByTemp(waterTemperature);
         waterVolume = specificDensityWater * waterMass;
         waterOutflow = (waterVolume - volume) / specificDensityWater;
@@ -387,29 +387,29 @@ class FuelChannel extends Channel implements Connectable, UIReadable {
         thermalUtilizationFactor = (thermalUtilizationFactorInitial - xeThermalUtilizationModifier) + voidFraction * 0.077;
         thermalUtilizationFactor += 0.025 - Loader.tables.getWaterDensityByTemp(20) / Loader.tables.getWaterDensityByTemp(waterTemperature) * 0.025;
         thermalPower = (this.getNeutronPopulation()[0] / 29986861831.1868724665) * 2.8898254064; // simple mapping of neutron count to thermal power per channel for 4800 MWt
-        
+
         if (thermalPower > 5) {
             autoControl.az1Control.trip("High Fuel Channel Power");
         }
-        
+
         //decay heat
-        
+
 //        if (thermalPower < 0.000001) {
 //            thermalPower = 0;
 //            tElapsed += 0.05;
-//        } 
+//        }
 //        else if (tElapsed > 0) {
 //            tElapsed -= 0.05;
 //        }
         if (thermalPower < 0.000001) {
             thermalPower = 0;
-        } 
+        }
         if (thermalPower < averagePower) {
             tElapsed += 1;
         } else {
             tElapsed = 1;
         }
-        
+
         if (autoControl.getTimeUpdatedFlag()) {     //update average power every second
             long simTime = autoControl.getSimulationTime() > 432000 ? 432000 : autoControl.getSimulationTime(); //consider last 5 days only
             averagePower = ((simTime - 1) * averagePower + thermalPower) / simTime;
@@ -576,7 +576,7 @@ class FuelChannel extends Channel implements Connectable, UIReadable {
     public double getSteamInflowRate() {
         return 0;
     }
-    
+
     public double getThermalPower() {
         return thermalPower;
     }

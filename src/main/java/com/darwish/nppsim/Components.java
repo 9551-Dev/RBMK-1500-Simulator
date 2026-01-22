@@ -65,7 +65,7 @@ class PressureHeader extends WaterSteamComponent implements Connectable, UIReada
 
     @Override
     public double getSteamDensity() {
-        // TODO Auto-generated method stub
+        
         throw new UnsupportedOperationException("Unimplemented method 'getSteamDensity'");
     }
 
@@ -76,25 +76,25 @@ class PressureHeader extends WaterSteamComponent implements Connectable, UIReada
 
     @Override
     public double getSteamMass() {
-        // TODO Auto-generated method stub
+        
         throw new UnsupportedOperationException("Unimplemented method 'getSteamMass'");
     }
 
     @Override
     public double getSteamVolume() {
-        // TODO Auto-generated method stub
+        
         throw new UnsupportedOperationException("Unimplemented method 'getSteamVolume'");
     }
 
     @Override
     public void updateSteamOutflow(double flow, double tempC) {
-        // TODO Auto-generated method stub
+        
         throw new UnsupportedOperationException("Unimplemented method 'updateSteamOutFlow'");
     }
 
     @Override
     public void updateSteamInflow(double flow, double tempC) {
-        // TODO Auto-generated method stub
+        
         throw new UnsupportedOperationException("Unimplemented method 'updateSteamInFlow'");
     }
 
@@ -200,13 +200,13 @@ class SimplePressureHeader extends WaterSteamComponent implements Connectable, U
 
     @Override
     public double getSteamMass() {
-        // TODO Auto-generated method stub
+        
         throw new UnsupportedOperationException("Unimplemented method 'getSteamMass'");
     }
 
     @Override
     public double getSteamVolume() {
-        // TODO Auto-generated method stub
+        
         throw new UnsupportedOperationException("Unimplemented method 'getSteamVolume'");
     }
 
@@ -322,13 +322,13 @@ class SimpleSuctionHeader extends WaterSteamComponent implements Connectable, UI
 
     @Override
     public double getSteamMass() {
-        // TODO Auto-generated method stub
+        
         throw new UnsupportedOperationException("Unimplemented method 'getSteamMass'");
     }
 
     @Override
     public double getSteamVolume() {
-        // TODO Auto-generated method stub
+        
         throw new UnsupportedOperationException("Unimplemented method 'getSteamVolume'");
     }
 
@@ -467,7 +467,7 @@ class Tank extends WaterSteamComponent implements Connectable, UIReadable {
 
     @Override
     public double getSteamDensity() {
-        // TODO Auto-generated method stub
+        
         throw new UnsupportedOperationException("Unimplemented method 'getSteamDensity'");
     }
 
@@ -478,25 +478,25 @@ class Tank extends WaterSteamComponent implements Connectable, UIReadable {
 
     @Override
     public double getSteamMass() {
-        // TODO Auto-generated method stub
+        
         throw new UnsupportedOperationException("Unimplemented method 'getSteamMass'");
     }
 
     @Override
     public double getSteamVolume() {
-        // TODO Auto-generated method stub
+        
         throw new UnsupportedOperationException("Unimplemented method 'getSteamVolume'");
     }
 
     @Override
     public void updateSteamOutflow(double flow, double tempC) {
-        // TODO Auto-generated method stub
+        
         throw new UnsupportedOperationException("Unimplemented method 'updateSteamOutflow'");
     }
 
     @Override
     public void updateSteamInflow(double flow, double tempC) {
-        // TODO Auto-generated method stub
+        
         throw new UnsupportedOperationException("Unimplemented method 'updateSteamInflow'");
     }
 

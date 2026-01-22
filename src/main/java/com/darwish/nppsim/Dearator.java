@@ -136,19 +136,19 @@ public class Dearator extends WaterSteamComponent implements Connectable, UIRead
 
     @Override
     public double getWaterDensity() {
-        // TODO Auto-generated method stub
+        
         return 0;
     }
 
     @Override
     public double getSteamMass() {
-        // TODO Auto-generated method stub
+        
         return 0;
     }
 
     @Override
     public double getSteamVolume() {
-        // TODO Auto-generated method stub
+        
         return 0;
     }
 
