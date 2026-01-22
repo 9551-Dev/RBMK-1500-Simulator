@@ -1823,7 +1823,7 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_aFWStop1ActionPerformed
 
     private void aFWStop1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_aFWStop1ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_aFWStop1ItemStateChanged
 
     private void aFWClose1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aFWClose1ActionPerformed
@@ -1831,7 +1831,7 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_aFWClose1ActionPerformed
 
     private void aFWClose1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_aFWClose1ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_aFWClose1ItemStateChanged
 
     private void aFWOpen1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aFWOpen1ActionPerformed
@@ -1839,7 +1839,7 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_aFWOpen1ActionPerformed
 
     private void aFWOpen1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_aFWOpen1ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_aFWOpen1ItemStateChanged
 
     private void mFW2StopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mFW2StopActionPerformed
@@ -1847,7 +1847,7 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_mFW2StopActionPerformed
 
     private void mFW2StopItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_mFW2StopItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_mFW2StopItemStateChanged
 
     private void mFW2CloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mFW2CloseActionPerformed
@@ -1855,7 +1855,7 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_mFW2CloseActionPerformed
 
     private void mFW2CloseItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_mFW2CloseItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_mFW2CloseItemStateChanged
 
     private void mFW2OpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mFW2OpenActionPerformed
@@ -1863,7 +1863,7 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_mFW2OpenActionPerformed
 
     private void mFW2OpenItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_mFW2OpenItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_mFW2OpenItemStateChanged
 
     private void mFW1StopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mFW1StopActionPerformed
@@ -1871,7 +1871,7 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_mFW1StopActionPerformed
 
     private void mFW1StopItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_mFW1StopItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_mFW1StopItemStateChanged
 
     private void mFW1CloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mFW1CloseActionPerformed
@@ -1879,7 +1879,7 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_mFW1CloseActionPerformed
 
     private void mFW1CloseItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_mFW1CloseItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_mFW1CloseItemStateChanged
 
     private void mFW1OpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mFW1OpenActionPerformed
@@ -1887,7 +1887,7 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_mFW1OpenActionPerformed
 
     private void mFW1OpenItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_mFW1OpenItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_mFW1OpenItemStateChanged
 
     private void stopAuxFWPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopAuxFWPActionPerformed
@@ -1915,7 +1915,7 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_stopAuxFWPActionPerformed
 
     private void stopAuxFWPItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_stopAuxFWPItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_stopAuxFWPItemStateChanged
 
     private void startAuxFWPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startAuxFWPActionPerformed
@@ -1947,27 +1947,27 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_startAuxFWPItemStateChanged
 
     private void jTextField11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField11ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jTextField11ActionPerformed
 
     private void jTextField10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField10ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jTextField10ActionPerformed
 
     private void trip2BActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_trip2BActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_trip2BActionPerformed
 
     private void mainTripActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mainTripActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_mainTripActionPerformed
 
     private void mainCavitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mainCavitActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_mainCavitActionPerformed
 
     private void drum2LowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_drum2LowActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_drum2LowActionPerformed
 
     private void stopMWFPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopMWFPActionPerformed
@@ -1998,7 +1998,7 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_stopMWFPActionPerformed
 
     private void stopMWFPItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_stopMWFPItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_stopMWFPItemStateChanged
 
     private void startMFWPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startMFWPActionPerformed
@@ -2033,7 +2033,7 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_startMFWPItemStateChanged
 
     private void aFWOpen2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_aFWOpen2ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_aFWOpen2ItemStateChanged
 
     private void aFWOpen2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aFWOpen2ActionPerformed
@@ -2041,7 +2041,7 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_aFWOpen2ActionPerformed
 
     private void aFWClose2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_aFWClose2ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_aFWClose2ItemStateChanged
 
     private void aFWClose2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aFWClose2ActionPerformed
@@ -2049,7 +2049,7 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_aFWClose2ActionPerformed
 
     private void aFWStop2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_aFWStop2ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_aFWStop2ItemStateChanged
 
     private void aFWStop2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aFWStop2ActionPerformed
@@ -2057,7 +2057,7 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_aFWStop2ActionPerformed
 
     private void autoControlWaterLevelItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_autoControlWaterLevelItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_autoControlWaterLevelItemStateChanged
 
     private void autoControlWaterLevelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autoControlWaterLevelActionPerformed
@@ -2068,7 +2068,7 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_autoControlWaterLevelActionPerformed
 
     private void autoControlOffItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_autoControlOffItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_autoControlOffItemStateChanged
 
     private void autoControlOffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autoControlOffActionPerformed
@@ -2081,7 +2081,7 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_autoControlOffActionPerformed
 
     private void autoControl3ElemItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_autoControl3ElemItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_autoControl3ElemItemStateChanged
 
     private void autoControl3ElemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autoControl3ElemActionPerformed

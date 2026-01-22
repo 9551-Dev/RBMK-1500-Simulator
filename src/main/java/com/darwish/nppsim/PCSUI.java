@@ -2245,19 +2245,19 @@ public class PCSUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void waterTempActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_waterTempActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_waterTempActionPerformed
 
     private void coolingCavitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coolingCavitActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_coolingCavitActionPerformed
 
     private void dwLowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dwLowActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_dwLowActionPerformed
 
     private void dwHighActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dwHighActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_dwHighActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
@@ -2277,7 +2277,7 @@ public class PCSUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void sdvcOpen1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_sdvcOpen1ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_sdvcOpen1ItemStateChanged
 
     private void sdvcOpen1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sdvcOpen1ActionPerformed
@@ -2285,7 +2285,7 @@ public class PCSUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_sdvcOpen1ActionPerformed
 
     private void sdvcClose1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_sdvcClose1ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_sdvcClose1ItemStateChanged
 
     private void sdvcClose1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sdvcClose1ActionPerformed
@@ -2293,7 +2293,7 @@ public class PCSUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_sdvcClose1ActionPerformed
 
     private void sdvcStop1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_sdvcStop1ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_sdvcStop1ItemStateChanged
 
     private void sdvcStop1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sdvcStop1ActionPerformed
@@ -2313,7 +2313,7 @@ public class PCSUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_start1AActionPerformed
 
     private void stop1AItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_stop1AItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_stop1AItemStateChanged
 
     private void stop1AActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stop1AActionPerformed
@@ -2325,7 +2325,7 @@ public class PCSUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_stop1AActionPerformed
 
     private void start1A2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_start1A2ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_start1A2ItemStateChanged
 
     private void start1A2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_start1A2ActionPerformed
@@ -2333,7 +2333,7 @@ public class PCSUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_start1A2ActionPerformed
 
     private void stop1A2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_stop1A2ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_stop1A2ItemStateChanged
 
     private void stop1A2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stop1A2ActionPerformed
@@ -2341,7 +2341,7 @@ public class PCSUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_stop1A2ActionPerformed
 
     private void sdvcOpen2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_sdvcOpen2ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_sdvcOpen2ItemStateChanged
 
     private void sdvcOpen2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sdvcOpen2ActionPerformed
@@ -2350,7 +2350,7 @@ public class PCSUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_sdvcOpen2ActionPerformed
 
     private void sdvcStop2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_sdvcStop2ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_sdvcStop2ItemStateChanged
 
     private void sdvcStop2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sdvcStop2ActionPerformed
@@ -2359,7 +2359,7 @@ public class PCSUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_sdvcStop2ActionPerformed
 
     private void sdvcClose2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_sdvcClose2ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_sdvcClose2ItemStateChanged
 
     private void sdvcClose2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sdvcClose2ActionPerformed
@@ -2368,7 +2368,7 @@ public class PCSUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_sdvcClose2ActionPerformed
 
     private void sdvcStop3ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_sdvcStop3ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_sdvcStop3ItemStateChanged
 
     private void sdvcStop3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sdvcStop3ActionPerformed
@@ -2377,7 +2377,7 @@ public class PCSUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_sdvcStop3ActionPerformed
 
     private void sdvcClose3ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_sdvcClose3ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_sdvcClose3ItemStateChanged
 
     private void sdvcClose3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sdvcClose3ActionPerformed
@@ -2386,7 +2386,7 @@ public class PCSUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_sdvcClose3ActionPerformed
 
     private void sdvcOpen3ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_sdvcOpen3ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_sdvcOpen3ItemStateChanged
 
     private void sdvcOpen3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sdvcOpen3ActionPerformed
@@ -2395,7 +2395,7 @@ public class PCSUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_sdvcOpen3ActionPerformed
 
     private void sdvcOpen4ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_sdvcOpen4ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_sdvcOpen4ItemStateChanged
 
     private void sdvcOpen4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sdvcOpen4ActionPerformed
@@ -2403,7 +2403,7 @@ public class PCSUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_sdvcOpen4ActionPerformed
 
     private void sdvcStop4ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_sdvcStop4ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_sdvcStop4ItemStateChanged
 
     private void sdvcStop4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sdvcStop4ActionPerformed
@@ -2411,7 +2411,7 @@ public class PCSUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_sdvcStop4ActionPerformed
 
     private void sdvcClose4ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_sdvcClose4ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_sdvcClose4ItemStateChanged
 
     private void sdvcClose4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sdvcClose4ActionPerformed
@@ -2419,23 +2419,23 @@ public class PCSUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_sdvcClose4ActionPerformed
 
     private void filter1InItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_filter1InItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_filter1InItemStateChanged
 
     private void filter1InActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filter1InActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_filter1InActionPerformed
 
     private void filter1RegItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_filter1RegItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_filter1RegItemStateChanged
 
     private void filter1RegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filter1RegActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_filter1RegActionPerformed
 
     private void regen2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_regen2ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_regen2ItemStateChanged
 
     private void regen2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regen2ActionPerformed
@@ -2447,7 +2447,7 @@ public class PCSUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_regen2ActionPerformed
 
     private void regenBothItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_regenBothItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_regenBothItemStateChanged
 
     private void regenBothActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regenBothActionPerformed
@@ -2459,7 +2459,7 @@ public class PCSUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_regenBothActionPerformed
 
     private void regen1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_regen1ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_regen1ItemStateChanged
 
     private void regen1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regen1ActionPerformed
@@ -2471,23 +2471,23 @@ public class PCSUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_regen1ActionPerformed
 
     private void filter2InItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_filter2InItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_filter2InItemStateChanged
 
     private void filter2InActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filter2InActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_filter2InActionPerformed
 
     private void filter2RegItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_filter2RegItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_filter2RegItemStateChanged
 
     private void filter2RegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filter2RegActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_filter2RegActionPerformed
 
     private void dwTankButtonItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_dwTankButtonItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_dwTankButtonItemStateChanged
 
     private void dwTankButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dwTankButtonActionPerformed
@@ -2503,11 +2503,11 @@ public class PCSUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void dwTankTempActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dwTankTempActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_dwTankTempActionPerformed
 
     private void bypassButtonItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_bypassButtonItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_bypassButtonItemStateChanged
 
     private void bypassButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bypassButtonActionPerformed
@@ -2519,7 +2519,7 @@ public class PCSUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_bypassButtonActionPerformed
 
     private void start1A1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_start1A1ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_start1A1ItemStateChanged
 
     private void start1A1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_start1A1ActionPerformed
@@ -2527,7 +2527,7 @@ public class PCSUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_start1A1ActionPerformed
 
     private void stop1A1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_stop1A1ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_stop1A1ItemStateChanged
 
     private void stop1A1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stop1A1ActionPerformed
@@ -2535,7 +2535,7 @@ public class PCSUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_stop1A1ActionPerformed
 
     private void sdvcOpen5ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_sdvcOpen5ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_sdvcOpen5ItemStateChanged
 
     private void sdvcOpen5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sdvcOpen5ActionPerformed
@@ -2543,7 +2543,7 @@ public class PCSUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_sdvcOpen5ActionPerformed
 
     private void sdvcStop5ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_sdvcStop5ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_sdvcStop5ItemStateChanged
 
     private void sdvcStop5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sdvcStop5ActionPerformed
@@ -2551,7 +2551,7 @@ public class PCSUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_sdvcStop5ActionPerformed
 
     private void sdvcClose5ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_sdvcClose5ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_sdvcClose5ItemStateChanged
 
     private void sdvcClose5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sdvcClose5ActionPerformed
@@ -2586,7 +2586,7 @@ public class PCSUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void start1A3ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_start1A3ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_start1A3ItemStateChanged
 
     private void start1A3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_start1A3ActionPerformed
@@ -2594,7 +2594,7 @@ public class PCSUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_start1A3ActionPerformed
 
     private void stop1A3ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_stop1A3ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_stop1A3ItemStateChanged
 
     private void stop1A3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stop1A3ActionPerformed

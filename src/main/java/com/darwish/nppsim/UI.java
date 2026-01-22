@@ -1849,19 +1849,19 @@ public class UI extends javax.swing.JFrame implements Serializable {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void powerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_powerActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_powerActionPerformed
 
     private void mcpCavitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mcpCavitActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_mcpCavitActionPerformed
 
     private void msv2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_msv2ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_msv2ActionPerformed
 
     private void highDrumPressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_highDrumPressActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_highDrumPressActionPerformed
 
     private void bar_selsyns_button_clicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed

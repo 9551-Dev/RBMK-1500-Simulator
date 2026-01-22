@@ -330,7 +330,7 @@ public class Loader extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void ic_load_button_trigger(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jButton5ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

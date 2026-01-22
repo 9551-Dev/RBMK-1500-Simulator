@@ -5752,7 +5752,7 @@ public class ManualRodControl extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {                                               
-        // TODO add your handling code here:
+        
     }                                              
 
 

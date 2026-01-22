@@ -3112,7 +3112,7 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void trip1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_trip1ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_trip1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
@@ -3144,95 +3144,95 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void cavit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cavit1ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_cavit1ActionPerformed
 
     private void waterTemp2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_waterTemp2ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_waterTemp2ActionPerformed
 
     private void trip2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_trip2ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_trip2ActionPerformed
 
     private void cavit2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cavit2ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_cavit2ActionPerformed
 
     private void trip5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_trip5ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_trip5ActionPerformed
 
     private void trip3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_trip3ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_trip3ActionPerformed
 
     private void cavit5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cavit5ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_cavit5ActionPerformed
 
     private void waterTemp10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_waterTemp10ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_waterTemp10ActionPerformed
 
     private void waterTemp12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_waterTemp12ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_waterTemp12ActionPerformed
 
     private void trip6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_trip6ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_trip6ActionPerformed
 
     private void cavit6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cavit6ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_cavit6ActionPerformed
 
     private void waterTemp3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_waterTemp3ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_waterTemp3ActionPerformed
 
     private void cavit3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cavit3ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_cavit3ActionPerformed
 
     private void waterTemp11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_waterTemp11ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_waterTemp11ActionPerformed
 
     private void trip7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_trip7ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_trip7ActionPerformed
 
     private void cavit7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cavit7ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_cavit7ActionPerformed
 
     private void waterTemp17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_waterTemp17ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_waterTemp17ActionPerformed
 
     private void cavit4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cavit4ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_cavit4ActionPerformed
 
     private void waterTemp19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_waterTemp19ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_waterTemp19ActionPerformed
 
     private void trip8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_trip8ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_trip8ActionPerformed
 
     private void trip4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_trip4ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_trip4ActionPerformed
 
     private void cavit8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cavit8ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_cavit8ActionPerformed
 
     private void waterTemp23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_waterTemp23ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_waterTemp23ActionPerformed
 
     private void precisionIncrement1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precisionIncrement1ActionPerformed
@@ -3244,63 +3244,63 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_precisionDecrement1ActionPerformed
 
     private void precisionIncrement2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precisionIncrement2ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_precisionIncrement2ActionPerformed
 
     private void precisionDecrement2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precisionDecrement2ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_precisionDecrement2ActionPerformed
 
     private void precisionIncrement5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precisionIncrement5ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_precisionIncrement5ActionPerformed
 
     private void precisionDecrement5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precisionDecrement5ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_precisionDecrement5ActionPerformed
 
     private void precisionIncrement6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precisionIncrement6ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_precisionIncrement6ActionPerformed
 
     private void precisionDecrement6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precisionDecrement6ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_precisionDecrement6ActionPerformed
 
     private void precisionIncrement3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precisionIncrement3ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_precisionIncrement3ActionPerformed
 
     private void precisionDecrement3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precisionDecrement3ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_precisionDecrement3ActionPerformed
 
     private void precisionIncrement4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precisionIncrement4ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_precisionIncrement4ActionPerformed
 
     private void precisionDecrement4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precisionDecrement4ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_precisionDecrement4ActionPerformed
 
     private void precisionIncrement7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precisionIncrement7ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_precisionIncrement7ActionPerformed
 
     private void precisionDecrement7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precisionDecrement7ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_precisionDecrement7ActionPerformed
 
     private void precisionIncrement8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precisionIncrement8ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_precisionIncrement8ActionPerformed
 
     private void precisionDecrement8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precisionDecrement8ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_precisionDecrement8ActionPerformed
 
     private void tgValvesClose18ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesClose18ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_tgValvesClose18ItemStateChanged
 
     private void tgValvesStop18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgValvesStop18ActionPerformed
@@ -3308,7 +3308,7 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_tgValvesStop18ActionPerformed
 
     private void tgValvesStop18ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesStop18ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_tgValvesStop18ItemStateChanged
 
     private void tgValvesOpen18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgValvesOpen18ActionPerformed
@@ -3316,11 +3316,11 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_tgValvesOpen18ActionPerformed
 
     private void tgValvesOpen18ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesOpen18ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_tgValvesOpen18ItemStateChanged
 
     private void tgValvesClose17ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesClose17ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_tgValvesClose17ItemStateChanged
 
     private void tgValvesStop17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgValvesStop17ActionPerformed
@@ -3328,7 +3328,7 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_tgValvesStop17ActionPerformed
 
     private void tgValvesStop17ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesStop17ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_tgValvesStop17ItemStateChanged
 
     private void tgValvesOpen17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgValvesOpen17ActionPerformed
@@ -3336,11 +3336,11 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_tgValvesOpen17ActionPerformed
 
     private void tgValvesOpen17ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesOpen17ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_tgValvesOpen17ItemStateChanged
 
     private void tgValvesClose5ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesClose5ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_tgValvesClose5ItemStateChanged
 
     private void tgValvesStop5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgValvesStop5ActionPerformed
@@ -3348,7 +3348,7 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_tgValvesStop5ActionPerformed
 
     private void tgValvesStop5ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesStop5ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_tgValvesStop5ItemStateChanged
 
     private void tgValvesOpen5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgValvesOpen5ActionPerformed
@@ -3356,11 +3356,11 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_tgValvesOpen5ActionPerformed
 
     private void tgValvesOpen5ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesOpen5ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_tgValvesOpen5ItemStateChanged
 
     private void tgValvesClose6ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesClose6ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_tgValvesClose6ItemStateChanged
 
     private void tgValvesStop6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgValvesStop6ActionPerformed
@@ -3368,7 +3368,7 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_tgValvesStop6ActionPerformed
 
     private void tgValvesStop6ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesStop6ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_tgValvesStop6ItemStateChanged
 
     private void tgValvesOpen6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgValvesOpen6ActionPerformed
@@ -3376,11 +3376,11 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_tgValvesOpen6ActionPerformed
 
     private void tgValvesOpen6ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesOpen6ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_tgValvesOpen6ItemStateChanged
 
     private void tgValvesClose3ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesClose3ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_tgValvesClose3ItemStateChanged
 
     private void tgValvesStop3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgValvesStop3ActionPerformed
@@ -3388,7 +3388,7 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_tgValvesStop3ActionPerformed
 
     private void tgValvesStop3ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesStop3ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_tgValvesStop3ItemStateChanged
 
     private void tgValvesOpen3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgValvesOpen3ActionPerformed
@@ -3396,11 +3396,11 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_tgValvesOpen3ActionPerformed
 
     private void tgValvesOpen3ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesOpen3ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_tgValvesOpen3ItemStateChanged
 
     private void tgValvesClose14ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesClose14ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_tgValvesClose14ItemStateChanged
 
     private void tgValvesStop14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgValvesStop14ActionPerformed
@@ -3408,7 +3408,7 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_tgValvesStop14ActionPerformed
 
     private void tgValvesStop14ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesStop14ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_tgValvesStop14ItemStateChanged
 
     private void tgValvesOpen14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgValvesOpen14ActionPerformed
@@ -3416,11 +3416,11 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_tgValvesOpen14ActionPerformed
 
     private void tgValvesOpen14ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesOpen14ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_tgValvesOpen14ItemStateChanged
 
     private void tgValvesClose12ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesClose12ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_tgValvesClose12ItemStateChanged
 
     private void tgValvesStop12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgValvesStop12ActionPerformed
@@ -3428,7 +3428,7 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_tgValvesStop12ActionPerformed
 
     private void tgValvesStop12ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesStop12ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_tgValvesStop12ItemStateChanged
 
     private void tgValvesOpen12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgValvesOpen12ActionPerformed
@@ -3436,7 +3436,7 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_tgValvesOpen12ActionPerformed
 
     private void tgValvesOpen12ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesOpen12ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_tgValvesOpen12ItemStateChanged
 
     private void tgValvesCloseItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesCloseItemStateChanged

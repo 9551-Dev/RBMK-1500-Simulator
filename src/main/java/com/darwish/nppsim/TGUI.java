@@ -2325,7 +2325,7 @@ public class TGUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_tgValvesOpenItemStateChanged
 
     private void tgValvesOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgValvesOpenActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_tgValvesOpenActionPerformed
 
     private void tgValvesStopItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesStopItemStateChanged
@@ -2339,7 +2339,7 @@ public class TGUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_tgValvesStopItemStateChanged
 
     private void tgValvesStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgValvesStopActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_tgValvesStopActionPerformed
 
     private void tgValvesCloseItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesCloseItemStateChanged
@@ -2391,7 +2391,7 @@ public class TGUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_tgValvesOpen1ItemStateChanged
 
     private void tgValvesOpen1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgValvesOpen1ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_tgValvesOpen1ActionPerformed
 
     private void tgValvesStop1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesStop1ItemStateChanged
@@ -2405,7 +2405,7 @@ public class TGUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_tgValvesStop1ItemStateChanged
 
     private void tgValvesStop1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgValvesStop1ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_tgValvesStop1ActionPerformed
 
     private void tgValvesClose1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesClose1ItemStateChanged
@@ -2475,39 +2475,39 @@ public class TGUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void tg1TripActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tg1TripActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_tg1TripActionPerformed
 
     private void tg2TripActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tg2TripActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_tg2TripActionPerformed
 
     private void tg2RevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tg2RevActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_tg2RevActionPerformed
 
     private void tg1SpeedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tg1SpeedActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_tg1SpeedActionPerformed
 
     private void tg2SpeedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tg2SpeedActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_tg2SpeedActionPerformed
 
     private void jTextField11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField11ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jTextField11ActionPerformed
 
     private void jTextField14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField14ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jTextField14ActionPerformed
 
     private void noVacuum1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noVacuum1ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_noVacuum1ActionPerformed
 
     private void lowVacuum1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lowVacuum1ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_lowVacuum1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
@@ -2527,7 +2527,7 @@ public class TGUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void sdvcOpen1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_sdvcOpen1ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_sdvcOpen1ItemStateChanged
 
     private void sdvcOpen1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sdvcOpen1ActionPerformed
@@ -2538,7 +2538,7 @@ public class TGUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_sdvcOpen1ActionPerformed
 
     private void sdvcClose1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_sdvcClose1ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_sdvcClose1ItemStateChanged
 
     private void sdvcClose1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sdvcClose1ActionPerformed
@@ -2549,7 +2549,7 @@ public class TGUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_sdvcClose1ActionPerformed
 
     private void sdvcStop1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_sdvcStop1ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_sdvcStop1ItemStateChanged
 
     private void sdvcStop1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sdvcStop1ActionPerformed
@@ -2560,7 +2560,7 @@ public class TGUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_sdvcStop1ActionPerformed
 
     private void sdvcOpen2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_sdvcOpen2ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_sdvcOpen2ItemStateChanged
 
     private void sdvcOpen2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sdvcOpen2ActionPerformed
@@ -2571,7 +2571,7 @@ public class TGUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_sdvcOpen2ActionPerformed
 
     private void sdvcClose2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_sdvcClose2ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_sdvcClose2ItemStateChanged
 
     private void sdvcClose2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sdvcClose2ActionPerformed
@@ -2582,7 +2582,7 @@ public class TGUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_sdvcClose2ActionPerformed
 
     private void sdvcStop2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_sdvcStop2ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_sdvcStop2ItemStateChanged
 
     private void sdvcStop2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sdvcStop2ActionPerformed
@@ -2593,7 +2593,7 @@ public class TGUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_sdvcStop2ActionPerformed
 
     private void autoSteamPressure1OnItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_autoSteamPressure1OnItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_autoSteamPressure1OnItemStateChanged
 
     private void autoSteamPressure1OnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autoSteamPressure1OnActionPerformed
@@ -2604,7 +2604,7 @@ public class TGUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_autoSteamPressure1OnActionPerformed
 
     private void autoSteamPressure1OffItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_autoSteamPressure1OffItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_autoSteamPressure1OffItemStateChanged
 
     private void autoSteamPressure1OffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autoSteamPressure1OffActionPerformed
@@ -2629,7 +2629,7 @@ public class TGUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_precisionIncrement2ActionPerformed
 
     private void autoSteamPressure1On1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_autoSteamPressure1On1ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_autoSteamPressure1On1ItemStateChanged
 
     private void autoSteamPressure1On1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autoSteamPressure1On1ActionPerformed
@@ -2640,7 +2640,7 @@ public class TGUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_autoSteamPressure1On1ActionPerformed
 
     private void autoSteamPressure1Off1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_autoSteamPressure1Off1ItemStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_autoSteamPressure1Off1ItemStateChanged
 
     private void autoSteamPressure1Off1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autoSteamPressure1Off1ActionPerformed
