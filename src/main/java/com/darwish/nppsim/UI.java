@@ -8,20 +8,16 @@ import static com.darwish.nppsim.NPPSim.sdv_a;
 import static com.darwish.nppsim.NPPSim.tg1;
 import static com.darwish.nppsim.NPPSim.tg2;
 import java.awt.Color;
-import java.io.Serializable;
 import java.util.ArrayList;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.plaf.metal.MetalLookAndFeel; 
 import org.netbeans.swing.laf.dark.*;
 
 import static com.darwish.nppsim.NPPSim.mcc;
 import javax.swing.JFrame;
-import javax.swing.JSpinner;
-import javax.swing.event.ChangeEvent;
 import javax.swing.plaf.metal.MetalToggleButtonUI;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
-public class UI extends javax.swing.JFrame implements Serializable {
+public class UI extends javax.swing.JFrame {
     static Color BACKGROUND = new Color(170, 130, 40);
     static ArrayList<ControlRodChannel> selectedControlRods;
     static ArrayList<UIUpdateable> elementsToUpdate;
@@ -35,7 +31,7 @@ public class UI extends javax.swing.JFrame implements Serializable {
         hush = true;
         try {
             javax.swing.UIManager.setLookAndFeel(new DarkMetalLookAndFeel());
-            //UI.BACKGROUND = new Color(115, 53, 0); 
+            //UI.BACKGROUND = new Color(115, 53, 0);
             //javax.swing.UIManager.setLookAndFeel(new MetalLookAndFeel());
         } catch (UnsupportedLookAndFeelException e) {
             e.printStackTrace();
@@ -321,27 +317,36 @@ public class UI extends javax.swing.JFrame implements Serializable {
         uiThreads.get(uiThreads.size() - 1).start();
     }
 
-    public static void createOrContinue(Class element, boolean fullscreen, boolean justInit) {
-        for (UIUpdateable i: elementsToUpdate) {
-            if (i.getClass() == element) {
-                i.setVisibility(true);
-                ((JFrame)i).toFront();
-                ((JFrame)i).requestFocus();
+    public static <T extends UIUpdateable> void createOrContinue(
+        Class<T> elementClass,
+        boolean fullscreen,
+        boolean justInit) {
+
+        for (UIUpdateable element : elementsToUpdate) {
+            if (element.getClass() == elementClass) {
+                element.setVisibility(true);
+                ((JFrame)element).toFront();
+                ((JFrame)element).requestFocus();
                 return;
             }
         }
+
         try {
-            Object newElement = element.getDeclaredConstructor().newInstance();
+            T newElement = elementClass.getDeclaredConstructor().newInstance();
             if (fullscreen) {
-                ((javax.swing.JFrame)newElement).setSize(1366, 768); //2000,2000
+                ((JFrame)newElement).setSize(1366, 768);
             }
             if (!justInit) {
-                ((UIUpdateable)newElement).setVisibility(true);
+                newElement.setVisibility(true);
             }
-            elementsToUpdate.add((UIUpdateable)newElement);
+            elementsToUpdate.add(newElement);
         } catch (Exception e) {
             e.printStackTrace();
-            new ErrorWindow("Error loading UI element class" , ExceptionUtils.getStackTrace(e), false).setVisible(true);
+            new ErrorWindow(
+                "Error loading UI element class",
+                ExceptionUtils.getStackTrace(e),
+                false
+            ).setVisible(true);
         }
     }
 
@@ -358,12 +363,12 @@ public class UI extends javax.swing.JFrame implements Serializable {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
-        buttonGroup2 = new javax.swing.ButtonGroup();
+        //buttonGroup1 = new javax.swing.ButtonGroup();
+        //buttonGroup2 = new javax.swing.ButtonGroup();
         buttonGroup3 = new javax.swing.ButtonGroup();
         buttonGroup4 = new javax.swing.ButtonGroup();
-        buttonGroup5 = new javax.swing.ButtonGroup();
-        buttonGroup6 = new javax.swing.ButtonGroup();
+        //buttonGroup5 = new javax.swing.ButtonGroup();
+        //buttonGroup6 = new javax.swing.ButtonGroup();
         buttonGroup7 = new javax.swing.ButtonGroup();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel3 = new javax.swing.JPanel();
@@ -2058,12 +2063,12 @@ public class UI extends javax.swing.JFrame implements Serializable {
     private javax.swing.JTextField busy1AR;
     private javax.swing.JTextField busy2AR;
     private javax.swing.JTextField busyLAC;
-    private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.ButtonGroup buttonGroup2;
+    //private javax.swing.ButtonGroup buttonGroup1;
+    //private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
     private javax.swing.ButtonGroup buttonGroup4;
-    private javax.swing.ButtonGroup buttonGroup5;
-    private javax.swing.ButtonGroup buttonGroup6;
+    //private javax.swing.ButtonGroup buttonGroup5;
+    //private javax.swing.ButtonGroup buttonGroup6;
     private javax.swing.ButtonGroup buttonGroup7;
     private eu.hansolo.steelseries.gauges.Linear deltaKeff;
     private eu.hansolo.steelseries.gauges.DisplaySingle drumTemp;

@@ -22,7 +22,7 @@ public class NPPSim {
     static ArrayList<SteamValve> msvLoop2;
     static ArrayList<SteamValve> TG1InletValves;
     static ArrayList<SteamValve> TG2InletValves;
-    static ArrayList<Pump> condensate1A; 
+    static ArrayList<Pump> condensate1A;
     static ArrayList<Pump> condensate2A;
     static ArrayList<Pump> condensate1B;
     static ArrayList<Pump> condensate2B;
@@ -43,7 +43,7 @@ public class NPPSim {
     static AutoControl autoControl;
     static PCS pcs;
     static ArrayList<Serializable> stateArray;
-    
+
     private static Thread updateThread, printThread;
     private static boolean simPaused = false, updating = false, run = true;
     public static boolean core1=false;
@@ -56,19 +56,19 @@ public class NPPSim {
     private static int deltaTimeStepLength = 0;
     private static long timeStepLengthCumulative; //IT IS USED DONT BELIEVE THE IDE
 
-    
+
     /**
      * new simulation instance with default values
      */
     public NPPSim() {
         stateArray = new ArrayList<>();
-        sdv_c = new ArrayList<>(); 
+        sdv_c = new ArrayList<>();
         sdv_a = new ArrayList<>();
-        msvLoop1 = new ArrayList<>(); 
+        msvLoop1 = new ArrayList<>();
         msvLoop2 = new ArrayList<>();
-        TG1InletValves = new ArrayList<>(); 
-        TG2InletValves = new ArrayList<>(); 
-        condensate1A = new ArrayList<>(); 
+        TG1InletValves = new ArrayList<>();
+        TG2InletValves = new ArrayList<>();
+        condensate1A = new ArrayList<>();
         condensate2A = new ArrayList<>();
         condensate1B = new ArrayList<>();
         condensate2B = new ArrayList<>();
@@ -82,7 +82,7 @@ public class NPPSim {
 
         //parse the steam tables
         tables = Loader.tables;
-        
+
         //initialize all components
         atmosphere = new Atmosphere(15);
         core = new Core();
@@ -90,7 +90,7 @@ public class NPPSim {
 
         //initialize the steam piping as a shared header
         steamPiping = new OneWaySteamHeader(new Connectable[] {mcc.drum1, mcc.drum2});
-        
+
         //TG and Condenser Components
         tg1 = new TG(new Condenser());
         tg2 = new TG(new Condenser());
@@ -110,13 +110,13 @@ public class NPPSim {
         TG2InletValves.add(new SteamValve(3044.72, 20, steamPiping, tg2));
 
         //add the eight SDV-C valves, 4 per loop
-        for (int i = 0; i < 4; i++) {   
+        for (int i = 0; i < 4; i++) {
             sdv_c.add(new SteamValve(745.76, 8, steamPiping, tg1.condenser));
         }
-        for (int i = 0; i < 4; i++) {   
+        for (int i = 0; i < 4; i++) {
             sdv_c.add(new SteamValve(745.76, 8, steamPiping, tg2.condenser));
         }
-        
+
         //SDV-A
         sdv_a.add(new SteamValve(471.03, 8, mcc.drum1, atmosphere));
         sdv_a.add(new SteamValve(471.03, 8, mcc.drum2, atmosphere));
@@ -132,7 +132,7 @@ public class NPPSim {
             msvLoop1.add(new SteamValve(455.48, 8, mcc.drum1, atmosphere)); //group 3
             msvLoop2.add(new SteamValve(455.48, 8, mcc.drum2, atmosphere));
         }
-  
+
         //initialize condensate pumps and dearators  TODO this is greatly simplified needs reworking
         condensateHeader = new SimplifiedCondensateHeader();
         condensateHeader1 = new PressureHeader();
@@ -154,13 +154,13 @@ public class NPPSim {
         condensateHeader.setSources(new Pump[] {condensate1B.get(0), condensate1B.get(1), condensate1B.get(2), condensate2B.get(0), condensate2B.get(1), condensate2B.get(2)});
         for (int i = 0; i < 4; i++) {
             dearators.add(new Dearator());
-            dearatorValves.add(new WaterValve(1667.52, 12, condensateHeader, dearators.get(i))); //1206.3 
+            dearatorValves.add(new WaterValve(1667.52, 12, condensateHeader, dearators.get(i))); //1206.3
         }
-        
+
         //initialize feedwater pumps and piping/valves
         feedwaterMixer1 = new WaterMixer(mcc.sHeader1, 2);
         feedwaterMixer2 = new WaterMixer(mcc.sHeader2, 2);
-        
+
         //auxiliaryFWSuctionHeader = new SimpleSuctionHeader(new Connectable[] {dearators.get(0), dearators.get(1), dearators.get(2), dearators.get(3)});
         fwSuctionHeader = new SimpleSuctionHeader(new Connectable[] {dearators.get(0), dearators.get(1), dearators.get(2), dearators.get(3)}, 1);
         fwSuctionHeader.isolationValveArray.get(0).setPosition(1.0f); //open valve for the first dearator
@@ -171,7 +171,7 @@ public class NPPSim {
         }
         for (int i = 0; i < 6; i++) {
             auxFeedwaterPumps.add(new Pump(2970, 0.069f, 8.6, 0.08825985, 30, 40, 133, fwSuctionHeader, auxiliaryFWPressureHeader)); //9.1
-        } 
+        }
         mainFWPressureHeader.setSources(new Pump[] {mainFeedwaterPumps.get(0), mainFeedwaterPumps.get(1), mainFeedwaterPumps.get(2), mainFeedwaterPumps.get(3), mainFeedwaterPumps.get(4), mainFeedwaterPumps.get(5), mainFeedwaterPumps.get(6)});
         auxiliaryFWPressureHeader.setSources(new Pump[] {auxFeedwaterPumps.get(0), auxFeedwaterPumps.get(1), auxFeedwaterPumps.get(2), auxFeedwaterPumps.get(3), auxFeedwaterPumps.get(4), auxFeedwaterPumps.get(5)});
         for (int i = 0; i < 3; i++) {
@@ -182,10 +182,10 @@ public class NPPSim {
         }
         auxFeederValves.add(new WaterValve(197.44, 40, auxiliaryFWPressureHeader, feedwaterMixer1));
         auxFeederValves.add(new WaterValve(197.44, 40, auxiliaryFWPressureHeader, feedwaterMixer2));
-        
+
         //PCS
         pcs = new PCS();
-        
+
         //initialize the automatic control system
         autoControl = new AutoControl();
 
@@ -216,7 +216,7 @@ public class NPPSim {
 //        dearators.forEach(dearator -> {
 //            dearator.setWaterTemp(190);
 //        });
-        
+
 
         //initialize UI
         simPaused = false;
@@ -227,21 +227,21 @@ public class NPPSim {
         updateTimer();
         printTimer();
     }
-    
+
     /**
      * This creates a new simulation instance from a saved state
      * @param state the saved instance
      */
     public NPPSim(List<Serializable> state) {
-        
+
         stateArray = (ArrayList<Serializable>)state;
-        sdv_c = new ArrayList<>(); 
+        sdv_c = new ArrayList<>();
         sdv_a = new ArrayList<>();
-        msvLoop1 = new ArrayList<>(); 
+        msvLoop1 = new ArrayList<>();
         msvLoop2 = new ArrayList<>();
-        TG1InletValves = new ArrayList<>(); 
-        TG2InletValves = new ArrayList<>(); 
-        condensate1A = new ArrayList<>(); 
+        TG1InletValves = new ArrayList<>();
+        TG2InletValves = new ArrayList<>();
+        condensate1A = new ArrayList<>();
         condensate2A = new ArrayList<>();
         condensate1B = new ArrayList<>();
         condensate2B = new ArrayList<>();
@@ -252,9 +252,9 @@ public class NPPSim {
         auxFeederValves = new ArrayList<>();
         dearators = new ArrayList<>();
         ejectors = new ArrayList<>();
-        
+
         tables = Loader.tables;
-        
+
         atmosphere = (Atmosphere)state.get(0);
         core = (Core)state.get(1);
         mcc = (MCC)state.get(2);
@@ -354,7 +354,7 @@ public class NPPSim {
                     }
                     updating = true;
                     long start = System.nanoTime();
-                    //all simulation components's update methods go here. 
+                    //all simulation components's update methods go here.
                     //RULE OF THUMB: objects from "Components" file should be updated before their sources/drains if possible
                     sdv_c.forEach(valve -> {
                         valve.update();
@@ -368,7 +368,7 @@ public class NPPSim {
                     msvLoop2.forEach(valve -> {
                         valve.update();
                     });
-                    
+
                     TG1InletValves.forEach(valve -> {
                         valve.update();
                     });
@@ -388,31 +388,31 @@ public class NPPSim {
                     });
                     tg1.condenser.update();
                     tg2.condenser.update();
-                    
+
                     dearatorValves.forEach(valve -> {
                         valve.update();
                     });
 
                     condensateHeader.update();
-                    
+
                     condensate1B.forEach(pump -> {
                         pump.update();
                     });
                     condensate2B.forEach(pump -> {
                         pump.update();
                     });
-                    
+
                     condensateHeader1.update();
                     condensateHeader2.update();
                     //System.out.println(condensateHeader.pressure + " " + condensateHeader1.pressure);
-                    
+
                     condensate1A.forEach(pump -> {
                         pump.update();
                     });
                     condensate2A.forEach(pump -> {
                         pump.update();
                     });
-                    
+
                     feedwaterMixer1.update();
                     feedwaterMixer2.update();
                     mainFeederValves.forEach(valve -> {
@@ -429,19 +429,19 @@ public class NPPSim {
                     auxFeedwaterPumps.forEach(pump -> {
                         pump.update();
                     });
-                    
+
                     fwSuctionHeader.update();
-                    
+
                     dearators.forEach(dearator -> {
                         dearator.update();
                     });
-                    
+
                     pcs.update();
                     NPPSim.core1 = true; //this value is read by the MTK so it won't update while the core is updating
                     core.update();
                     NPPSim.core1 = false;
                     mcc.update();
-                    
+
                     autoControl.update();
                     //end of components to update
                     updateCount++;
@@ -500,7 +500,7 @@ public class NPPSim {
         });
         printThread.start();
     }
-    
+
     public static void endSimulation() {
         try {
             for (int i = 0; i < UI.uiThreads.size(); i++) {
@@ -517,19 +517,19 @@ public class NPPSim {
             //void
         }
     }
-    
+
     public static void setPaused(boolean paused) {
         simPaused = paused;
     }
-    
+
     public static boolean isPaused() {
         return simPaused;
     }
-    
+
     public static boolean isRunning() {
         return run;
     }
-    
+
     public ArrayList<Serializable> getState() {
         return stateArray;
     }
@@ -554,18 +554,22 @@ public class NPPSim {
             setPaused(wasPaused);
         }
     }
-    
+
     public static void load(File file) {
         Loader.loader.setLoading(false);
         try (
-         FileInputStream fin = new FileInputStream(file);
-         ObjectInputStream ois = new ObjectInputStream(fin);          
+            FileInputStream fin = new FileInputStream(file);
+            ObjectInputStream ois = new ObjectInputStream(fin);
         ) {
-            List<Serializable> read = (List<Serializable>) ois.readObject();
-            ois.close();
-            fin.close();
-            endSimulation();
-            Loader.simulation = new NPPSim(read);
+            Object data_object = ois.readObject();
+            if (data_object instanceof List<?>) {
+                @SuppressWarnings("unchecked")
+                List<Serializable> read = (List<Serializable>) data_object;
+                ois.close();
+                fin.close();
+                endSimulation();
+                Loader.simulation = new NPPSim(read);
+            }
         } catch (Exception e) {
             new ErrorWindow("Error Loading IC", ExceptionUtils.getStackTrace(e), true).setVisible(true);
         }

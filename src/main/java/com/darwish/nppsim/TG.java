@@ -8,13 +8,13 @@ import static com.darwish.nppsim.NPPSim.core;
 import static com.darwish.nppsim.NPPSim.mcc;
 import static com.darwish.nppsim.NPPSim.tg1;
 import static com.darwish.nppsim.NPPSim.tg2;
-import java.io.Serializable;
 
 class TG extends WaterSteamComponent implements Connectable {
     final Condenser condenser;
     private double lastStepSteamInflow = 0.0;
-    private double casingTemp, turbineTemp, load;
-    private double steamInletPressure = 0.0, steamOutLetPressure = 0.0;
+    //private double casingTemp, turbineTemp, load;
+    private double load;
+    //private double steamInletPressure = 0.0, steamOutLetPressure = 0.0;
     private double steamInflowTemperature = 20.0, steamOutflowTemperature = 20.0;
     private float rpm = 0.0f;
     private boolean synced = false, tripped = true, reversePower = false;
@@ -34,7 +34,7 @@ class TG extends WaterSteamComponent implements Connectable {
         gridPhase += 900.0f;
         gridPhase %= 360.0f;
     }
-    
+
     protected void sync() {
         if (synced) {
             return;
@@ -48,11 +48,11 @@ class TG extends WaterSteamComponent implements Connectable {
             }
         }
     }
-    
+
     protected void deSync() {
         synced = false;
     }
-    
+
     protected void trip(String reason) {
         if (tripped) {
             return;
@@ -80,7 +80,7 @@ class TG extends WaterSteamComponent implements Connectable {
         }
         tripped = true;
     }
-    
+
     protected void reset() {
         if (rpm < 3250 && condenser.getPressure() < 0.030 && mcc.drum1.getPressure() > 5 && mcc.drum2.getPressure() > 5) {
             tripped = false;
@@ -97,7 +97,7 @@ class TG extends WaterSteamComponent implements Connectable {
         genPhase %= 360.0f;
         genAlignment = (genPhase - gridPhase);
         genAlignment = genAlignment < 180 ? genAlignment + 180 : genAlignment - 180;
-        genAlignment = genAlignment / 360 * 100; 
+        genAlignment = genAlignment / 360 * 100;
 
         if (synced) {
             rpm = 3000;
@@ -109,7 +109,7 @@ class TG extends WaterSteamComponent implements Connectable {
             if (rpm < benchmark) {
                 rpm += (benchmark - rpm) / 1000;
             } else {
-                rpm += (benchmark - rpm) / 3000; 
+                rpm += (benchmark - rpm) / 3000;
             }
             if (rpm < 0) {
                 rpm = 0;
@@ -127,39 +127,39 @@ class TG extends WaterSteamComponent implements Connectable {
         if (load > 825) {
             trip("High Generator Load");
         }
-        
+
         reversePower = load < 0;
         if (reversePower) {
             reversePowerTrip();
         }
         lastStepSteamInflow = steamInflow;
-        steamOutflow = steamInflow; 
-        steamOutflowTemperature = steamInflowTemperature * 0.92; 
+        steamOutflow = steamInflow;
+        steamOutflowTemperature = steamInflowTemperature * 0.92;
         condenser.updateSteamInflow(steamOutflow, steamOutflowTemperature);
         resetFlows();
     }
 
     @Override
     public double getSteamDensity() {
-        
+
         throw new UnsupportedOperationException("Unimplemented method 'getSteamDensity'");
     }
 
     @Override
     public double getWaterDensity() {
-        
+
         throw new UnsupportedOperationException("Unimplemented method 'getWaterDensity'");
     }
 
     @Override
     public double getSteamMass() {
-        
+
         throw new UnsupportedOperationException("Unimplemented method 'getSteamMass'");
     }
 
     @Override
     public double getSteamVolume() {
-        
+
         throw new UnsupportedOperationException("Unimplemented method 'getSteamVolume'");
     }
 
@@ -167,10 +167,10 @@ class TG extends WaterSteamComponent implements Connectable {
     public double getSteamTemperature() {
         return steamInflowTemperature;
     }
-    
+
     @Override
     public void updateSteamOutflow(double flow, double tempC) {
-        
+
         throw new UnsupportedOperationException("Unimplemented method 'updateSteamOutFlow'");
     }
 
@@ -183,32 +183,32 @@ class TG extends WaterSteamComponent implements Connectable {
 
     @Override
     public void updateWaterOutflow(double flow, double tempC) {
-        
+
         throw new UnsupportedOperationException("Unimplemented method 'updateWaterOutFlow'");
     }
 
     @Override
     public void updateWaterInflow(double flow, double tempC) {
-        
+
         throw new UnsupportedOperationException("Unimplemented method 'updateWaterInFlow'");
     }
-    
+
     public float getRpm() {
         return rpm;
     }
-    
+
     public float getGenAligmnent() {
         return genAlignment;
     }
-    
+
     public boolean isTripped() {
         return tripped;
     }
-    
+
     public double getSteamInflow() {
         return lastStepSteamInflow;
     }
-    
+
     public double getGeneratorLoad() {
         return load;
     }
@@ -217,7 +217,7 @@ class TG extends WaterSteamComponent implements Connectable {
         rpm = 3000;
         synced = true;
     }
-    
+
     public boolean isReversePower() {
         return reversePower;
     }
@@ -243,7 +243,7 @@ class TG extends WaterSteamComponent implements Connectable {
             }
         }).start();
     }
-    
+
     public void setTG1() {
         isTG1 = true;
     }
@@ -254,7 +254,7 @@ class TG extends WaterSteamComponent implements Connectable {
     }
 }
 
-class Condenser extends WaterSteamSubComponent implements Connectable, UIReadable, Serializable {
+class Condenser extends WaterSteamSubComponent implements Connectable, UIReadable {
     protected final Pump condenserPump;
     private final double volume;
     private double feedwaterOutflow = 0.0, feedwaterOutflowRate = 0.0; // kg kg/s
@@ -262,14 +262,14 @@ class Condenser extends WaterSteamSubComponent implements Connectable, UIReadabl
     private double specificDensityFeedwater = Loader.tables.getWaterDensityByTemp(feedwaterTemperature);
 
     private final double volumeWaterSide = 116;
-    private double waterMass = 0.0; 
+    private double waterMass = 0.0;
     private double steamMass = 0.0; //initialSteamMass = mass equivalent of non-steam gasses
     double initialSteamMass;
 
     // calculated results from the update thread stored here for use in other functions:
     private double steamVolume;
     private double deltaEnergy = 0.0, deltaSteamEnergy = 0.0;
-    private double condensationRate = 0.0; //per tick, multiply by 20 for rate/s 
+    private double condensationRate = 0.0; //per tick, multiply by 20 for rate/s
     private double steamInflowTemperature = 20.0; // c
     private double steamDensity;
 
@@ -316,9 +316,9 @@ class Condenser extends WaterSteamSubComponent implements Connectable, UIReadabl
 
         initialSteamMass += (steamInflow / 60 * 0.06 + (0.10142 - pressure)) / 20; //non-steam gasses from feedwater and leakage into the condenser
         feedwaterMass -= feedwaterOutflow;
-        
+
         double condensedSteamEnergy = Loader.tables.getSteamEnthalpyByTemperature(steamTemperature) * steamMass;
-        steamTemperature = waterTemperature * (1 + steamTemperature / waterTemperature / 30 * (1 - waterTemperature / steamTemperature) * 1.084337735) ; 
+        steamTemperature = waterTemperature * (1 + steamTemperature / waterTemperature / 30 * (1 - waterTemperature / steamTemperature) * 1.084337735) ;
         condensedSteamEnergy -= Loader.tables.getSteamEnthalpyByTemperature(steamTemperature) * steamMass;
 
         double steamEnergy = 0 - deltaSteamEnergy / 3;
@@ -343,7 +343,7 @@ class Condenser extends WaterSteamSubComponent implements Connectable, UIReadabl
         double[] feedwaterInflowData = NPPMath.mixWater(feedwaterMass, feedwaterTemperature, condensedWaterMass , steamTemperature);
         feedwaterMass = feedwaterInflowData[0];
         feedwaterTemperature = feedwaterInflowData[1];
-        condensationRate = oldFeedwaterMass < feedwaterMass ? feedwaterMass - oldFeedwaterMass : 0; 
+        condensationRate = oldFeedwaterMass < feedwaterMass ? feedwaterMass - oldFeedwaterMass : 0;
 
         double energy = 0 - deltaEnergy / 3;
         deltaEnergy -= deltaEnergy / 3;
@@ -361,7 +361,7 @@ class Condenser extends WaterSteamSubComponent implements Connectable, UIReadabl
             }
             deltaEnergy += deltaSteamMass * Loader.tables.getSpecificVaporEnthalpyByTemperature(feedwaterTemperature);
             feedwaterMass -= deltaSteamMass;
-            steamMass += deltaSteamMass; 
+            steamMass += deltaSteamMass;
         }
 
         waterOutflow = waterMass * Loader.tables.getWaterDensityByTemp(waterTemperature) - volumeWaterSide;
@@ -383,8 +383,8 @@ class Condenser extends WaterSteamSubComponent implements Connectable, UIReadabl
     public double getSteamDensity() {
         return steamDensity;
     }
-    
-    @Override 
+
+    @Override
     public double getWaterTemperature() {
         return feedwaterTemperature;
     }
@@ -423,7 +423,7 @@ class Condenser extends WaterSteamSubComponent implements Connectable, UIReadabl
 
     @Override
     public void updateWaterInflow(double flow, double tempC) {
-        
+
         throw new UnsupportedOperationException("Unimplemented method 'getWaterInflowRate'");
     }
 
@@ -431,11 +431,11 @@ class Condenser extends WaterSteamSubComponent implements Connectable, UIReadabl
     public double getWaterOutflowRate() {
         return feedwaterOutflowRate * 20;
     }
-    
+
     public double getCondenserWaterTemperature() {
         return waterTemperature;
     }
-    
+
     public double getCondensationRate() {
         return condensationRate * 20;
     }

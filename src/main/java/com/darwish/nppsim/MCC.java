@@ -53,7 +53,7 @@ public class MCC extends Component {
         }
     }
 
-    protected class SeparatorDrum extends WaterSteamSubComponent implements Connectable, UIReadable, Serializable {
+    protected class SeparatorDrum extends WaterSteamSubComponent implements Connectable, UIReadable {
         private final double volume = 397.1;// drum + downcomers //682.35;
         private final double nominalWaterVolume;
         private double initialSteamMass; // this would be air in reality
@@ -283,7 +283,7 @@ public class MCC extends Component {
     }
 }
 
-    protected class MCPPressureHeader extends WaterSteamSubComponent implements Connectable, UIReadable, Serializable {
+    protected class MCPPressureHeader extends WaterSteamSubComponent implements Connectable, UIReadable {
         final List<FuelChannel> drains;
         private final double volume = 121.5;
         private double waterMass, waterVolume;
@@ -303,7 +303,7 @@ public class MCC extends Component {
             double[] waterInflowData = NPPMath.mixWater(waterMass, waterTemperature, waterInflow, waterInflowTemperature);
             waterTemperature = waterInflowData[1];
             waterMass = waterInflowData[0];
-            //waterTemperature -= (0.5 * waterTemperature - 10) * 0.0000004; 
+            //waterTemperature -= (0.5 * waterTemperature - 10) * 0.0000004;
             specificDensityWater = Loader.tables.getWaterDensityByTemp(waterTemperature);
             waterVolume = specificDensityWater * waterMass;
             waterOutflow = (waterVolume - volume) / specificDensityWater;
