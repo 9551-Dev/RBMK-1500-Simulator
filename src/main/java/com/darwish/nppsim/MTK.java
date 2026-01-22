@@ -7,17 +7,18 @@ import javax.swing.JTextField;
 public class MTK extends javax.swing.JPanel {
     static Color CPSONCOLOR = Color.GREEN.brighter();
     static Color CPSOFFCOLOR = Color.GREEN.darker().darker();
-    static Color CHANNELOFFCOLOR; 
+    static Color CHANNELOFFCOLOR;
     private short rowNumber = 0;
-    private int[] fuelCPSCount = {0, 0};
+    private int[] fuelCPSCount = { 0, 0 };
     private HashMap<Channel, JTextField> channelMtkBinding;
     private boolean positive = true;
     private float threshold = 0.15f;
-    
+
     public MTK() {
         initComponents();
         this.setVisible(true);
-        if (NPPSim.core == null) { //return when the IDE tries to create this object as the mcc will not be initialized 
+        if (NPPSim.core == null) { // return when the IDE tries to create this object as the mcc will not be
+                                   // initialized
             return;
         }
         CHANNELOFFCOLOR = new FuelChannel().uiData.UIBackgroundColor;
@@ -32,19 +33,19 @@ public class MTK extends javax.swing.JPanel {
                 fuelCPSCount[1]++;
             }
         });
-        
+
     }
 
     public void update() {
         try {
-            while(NPPSim.core1) {
+            while (NPPSim.core1) {
                 Thread.sleep(5);
                 System.out.println("mtk is asleep for 5 ms");
             }
         } catch (InterruptedException e) {
-            
+
         }
-        Double[] medianFuelAndCPSFlux = new Double[] {0.0, 0.0};
+        Double[] medianFuelAndCPSFlux = new Double[] { 0.0, 0.0 };
         channelMtkBinding.forEach((channel, light) -> {
             if (channel instanceof FuelChannel) {
                 medianFuelAndCPSFlux[0] += channel.getNeutronPopulation()[0];
@@ -57,37 +58,37 @@ public class MTK extends javax.swing.JPanel {
         channelMtkBinding.forEach((channel, light) -> {
             if (positive) {
                 if (channel instanceof FuelChannel) {
-                   if (channel.getNeutronPopulation()[0] > medianFuelAndCPSFlux[0] * (1 + threshold)) {
-                       light.setBackground(((FuelChannel) channel).uiData.UISelectedColor.brighter().brighter());
-                   } else {
-                       light.setBackground(CHANNELOFFCOLOR);
-                   }
+                    if (channel.getNeutronPopulation()[0] > medianFuelAndCPSFlux[0] * (1 + threshold)) {
+                        light.setBackground(((FuelChannel) channel).uiData.UISelectedColor.brighter().brighter());
+                    } else {
+                        light.setBackground(CHANNELOFFCOLOR);
+                    }
                 } else if (channel instanceof CPSChannel) {
                     if (channel.getNeutronPopulation()[0] > medianFuelAndCPSFlux[1] * (1 + threshold)) {
-                       light.setBackground(CPSONCOLOR);
-                   } else {
-                       light.setBackground(CPSOFFCOLOR);
-                   }
+                        light.setBackground(CPSONCOLOR);
+                    } else {
+                        light.setBackground(CPSOFFCOLOR);
+                    }
                 }
             } else {
                 if (channel instanceof FuelChannel) {
-                   if (channel.getNeutronPopulation()[0] < medianFuelAndCPSFlux[0] * (1 - threshold)) {
-                       light.setBackground(((FuelChannel) channel).uiData.UISelectedColor.brighter().brighter());
-                   } else {
-                       light.setBackground(CHANNELOFFCOLOR);
-                   }
+                    if (channel.getNeutronPopulation()[0] < medianFuelAndCPSFlux[0] * (1 - threshold)) {
+                        light.setBackground(((FuelChannel) channel).uiData.UISelectedColor.brighter().brighter());
+                    } else {
+                        light.setBackground(CHANNELOFFCOLOR);
+                    }
                 } else if (channel instanceof CPSChannel) {
                     if (channel.getNeutronPopulation()[0] < medianFuelAndCPSFlux[1] * (1 - threshold)) {
-                       light.setBackground(CPSONCOLOR);
-                   } else {
-                       light.setBackground(CPSOFFCOLOR);
-                   }
+                        light.setBackground(CPSONCOLOR);
+                    } else {
+                        light.setBackground(CPSOFFCOLOR);
+                    }
                 }
             }
         });
-        
+
     }
-    
+
     private javax.swing.JPanel createRow() {
         javax.swing.JPanel row = new javax.swing.JPanel();
         row.setBackground(UI.BACKGROUND.darker());
@@ -125,12 +126,12 @@ public class MTK extends javax.swing.JPanel {
         rowNumber++;
         return row;
     }
-    
+
     public void setThresHold(float threshold) {
         this.threshold = threshold;
         update();
     }
-    
+
     public void setSignPositive(boolean positive) {
         this.positive = positive;
         update();
@@ -141,13 +142,15 @@ public class MTK extends javax.swing.JPanel {
      * WARNING: Do NOT modify this code. The content of this method is always
      * regenerated by the Form Editor.
      */
-    
+
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         setBackground(UI.BACKGROUND.darker());
-        setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.darkGray, java.awt.Color.darkGray, java.awt.Color.darkGray, java.awt.Color.darkGray));
+        setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.darkGray,
+                java.awt.Color.darkGray, java.awt.Color.darkGray, java.awt.Color.darkGray));
         setMaximumSize(new java.awt.Dimension(500, 500));
         setMinimumSize(new java.awt.Dimension(20, 20));
         setPreferredSize(new java.awt.Dimension(100, 100));

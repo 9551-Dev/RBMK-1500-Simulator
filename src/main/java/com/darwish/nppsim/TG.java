@@ -12,9 +12,9 @@ import static com.darwish.nppsim.NPPSim.tg2;
 class TG extends WaterSteamComponent implements Connectable {
     final Condenser condenser;
     private double lastStepSteamInflow = 0.0;
-    //private double casingTemp, turbineTemp, load;
+    // private double casingTemp, turbineTemp, load;
     private double load;
-    //private double steamInletPressure = 0.0, steamOutLetPressure = 0.0;
+    // private double steamInletPressure = 0.0, steamOutLetPressure = 0.0;
     private double steamInflowTemperature = 20.0, steamOutflowTemperature = 20.0;
     private float rpm = 0.0f;
     private boolean synced = false, tripped = true, reversePower = false;
@@ -82,7 +82,8 @@ class TG extends WaterSteamComponent implements Connectable {
     }
 
     protected void reset() {
-        if (rpm < 3250 && condenser.getPressure() < 0.030 && mcc.drum1.getPressure() > 5 && mcc.drum2.getPressure() > 5) {
+        if (rpm < 3250 && condenser.getPressure() < 0.030 && mcc.drum1.getPressure() > 5
+                && mcc.drum2.getPressure() > 5) {
             tripped = false;
             if (isTG1) {
                 autoControl.recordEvent("TG-1 Reset");
@@ -223,7 +224,7 @@ class TG extends WaterSteamComponent implements Connectable {
     }
 
     private void reversePowerTrip() {
-        if(!reversePowerRecorded) {
+        if (!reversePowerRecorded) {
             if (isTG1) {
                 autoControl.recordEvent("TG-1 Reverse Power");
             } else {
@@ -250,7 +251,8 @@ class TG extends WaterSteamComponent implements Connectable {
 
     @Override
     public double getWaterMass() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from
+                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
 
@@ -258,18 +260,20 @@ class Condenser extends WaterSteamSubComponent implements Connectable, UIReadabl
     protected final Pump condenserPump;
     private final double volume;
     private double feedwaterOutflow = 0.0, feedwaterOutflowRate = 0.0; // kg kg/s
-    private double feedwaterMass = 366600, feedwaterTemperature = 20, feedwaterLevel, feedwaterVolume, nominalFeedwaterVolume;
+    private double feedwaterMass = 366600, feedwaterTemperature = 20, feedwaterLevel, feedwaterVolume,
+            nominalFeedwaterVolume;
     private double specificDensityFeedwater = Loader.tables.getWaterDensityByTemp(feedwaterTemperature);
 
     private final double volumeWaterSide = 116;
     private double waterMass = 0.0;
-    private double steamMass = 0.0; //initialSteamMass = mass equivalent of non-steam gasses
+    private double steamMass = 0.0; // initialSteamMass = mass equivalent of non-steam gasses
     double initialSteamMass;
 
-    // calculated results from the update thread stored here for use in other functions:
+    // calculated results from the update thread stored here for use in other
+    // functions:
     private double steamVolume;
     private double deltaEnergy = 0.0, deltaSteamEnergy = 0.0;
-    private double condensationRate = 0.0; //per tick, multiply by 20 for rate/s
+    private double condensationRate = 0.0; // per tick, multiply by 20 for rate/s
     private double steamInflowTemperature = 20.0; // c
     private double steamDensity;
 
@@ -290,7 +294,8 @@ class Condenser extends WaterSteamSubComponent implements Connectable, UIReadabl
         double condensedWaterMass = 0, deltaCondensedSteamMass, deltaSteamMass, potentialPressure;
         feedwaterTemperature -= (0.5 * feedwaterTemperature - 10) * 0.000005;
 
-        double[] waterInflowData = NPPMath.mixWater(waterMass, waterTemperature, condenserPump.flow * 25, condenserPump.source.getWaterTemperature());
+        double[] waterInflowData = NPPMath.mixWater(waterMass, waterTemperature, condenserPump.flow * 25,
+                condenserPump.source.getWaterTemperature());
         waterMass = waterInflowData[0];
         waterTemperature = waterInflowData[1];
 
@@ -303,58 +308,68 @@ class Condenser extends WaterSteamSubComponent implements Connectable, UIReadabl
         }
 
         if (pressure > 0.10142) {
-            steamMass -= (pressure - 0.10142) * 6000; //atmospheric valves opened;
+            steamMass -= (pressure - 0.10142) * 6000; // atmospheric valves opened;
         }
 
         if (steamMass <= 0) {
             steamMass = 0;
         }
 
-        Double steamInFlowData[] = NPPMath.mixSteam(steamMass, feedwaterTemperature, steamInflow, steamInflowTemperature);
+        Double steamInFlowData[] = NPPMath.mixSteam(steamMass, feedwaterTemperature, steamInflow,
+                steamInflowTemperature);
         steamMass = steamInFlowData[0];
         steamTemperature = steamInFlowData[1];
 
-        initialSteamMass += (steamInflow / 60 * 0.06 + (0.10142 - pressure)) / 20; //non-steam gasses from feedwater and leakage into the condenser
+        initialSteamMass += (steamInflow / 60 * 0.06 + (0.10142 - pressure)) / 20; // non-steam gasses from feedwater
+                                                                                   // and leakage into the condenser
         feedwaterMass -= feedwaterOutflow;
 
         double condensedSteamEnergy = Loader.tables.getSteamEnthalpyByTemperature(steamTemperature) * steamMass;
-        steamTemperature = waterTemperature * (1 + steamTemperature / waterTemperature / 30 * (1 - waterTemperature / steamTemperature) * 1.084337735) ;
+        steamTemperature = waterTemperature * (1
+                + steamTemperature / waterTemperature / 30 * (1 - waterTemperature / steamTemperature) * 1.084337735);
         condensedSteamEnergy -= Loader.tables.getSteamEnthalpyByTemperature(steamTemperature) * steamMass;
 
         double steamEnergy = 0 - deltaSteamEnergy / 3;
         deltaSteamEnergy -= deltaSteamEnergy / 3;
-        waterTemperature += ((condensedSteamEnergy + steamEnergy) / (NPPMath.calculateSpecificHeatWater(waterTemperature) * waterMass)); //test?
+        waterTemperature += ((condensedSteamEnergy + steamEnergy)
+                / (NPPMath.calculateSpecificHeatWater(waterTemperature) * waterMass)); // test?
 
         potentialPressure = Loader.tables.getSteamPressureByTemp(steamTemperature);
         specificDensityFeedwater = Loader.tables.getWaterDensityByTemp(feedwaterTemperature);
         feedwaterVolume = feedwaterMass * specificDensityFeedwater;
         steamVolume = volume - feedwaterVolume;
-        deltaCondensedSteamMass = steamVolume / Loader.tables.getSteamDensityByPressure(potentialPressure) - (steamMass + initialSteamMass);
+        deltaCondensedSteamMass = steamVolume / Loader.tables.getSteamDensityByPressure(potentialPressure)
+                - (steamMass + initialSteamMass);
         if (steamMass + deltaCondensedSteamMass < 0) {
             deltaCondensedSteamMass = 0 - steamMass;
         }
 
-        deltaSteamEnergy += deltaCondensedSteamMass * Loader.tables.getSpecificVaporEnthalpyByTemperature(steamTemperature);
+        deltaSteamEnergy += deltaCondensedSteamMass
+                * Loader.tables.getSpecificVaporEnthalpyByTemperature(steamTemperature);
         condensedWaterMass -= deltaCondensedSteamMass;
         steamMass += deltaCondensedSteamMass;
 
         double oldFeedwaterMass = feedwaterMass;
 
-        double[] feedwaterInflowData = NPPMath.mixWater(feedwaterMass, feedwaterTemperature, condensedWaterMass , steamTemperature);
+        double[] feedwaterInflowData = NPPMath.mixWater(feedwaterMass, feedwaterTemperature, condensedWaterMass,
+                steamTemperature);
         feedwaterMass = feedwaterInflowData[0];
         feedwaterTemperature = feedwaterInflowData[1];
         condensationRate = oldFeedwaterMass < feedwaterMass ? feedwaterMass - oldFeedwaterMass : 0;
 
         double energy = 0 - deltaEnergy / 3;
         deltaEnergy -= deltaEnergy / 3;
-        feedwaterTemperature += energy / (NPPMath.calculateSpecificHeatWater(feedwaterTemperature) * feedwaterMass); //boiling condensate
+        feedwaterTemperature += energy / (NPPMath.calculateSpecificHeatWater(feedwaterTemperature) * feedwaterMass); // boiling
+                                                                                                                     // condensate
 
         potentialPressure = Loader.tables.getSteamPressureByTemp(feedwaterTemperature);
-        if (potentialPressure > pressure) { //only let condensate boil if pressure < saturated but dont let steam condense if pressure > saturated
+        if (potentialPressure > pressure) { // only let condensate boil if pressure < saturated but dont let steam
+                                            // condense if pressure > saturated
             specificDensityFeedwater = Loader.tables.getWaterDensityByTemp(feedwaterTemperature);
             feedwaterVolume = feedwaterMass * specificDensityFeedwater;
             steamVolume = volume - feedwaterVolume;
-            deltaSteamMass = steamVolume / Loader.tables.getSteamDensityByPressure(potentialPressure) - (steamMass + initialSteamMass);
+            deltaSteamMass = steamVolume / Loader.tables.getSteamDensityByPressure(potentialPressure)
+                    - (steamMass + initialSteamMass);
 
             if (steamMass + deltaSteamMass < 0) {
                 deltaSteamMass = 0 - steamMass;
@@ -445,5 +460,3 @@ class Condenser extends WaterSteamSubComponent implements Connectable, UIReadabl
         return waterMass;
     }
 }
-
-

@@ -23,12 +23,12 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
         this.setTitle("Feedwater Control");
         annunciator = new Annunciator(annunciatorPanel);
 
-        ((JSpinner.DefaultEditor)mFWPSpinner.getEditor()).getTextField().setEditable(false);
-        ((JSpinner.DefaultEditor)auxFWPSpinner.getEditor()).getTextField().setEditable(false);
-        ((JSpinner.DefaultEditor)mFW1Spinner.getEditor()).getTextField().setEditable(false);
-        ((JSpinner.DefaultEditor)mFW2Spinner.getEditor()).getTextField().setEditable(false);
+        ((JSpinner.DefaultEditor) mFWPSpinner.getEditor()).getTextField().setEditable(false);
+        ((JSpinner.DefaultEditor) auxFWPSpinner.getEditor()).getTextField().setEditable(false);
+        ((JSpinner.DefaultEditor) mFW1Spinner.getEditor()).getTextField().setEditable(false);
+        ((JSpinner.DefaultEditor) mFW2Spinner.getEditor()).getTextField().setEditable(false);
         mFWPSpinner.addChangeListener((ChangeEvent e) -> {
-            Pump currentSelection = mainFeedwaterPumps.get((int)mFWPSpinner.getValue() - 1);
+            Pump currentSelection = mainFeedwaterPumps.get((int) mFWPSpinner.getValue() - 1);
             rpm1A.setLcdValue(currentSelection.getRPM());
             amps1A.setLcdValue(currentSelection.getPowerUsage());
             if (currentSelection.isActive()) {
@@ -38,7 +38,7 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
             }
         });
         auxFWPSpinner.addChangeListener((ChangeEvent e) -> {
-            Pump currentSelection = auxFeedwaterPumps.get((int)auxFWPSpinner.getValue() - 1);
+            Pump currentSelection = auxFeedwaterPumps.get((int) auxFWPSpinner.getValue() - 1);
             rpm2A.setLcdValue(currentSelection.getRPM());
             amps2A.setLcdValue(currentSelection.getPowerUsage());
             if (currentSelection.isActive()) {
@@ -48,7 +48,7 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
             }
         });
         mFW1Spinner.addChangeListener((ChangeEvent e) -> {
-            WaterValve currentSelection = mainFeederValves.get((int)mFW1Spinner.getValue() - 1);
+            WaterValve currentSelection = mainFeederValves.get((int) mFW1Spinner.getValue() - 1);
             switch (currentSelection.getState()) {
                 case 0:
                     mFW1Close.setSelected(true);
@@ -62,7 +62,7 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
             }
         });
         mFW2Spinner.addChangeListener((ChangeEvent e) -> {
-            WaterValve currentSelection = mainFeederValves.get((int)mFW2Spinner.getValue() + 2);
+            WaterValve currentSelection = mainFeederValves.get((int) mFW2Spinner.getValue() + 2);
             switch (currentSelection.getState()) {
                 case 0:
                     mFW2Close.setSelected(true);
@@ -77,14 +77,14 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
         });
         initializeDialUpdateThread();
 
-        //set variables
-        Pump currentSelection = mainFeedwaterPumps.get((int)mFWPSpinner.getValue() - 1);
+        // set variables
+        Pump currentSelection = mainFeedwaterPumps.get((int) mFWPSpinner.getValue() - 1);
         if (currentSelection.isActive()) {
             startMFWP.setSelected(true);
         } else {
             stopMWFP.setSelected(true);
         }
-        currentSelection = auxFeedwaterPumps.get((int)auxFWPSpinner.getValue() - 1);
+        currentSelection = auxFeedwaterPumps.get((int) auxFWPSpinner.getValue() - 1);
         if (currentSelection.isActive()) {
             startAuxFWP.setSelected(true);
         } else {
@@ -115,14 +115,13 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
         }
     }
 
-
     @Override
     public void update() {
         checkAlarms();
         if (this.isVisible()) {
             java.awt.EventQueue.invokeLater(() -> {
-                Pump selectedMain = mainFeedwaterPumps.get((int)mFWPSpinner.getValue() - 1);
-                Pump selectedAux = auxFeedwaterPumps.get((int)auxFWPSpinner.getValue() - 1);
+                Pump selectedMain = mainFeedwaterPumps.get((int) mFWPSpinner.getValue() - 1);
+                Pump selectedAux = auxFeedwaterPumps.get((int) auxFWPSpinner.getValue() - 1);
 
                 rpm1A.setLcdValue(selectedMain.getRPM());
                 flow1A.setLcdValue(selectedMain.getFlowRate());
@@ -146,48 +145,47 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
     @Override
     public void initializeDialUpdateThread() {
         UI.uiThreads.add(new Thread(() -> {
-                try {
-                    while (true) {
-                        annunciator.update();
-                        if (this.isVisible()) {
-                            java.awt.EventQueue.invokeLater(() -> {
-                                double[] mfwFlows = new double[] {0.0, 0.0};
-                                for (int i = 0; i < 3; i++) {
-                                    mfwFlows[0] += mainFeederValves.get(i).timestepFlow * 20;
-                                }
-                                for (int i = 3; i < 6; i++) {
-                                    mfwFlows[1] += mainFeederValves.get(i).timestepFlow * 20;
-                                }
-                                drumLevel1.setValue(mcc.drum1.getWaterLevel());
-                                drumLevel2.setValue(mcc.drum2.getWaterLevel());
-                                mainFWFlow1.setValue(mfwFlows[0]);
-                                mainFWFlow2.setValue(mfwFlows[1]);
-                                auxFWFlow1.setValue(auxFeederValves.get(0).timestepFlow * 20);
-                                auxFWFlow2.setValue(auxFeederValves.get(1).timestepFlow * 20);
-                                fwTemp1.setValue(feedwaterMixer1.getWaterTemperature());
-                                fwTemp2.setValue(feedwaterMixer2.getWaterTemperature());
+            try {
+                while (true) {
+                    annunciator.update();
+                    if (this.isVisible()) {
+                        java.awt.EventQueue.invokeLater(() -> {
+                            double[] mfwFlows = new double[] { 0.0, 0.0 };
+                            for (int i = 0; i < 3; i++) {
+                                mfwFlows[0] += mainFeederValves.get(i).timestepFlow * 20;
+                            }
+                            for (int i = 3; i < 6; i++) {
+                                mfwFlows[1] += mainFeederValves.get(i).timestepFlow * 20;
+                            }
+                            drumLevel1.setValue(mcc.drum1.getWaterLevel());
+                            drumLevel2.setValue(mcc.drum2.getWaterLevel());
+                            mainFWFlow1.setValue(mfwFlows[0]);
+                            mainFWFlow2.setValue(mfwFlows[1]);
+                            auxFWFlow1.setValue(auxFeederValves.get(0).timestepFlow * 20);
+                            auxFWFlow2.setValue(auxFeederValves.get(1).timestepFlow * 20);
+                            fwTemp1.setValue(feedwaterMixer1.getWaterTemperature());
+                            fwTemp2.setValue(feedwaterMixer2.getWaterTemperature());
 
-                                fwPos1.setValue(mainFeederValves.get(0).getPosition() * 100);
-                                fwPos2.setValue(mainFeederValves.get(1).getPosition() * 100);
-                                fwPos3.setValue(mainFeederValves.get(2).getPosition() * 100);
-                                fwPos4.setValue(mainFeederValves.get(3).getPosition() * 100);
-                                fwPos5.setValue(mainFeederValves.get(4).getPosition() * 100);
-                                fwPos6.setValue(mainFeederValves.get(5).getPosition() * 100);
-                                aFWPos1.setValue(auxFeederValves.get(0).getPosition() * 100);
-                                aFWPos2.setValue(auxFeederValves.get(1).getPosition() * 100);
-                            });
-                        }
-                        if (this.isFocused()) {
-                            Thread.sleep(UI.getUpdateRate());
-                        } else {
-                            Thread.sleep(200);
-                        }
+                            fwPos1.setValue(mainFeederValves.get(0).getPosition() * 100);
+                            fwPos2.setValue(mainFeederValves.get(1).getPosition() * 100);
+                            fwPos3.setValue(mainFeederValves.get(2).getPosition() * 100);
+                            fwPos4.setValue(mainFeederValves.get(3).getPosition() * 100);
+                            fwPos5.setValue(mainFeederValves.get(4).getPosition() * 100);
+                            fwPos6.setValue(mainFeederValves.get(5).getPosition() * 100);
+                            aFWPos1.setValue(auxFeederValves.get(0).getPosition() * 100);
+                            aFWPos2.setValue(auxFeederValves.get(1).getPosition() * 100);
+                        });
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    if (this.isFocused()) {
+                        Thread.sleep(UI.getUpdateRate());
+                    } else {
+                        Thread.sleep(200);
+                    }
                 }
-            })
-        );
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }));
         UI.uiThreads.get(UI.uiThreads.size() - 1).start();
     }
 
@@ -233,7 +231,7 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
             annunciator.reset(FWTemp);
         }
         boolean mainCavitation = false;
-        for (Pump pump: mainFeedwaterPumps) {
+        for (Pump pump : mainFeedwaterPumps) {
             if (pump.isCavitating) {
                 mainCavitation = true;
                 break;
@@ -241,7 +239,7 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
         }
         annunciator.setTrigger(mainCavitation, mainCavit);
         boolean auxCavitation = false;
-        for (Pump pump: auxFeedwaterPumps) {
+        for (Pump pump : auxFeedwaterPumps) {
             if (pump.isCavitating) {
                 auxCavitation = true;
                 break;
@@ -250,13 +248,14 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
         annunciator.setTrigger(auxCavitation, auxCavit);
     }
 
-     /**
+    /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
      * regenerated by the Form Editor.
      */
 
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
@@ -266,7 +265,7 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
         buttonGroup5 = new javax.swing.ButtonGroup();
         buttonGroup6 = new javax.swing.ButtonGroup();
         buttonGroup7 = new javax.swing.ButtonGroup();
-        //buttonGroup8 = new javax.swing.ButtonGroup();
+        // buttonGroup8 = new javax.swing.ButtonGroup();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel3 = new javax.swing.JPanel();
         auxFWFlow1 = new eu.hansolo.steelseries.gauges.Linear();
@@ -401,7 +400,8 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
         auxFWFlow1.setTrackSectionColor(new java.awt.Color(255, 0, 0));
         auxFWFlow1.setTrackStart(800.0);
         auxFWFlow1.setTrackStartColor(new java.awt.Color(255, 0, 0));
-        auxFWFlow1.setUnitString(org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "CondensateUI.totalFlow1.unitString")); // NOI18N
+        auxFWFlow1.setUnitString(
+                org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "CondensateUI.totalFlow1.unitString")); // NOI18N
         auxFWFlow1.setValueColor(eu.hansolo.steelseries.tools.ColorDef.YELLOW);
 
         jPanel8.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(222, 222, 222), 1, true));
@@ -446,59 +446,72 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
 
         rpm1A.setCustomLcdForeground(new java.awt.Color(204, 204, 255));
         rpm1A.setLcdColor(eu.hansolo.steelseries.tools.LcdColor.LIGHTBLUE_LCD);
-        rpm1A.setLcdUnitString(org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "CondensateUI.rpm1A.lcdUnitString")); // NOI18N
+        rpm1A.setLcdUnitString(
+                org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "CondensateUI.rpm1A.lcdUnitString")); // NOI18N
 
         amps1A.setCustomLcdForeground(new java.awt.Color(204, 204, 255));
         amps1A.setLcdColor(eu.hansolo.steelseries.tools.LcdColor.LIGHTBLUE_LCD);
-        amps1A.setLcdUnitString(org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "CondensateUI.amps1A.lcdUnitString")); // NOI18N
+        amps1A.setLcdUnitString(
+                org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "CondensateUI.amps1A.lcdUnitString")); // NOI18N
 
         flow1A.setCustomLcdForeground(new java.awt.Color(204, 204, 255));
         flow1A.setLcdColor(eu.hansolo.steelseries.tools.LcdColor.LIGHTBLUE_LCD);
-        flow1A.setLcdUnitString(org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "CondensateUI.flow1A.lcdUnitString")); // NOI18N
+        flow1A.setLcdUnitString(
+                org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "CondensateUI.flow1A.lcdUnitString")); // NOI18N
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(jLabel12)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(mFWPSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(startMFWP)
-                            .addComponent(stopMWFP))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(amps1A, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(rpm1A, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(flow1A, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(0, 12, Short.MAX_VALUE))
-        );
+                jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel9Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel9Layout.createSequentialGroup()
+                                                .addComponent(jLabel12)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(mFWPSpinner, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(jPanel9Layout.createSequentialGroup()
+                                                .addGroup(jPanel9Layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(startMFWP)
+                                                        .addComponent(stopMWFP))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addGroup(jPanel9Layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addComponent(amps1A, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(rpm1A, javax.swing.GroupLayout.PREFERRED_SIZE, 94,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(flow1A, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                94, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(0, 12, Short.MAX_VALUE)));
         jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel12)
-                    .addComponent(mFWPSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(startMFWP)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(stopMWFP))
-                    .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(rpm1A, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(amps1A, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(flow1A, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel9Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel12)
+                                        .addComponent(mFWPSpinner, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel9Layout.createSequentialGroup()
+                                                .addComponent(startMFWP)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(stopMWFP))
+                                        .addGroup(jPanel9Layout.createSequentialGroup()
+                                                .addComponent(rpm1A, javax.swing.GroupLayout.PREFERRED_SIZE, 32,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(amps1A, javax.swing.GroupLayout.PREFERRED_SIZE, 32,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(flow1A, javax.swing.GroupLayout.PREFERRED_SIZE, 32,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
         powerFWP2.setPreferredSize(new java.awt.Dimension(20, 20));
 
@@ -507,7 +520,8 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
         powerFWP4.setPreferredSize(new java.awt.Dimension(20, 20));
 
         jLabel17.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel17, org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "CondensateUI.jLabel17.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel17,
+                org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "CondensateUI.jLabel17.text")); // NOI18N
 
         powerFWP7.setPreferredSize(new java.awt.Dimension(20, 20));
 
@@ -520,53 +534,91 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel8Layout.createSequentialGroup()
-                            .addComponent(jLabel17)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(powerFWP1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(powerFWP2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(powerFWP3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(powerFWP4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel8Layout.createSequentialGroup()
-                            .addGap(109, 109, 109)
-                            .addComponent(powerFWP5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(powerFWP6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(powerFWP7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jLabel11))
-                .addGap(0, 9, Short.MAX_VALUE))
-        );
+                                .addContainerGap()
+                                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel8Layout
+                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGroup(jPanel8Layout.createSequentialGroup()
+                                                        .addComponent(jLabel17)
+                                                        .addPreferredGap(
+                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(powerFWP1, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addPreferredGap(
+                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(powerFWP2, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addPreferredGap(
+                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(powerFWP3, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addPreferredGap(
+                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(powerFWP4, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGroup(jPanel8Layout.createSequentialGroup()
+                                                        .addGap(109, 109, 109)
+                                                        .addComponent(powerFWP5, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addPreferredGap(
+                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(powerFWP6, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addPreferredGap(
+                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(powerFWP7, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(jLabel11))
+                                .addGap(0, 9, Short.MAX_VALUE)));
         jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(powerFWP2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(powerFWP3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(powerFWP4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel17)
-                    .addComponent(powerFWP1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(powerFWP5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(powerFWP6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(powerFWP7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 17,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(powerFWP2, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(powerFWP3, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(powerFWP4, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel17)
+                                        .addComponent(powerFWP1, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(powerFWP5, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(powerFWP6, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(powerFWP7, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
         annunciatorPanel.setLayout(new java.awt.GridLayout(3, 6));
 
@@ -734,7 +786,8 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
         auxFWFlow2.setTrackSectionColor(new java.awt.Color(255, 0, 0));
         auxFWFlow2.setTrackStart(800.0);
         auxFWFlow2.setTrackStartColor(new java.awt.Color(255, 0, 0));
-        auxFWFlow2.setUnitString(org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "CondensateUI.totalFlow2.unitString")); // NOI18N
+        auxFWFlow2.setUnitString(
+                org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "CondensateUI.totalFlow2.unitString")); // NOI18N
         auxFWFlow2.setValueColor(eu.hansolo.steelseries.tools.ColorDef.YELLOW);
 
         jPanel16.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(222, 222, 222), 1, true));
@@ -779,59 +832,72 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
 
         rpm2A.setCustomLcdForeground(new java.awt.Color(204, 204, 255));
         rpm2A.setLcdColor(eu.hansolo.steelseries.tools.LcdColor.LIGHTBLUE_LCD);
-        rpm2A.setLcdUnitString(org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "CondensateUI.rpm2A.lcdUnitString")); // NOI18N
+        rpm2A.setLcdUnitString(
+                org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "CondensateUI.rpm2A.lcdUnitString")); // NOI18N
 
         amps2A.setCustomLcdForeground(new java.awt.Color(204, 204, 255));
         amps2A.setLcdColor(eu.hansolo.steelseries.tools.LcdColor.LIGHTBLUE_LCD);
-        amps2A.setLcdUnitString(org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "CondensateUI.amps2A.lcdUnitString")); // NOI18N
+        amps2A.setLcdUnitString(
+                org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "CondensateUI.amps2A.lcdUnitString")); // NOI18N
 
         flow2A.setCustomLcdForeground(new java.awt.Color(204, 204, 255));
         flow2A.setLcdColor(eu.hansolo.steelseries.tools.LcdColor.LIGHTBLUE_LCD);
-        flow2A.setLcdUnitString(org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "CondensateUI.flow2A.lcdUnitString")); // NOI18N
+        flow2A.setLcdUnitString(
+                org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "CondensateUI.flow2A.lcdUnitString")); // NOI18N
 
         javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
         jPanel17.setLayout(jPanel17Layout);
         jPanel17Layout.setHorizontalGroup(
-            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel17Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel17Layout.createSequentialGroup()
-                        .addComponent(jLabel29)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(auxFWPSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel17Layout.createSequentialGroup()
-                        .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(startAuxFWP)
-                            .addComponent(stopAuxFWP))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(amps2A, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(rpm2A, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(flow2A, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(0, 12, Short.MAX_VALUE))
-        );
+                jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel17Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel17Layout.createSequentialGroup()
+                                                .addComponent(jLabel29)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(auxFWPSpinner, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(jPanel17Layout.createSequentialGroup()
+                                                .addGroup(jPanel17Layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(startAuxFWP)
+                                                        .addComponent(stopAuxFWP))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addGroup(jPanel17Layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addComponent(amps2A, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(rpm2A, javax.swing.GroupLayout.PREFERRED_SIZE, 94,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(flow2A, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                94, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(0, 12, Short.MAX_VALUE)));
         jPanel17Layout.setVerticalGroup(
-            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel17Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel29)
-                    .addComponent(auxFWPSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel17Layout.createSequentialGroup()
-                        .addComponent(startAuxFWP)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(stopAuxFWP))
-                    .addGroup(jPanel17Layout.createSequentialGroup()
-                        .addComponent(rpm2A, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(amps2A, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(flow2A, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel17Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel29)
+                                        .addComponent(auxFWPSpinner, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel17Layout.createSequentialGroup()
+                                                .addComponent(startAuxFWP)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(stopAuxFWP))
+                                        .addGroup(jPanel17Layout.createSequentialGroup()
+                                                .addComponent(rpm2A, javax.swing.GroupLayout.PREFERRED_SIZE, 32,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(amps2A, javax.swing.GroupLayout.PREFERRED_SIZE, 32,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(flow2A, javax.swing.GroupLayout.PREFERRED_SIZE, 32,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
         power2A1.setPreferredSize(new java.awt.Dimension(20, 20));
 
@@ -840,7 +906,8 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
         power2A3.setPreferredSize(new java.awt.Dimension(20, 20));
 
         jLabel31.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel31, org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "CondensateUI.jLabel31.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel31,
+                org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "CondensateUI.jLabel31.text")); // NOI18N
 
         power2A4.setPreferredSize(new java.awt.Dimension(20, 20));
 
@@ -851,51 +918,79 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
         javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
         jPanel16.setLayout(jPanel16Layout);
         jPanel16Layout.setHorizontalGroup(
-            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel16Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel16Layout.createSequentialGroup()
-                            .addComponent(jLabel31)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(power2A1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(power2A2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(power2A3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jLabel28))
-                .addGap(0, 12, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(power2A4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(power2A5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(power2A6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+                                .addContainerGap()
+                                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel16Layout
+                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGroup(jPanel16Layout.createSequentialGroup()
+                                                        .addComponent(jLabel31)
+                                                        .addPreferredGap(
+                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(power2A1, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addPreferredGap(
+                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(power2A2, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addPreferredGap(
+                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(power2A3, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(jLabel28))
+                                .addGap(0, 12, Short.MAX_VALUE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(power2A4, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(power2A5, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(power2A6, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap()));
         jPanel16Layout.setVerticalGroup(
-            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel16Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(power2A1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(power2A2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(power2A3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel31))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(power2A4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(power2A5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(power2A6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel16Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 17,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(power2A1, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(power2A2, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(power2A3, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel31))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(power2A4, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(power2A5, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(power2A6, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
         drumLevel1.setBackgroundColor(eu.hansolo.steelseries.tools.BackgroundColor.SATIN_GRAY);
         drumLevel1.setFrameVisible(false);
@@ -946,7 +1041,8 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
         mainFWFlow2.setTrackStart(800.0);
         mainFWFlow2.setTrackStartColor(new java.awt.Color(255, 0, 0));
         mainFWFlow2.setTrackStop(1000.0);
-        mainFWFlow2.setUnitString(org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "CondensateUI.totalInflow2.unitString")); // NOI18N
+        mainFWFlow2.setUnitString(
+                org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "CondensateUI.totalInflow2.unitString")); // NOI18N
         mainFWFlow2.setValueColor(eu.hansolo.steelseries.tools.ColorDef.YELLOW);
 
         jPanel20.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(222, 222, 222), 1, true));
@@ -987,7 +1083,8 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
 
         buttonGroup1.add(mFW1Stop);
         mFW1Stop.setSelected(true);
-        org.openide.awt.Mnemonics.setLocalizedText(mFW1Stop, org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.mFW1Stop.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(mFW1Stop,
+                org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.mFW1Stop.text")); // NOI18N
         mFW1Stop.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 mFW1StopItemStateChanged(evt);
@@ -1016,7 +1113,8 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
         flow3.setCustomLcdForeground(new java.awt.Color(204, 204, 255));
         flow3.setLcdColor(eu.hansolo.steelseries.tools.LcdColor.LIGHTBLUE_LCD);
         flow3.setLcdDecimals(2);
-        flow3.setLcdUnitString(org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.flow3.lcdUnitString")); // NOI18N
+        flow3.setLcdUnitString(
+                org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.flow3.lcdUnitString")); // NOI18N
         fwPos3.add(flow3);
         flow3.setBounds(0, 60, 100, 30);
 
@@ -1065,48 +1163,61 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
         javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);
         jPanel20.setLayout(jPanel20Layout);
         jPanel20Layout.setHorizontalGroup(
-            jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel20Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel40)
-                    .addGroup(jPanel20Layout.createSequentialGroup()
-                        .addComponent(jLabel38)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(mFW1Spinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(mFW1Open)
-                    .addComponent(mFW1Close)
-                    .addComponent(mFW1Stop))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fwPos1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fwPos2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fwPos3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel20Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel40)
+                                        .addGroup(jPanel20Layout.createSequentialGroup()
+                                                .addComponent(jLabel38)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(mFW1Spinner, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(mFW1Open)
+                                        .addComponent(mFW1Close)
+                                        .addComponent(mFW1Stop))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(fwPos1, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(fwPos2, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(fwPos3, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
         jPanel20Layout.setVerticalGroup(
-            jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel20Layout.createSequentialGroup()
-                .addGap(8, 8, 8)
-                .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel20Layout.createSequentialGroup()
-                        .addComponent(jLabel40)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(mFW1Spinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel38))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(mFW1Open)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(mFW1Stop)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(mFW1Close))
-                    .addComponent(fwPos3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fwPos2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fwPos1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel20Layout.createSequentialGroup()
+                                .addGap(8, 8, 8)
+                                .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel20Layout.createSequentialGroup()
+                                                .addComponent(jLabel40)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(jPanel20Layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(mFW1Spinner,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(jLabel38))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(mFW1Open)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(mFW1Stop)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(mFW1Close))
+                                        .addComponent(fwPos3, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(fwPos2, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(fwPos1, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
         fwTemp1.setBackgroundColor(eu.hansolo.steelseries.tools.BackgroundColor.SATIN_GRAY);
         fwTemp1.setCustomThresholdColor(null);
@@ -1141,7 +1252,8 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
         jPanel24.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(222, 222, 222), 1, true));
 
         buttonGroup2.add(mFW2Open);
-        org.openide.awt.Mnemonics.setLocalizedText(mFW2Open, org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.mFW2Open.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(mFW2Open,
+                org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.mFW2Open.text")); // NOI18N
         mFW2Open.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 mFW2OpenItemStateChanged(evt);
@@ -1154,7 +1266,8 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
         });
 
         buttonGroup2.add(mFW2Close);
-        org.openide.awt.Mnemonics.setLocalizedText(mFW2Close, org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.mFW2Close.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(mFW2Close,
+                org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.mFW2Close.text")); // NOI18N
         mFW2Close.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 mFW2CloseItemStateChanged(evt);
@@ -1176,7 +1289,8 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
 
         buttonGroup2.add(mFW2Stop);
         mFW2Stop.setSelected(true);
-        org.openide.awt.Mnemonics.setLocalizedText(mFW2Stop, org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.mFW2Stop.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(mFW2Stop,
+                org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.mFW2Stop.text")); // NOI18N
         mFW2Stop.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 mFW2StopItemStateChanged(evt);
@@ -1205,7 +1319,8 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
         flow6.setCustomLcdForeground(new java.awt.Color(204, 204, 255));
         flow6.setLcdColor(eu.hansolo.steelseries.tools.LcdColor.LIGHTBLUE_LCD);
         flow6.setLcdDecimals(2);
-        flow6.setLcdUnitString(org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.flow6.lcdUnitString")); // NOI18N
+        flow6.setLcdUnitString(
+                org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.flow6.lcdUnitString")); // NOI18N
         fwPos6.add(flow6);
         flow6.setBounds(0, 60, 100, 30);
 
@@ -1226,7 +1341,8 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
         flow5.setCustomLcdForeground(new java.awt.Color(204, 204, 255));
         flow5.setLcdColor(eu.hansolo.steelseries.tools.LcdColor.LIGHTBLUE_LCD);
         flow5.setLcdDecimals(2);
-        flow5.setLcdUnitString(org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.flow5.lcdUnitString")); // NOI18N
+        flow5.setLcdUnitString(
+                org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.flow5.lcdUnitString")); // NOI18N
         fwPos5.add(flow5);
         flow5.setBounds(0, 60, 100, 30);
 
@@ -1247,60 +1363,75 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
         flow4.setCustomLcdForeground(new java.awt.Color(204, 204, 255));
         flow4.setLcdColor(eu.hansolo.steelseries.tools.LcdColor.LIGHTBLUE_LCD);
         flow4.setLcdDecimals(2);
-        flow4.setLcdUnitString(org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.flow4.lcdUnitString")); // NOI18N
+        flow4.setLcdUnitString(
+                org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.flow4.lcdUnitString")); // NOI18N
         fwPos4.add(flow4);
         flow4.setBounds(0, 60, 100, 30);
 
         javax.swing.GroupLayout jPanel24Layout = new javax.swing.GroupLayout(jPanel24);
         jPanel24.setLayout(jPanel24Layout);
         jPanel24Layout.setHorizontalGroup(
-            jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel24Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel47)
-                    .addGroup(jPanel24Layout.createSequentialGroup()
-                        .addComponent(jLabel44)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(mFW2Spinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(mFW2Open)
-                    .addComponent(mFW2Close)
-                    .addComponent(mFW2Stop))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fwPos4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fwPos5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fwPos6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel24Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel47)
+                                        .addGroup(jPanel24Layout.createSequentialGroup()
+                                                .addComponent(jLabel44)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(mFW2Spinner, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(mFW2Open)
+                                        .addComponent(mFW2Close)
+                                        .addComponent(mFW2Stop))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(fwPos4, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(fwPos5, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(fwPos6, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
         jPanel24Layout.setVerticalGroup(
-            jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel24Layout.createSequentialGroup()
-                .addGap(8, 8, 8)
-                .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel24Layout.createSequentialGroup()
-                        .addComponent(jLabel47)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(mFW2Spinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel44))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(mFW2Open)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(mFW2Stop)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(mFW2Close))
-                    .addComponent(fwPos6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fwPos5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fwPos4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel24Layout.createSequentialGroup()
+                                .addGap(8, 8, 8)
+                                .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel24Layout.createSequentialGroup()
+                                                .addComponent(jLabel47)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(jPanel24Layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(mFW2Spinner,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(jLabel44))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(mFW2Open)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(mFW2Stop)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(mFW2Close))
+                                        .addComponent(fwPos6, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(fwPos5, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(fwPos4, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
         jPanel25.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(222, 222, 222), 1, true));
 
         buttonGroup5.add(aFWOpen1);
-        org.openide.awt.Mnemonics.setLocalizedText(aFWOpen1, org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.aFWOpen1.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(aFWOpen1,
+                org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.aFWOpen1.text")); // NOI18N
         aFWOpen1.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 aFWOpen1ItemStateChanged(evt);
@@ -1313,7 +1444,8 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
         });
 
         buttonGroup5.add(aFWClose1);
-        org.openide.awt.Mnemonics.setLocalizedText(aFWClose1, org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.aFWClose1.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(aFWClose1,
+                org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.aFWClose1.text")); // NOI18N
         aFWClose1.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 aFWClose1ItemStateChanged(evt);
@@ -1330,7 +1462,8 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
 
         buttonGroup5.add(aFWStop1);
         aFWStop1.setSelected(true);
-        org.openide.awt.Mnemonics.setLocalizedText(aFWStop1, org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.aFWStop1.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(aFWStop1,
+                org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.aFWStop1.text")); // NOI18N
         aFWStop1.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 aFWStop1ItemStateChanged(evt);
@@ -1354,54 +1487,62 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
         aFWPos1.setTitle(org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.aFWPos1.title")); // NOI18N
         aFWPos1.setTitleAndUnitFont(new java.awt.Font("Verdana", 0, 8)); // NOI18N
         aFWPos1.setTitleAndUnitFontEnabled(true);
-        aFWPos1.setUnitString(org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.aFWPos1.unitString")); // NOI18N
+        aFWPos1.setUnitString(
+                org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.aFWPos1.unitString")); // NOI18N
 
         auxFlow1.setCustomLcdForeground(new java.awt.Color(204, 204, 255));
         auxFlow1.setLcdColor(eu.hansolo.steelseries.tools.LcdColor.LIGHTBLUE_LCD);
         auxFlow1.setLcdDecimals(2);
-        auxFlow1.setLcdUnitString(org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.auxFlow1.lcdUnitString")); // NOI18N
+        auxFlow1.setLcdUnitString(
+                org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.auxFlow1.lcdUnitString")); // NOI18N
         aFWPos1.add(auxFlow1);
         auxFlow1.setBounds(0, 60, 100, 30);
 
         javax.swing.GroupLayout jPanel25Layout = new javax.swing.GroupLayout(jPanel25);
         jPanel25.setLayout(jPanel25Layout);
         jPanel25Layout.setHorizontalGroup(
-            jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel25Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel42)
-                    .addGroup(jPanel25Layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addGroup(jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(aFWStop1)
-                            .addComponent(aFWOpen1)
-                            .addComponent(aFWClose1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(aFWPos1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel25Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel42)
+                                        .addGroup(jPanel25Layout.createSequentialGroup()
+                                                .addGap(2, 2, 2)
+                                                .addGroup(jPanel25Layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(aFWStop1)
+                                                        .addComponent(aFWOpen1)
+                                                        .addComponent(aFWClose1))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(aFWPos1, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
         jPanel25Layout.setVerticalGroup(
-            jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel25Layout.createSequentialGroup()
-                .addGap(8, 8, 8)
-                .addComponent(jLabel42)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel25Layout.createSequentialGroup()
-                        .addComponent(aFWOpen1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(aFWStop1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(aFWClose1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(aFWPos1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        );
+                jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel25Layout.createSequentialGroup()
+                                .addGap(8, 8, 8)
+                                .addComponent(jLabel42)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel25Layout
+                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(jPanel25Layout.createSequentialGroup()
+                                                .addComponent(aFWOpen1)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(aFWStop1)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(aFWClose1)
+                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(aFWPos1, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))));
 
         jPanel26.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(222, 222, 222), 1, true));
 
         buttonGroup6.add(aFWOpen2);
-        org.openide.awt.Mnemonics.setLocalizedText(aFWOpen2, org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.aFWOpen2.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(aFWOpen2,
+                org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.aFWOpen2.text")); // NOI18N
         aFWOpen2.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 aFWOpen2ItemStateChanged(evt);
@@ -1414,7 +1555,8 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
         });
 
         buttonGroup6.add(aFWClose2);
-        org.openide.awt.Mnemonics.setLocalizedText(aFWClose2, org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.aFWClose2.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(aFWClose2,
+                org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.aFWClose2.text")); // NOI18N
         aFWClose2.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 aFWClose2ItemStateChanged(evt);
@@ -1431,7 +1573,8 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
 
         buttonGroup6.add(aFWStop2);
         aFWStop2.setSelected(true);
-        org.openide.awt.Mnemonics.setLocalizedText(aFWStop2, org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.aFWStop2.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(aFWStop2,
+                org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.aFWStop2.text")); // NOI18N
         aFWStop2.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 aFWStop2ItemStateChanged(evt);
@@ -1455,54 +1598,62 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
         aFWPos2.setTitle(org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.aFWPos2.title")); // NOI18N
         aFWPos2.setTitleAndUnitFont(new java.awt.Font("Verdana", 0, 8)); // NOI18N
         aFWPos2.setTitleAndUnitFontEnabled(true);
-        aFWPos2.setUnitString(org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.aFWPos2.unitString")); // NOI18N
+        aFWPos2.setUnitString(
+                org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.aFWPos2.unitString")); // NOI18N
 
         auxFlow2.setCustomLcdForeground(new java.awt.Color(204, 204, 255));
         auxFlow2.setLcdColor(eu.hansolo.steelseries.tools.LcdColor.LIGHTBLUE_LCD);
         auxFlow2.setLcdDecimals(2);
-        auxFlow2.setLcdUnitString(org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.auxFlow2.lcdUnitString")); // NOI18N
+        auxFlow2.setLcdUnitString(
+                org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.auxFlow2.lcdUnitString")); // NOI18N
         aFWPos2.add(auxFlow2);
         auxFlow2.setBounds(0, 60, 100, 30);
 
         javax.swing.GroupLayout jPanel26Layout = new javax.swing.GroupLayout(jPanel26);
         jPanel26.setLayout(jPanel26Layout);
         jPanel26Layout.setHorizontalGroup(
-            jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel26Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel50)
-                    .addGroup(jPanel26Layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addGroup(jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(aFWStop2)
-                            .addComponent(aFWOpen2)
-                            .addComponent(aFWClose2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(aFWPos2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel26Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel50)
+                                        .addGroup(jPanel26Layout.createSequentialGroup()
+                                                .addGap(2, 2, 2)
+                                                .addGroup(jPanel26Layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(aFWStop2)
+                                                        .addComponent(aFWOpen2)
+                                                        .addComponent(aFWClose2))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(aFWPos2, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
         jPanel26Layout.setVerticalGroup(
-            jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel26Layout.createSequentialGroup()
-                .addGap(8, 8, 8)
-                .addComponent(jLabel50)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel26Layout.createSequentialGroup()
-                        .addComponent(aFWOpen2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(aFWStop2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(aFWClose2)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(aFWPos2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        );
+                jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel26Layout.createSequentialGroup()
+                                .addGap(8, 8, 8)
+                                .addComponent(jLabel50)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel26Layout
+                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(jPanel26Layout.createSequentialGroup()
+                                                .addComponent(aFWOpen2)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(aFWStop2)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(aFWClose2)
+                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(aFWPos2, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))));
 
         jPanel27.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(222, 222, 222), 1, true));
 
         buttonGroup7.add(autoControlWaterLevel);
-        org.openide.awt.Mnemonics.setLocalizedText(autoControlWaterLevel, org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.autoControlWaterLevel.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(autoControlWaterLevel,
+                org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.autoControlWaterLevel.text")); // NOI18N
         autoControlWaterLevel.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 autoControlWaterLevelItemStateChanged(evt);
@@ -1516,7 +1667,8 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
 
         buttonGroup7.add(autoControlOff);
         autoControlOff.setSelected(true);
-        org.openide.awt.Mnemonics.setLocalizedText(autoControlOff, org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.autoControlOff.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(autoControlOff,
+                org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.autoControlOff.text")); // NOI18N
         autoControlOff.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 autoControlOffItemStateChanged(evt);
@@ -1532,7 +1684,8 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
         org.openide.awt.Mnemonics.setLocalizedText(jLabel51, "Auto-Control");
 
         buttonGroup7.add(autoControl3Elem);
-        org.openide.awt.Mnemonics.setLocalizedText(autoControl3Elem, org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.autoControl3Elem.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(autoControl3Elem,
+                org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.autoControl3Elem.text")); // NOI18N
         autoControl3Elem.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 autoControl3ElemItemStateChanged(evt);
@@ -1544,28 +1697,32 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
             }
         });
 
-        org.openide.awt.Mnemonics.setLocalizedText(autoControlMain1, org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.autoControlMain1.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(autoControlMain1,
+                org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.autoControlMain1.text")); // NOI18N
         autoControlMain1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 autoControlMain1ActionPerformed(evt);
             }
         });
 
-        org.openide.awt.Mnemonics.setLocalizedText(autoControlMain2, org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.autoControlMain2.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(autoControlMain2,
+                org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.autoControlMain2.text")); // NOI18N
         autoControlMain2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 autoControlMain2ActionPerformed(evt);
             }
         });
 
-        org.openide.awt.Mnemonics.setLocalizedText(autoControlAux1, org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.autoControlAux1.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(autoControlAux1,
+                org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.autoControlAux1.text")); // NOI18N
         autoControlAux1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 autoControlAux1ActionPerformed(evt);
             }
         });
 
-        org.openide.awt.Mnemonics.setLocalizedText(autoControlAux2, org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.autoControlAux2.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(autoControlAux2,
+                org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.autoControlAux2.text")); // NOI18N
         autoControlAux2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 autoControlAux2ActionPerformed(evt);
@@ -1575,48 +1732,51 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
         javax.swing.GroupLayout jPanel27Layout = new javax.swing.GroupLayout(jPanel27);
         jPanel27.setLayout(jPanel27Layout);
         jPanel27Layout.setHorizontalGroup(
-            jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel27Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(autoControlWaterLevel)
-                    .addComponent(autoControlOff)
-                    .addComponent(autoControl3Elem)
-                    .addGroup(jPanel27Layout.createSequentialGroup()
-                        .addGroup(jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(autoControlMain1)
-                            .addComponent(autoControlAux1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(autoControlAux2)
-                            .addComponent(autoControlMain2))))
-                .addGap(49, 49, 49))
-            .addGroup(jPanel27Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel51)
-                .addContainerGap())
-        );
+                jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel27Layout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(autoControlWaterLevel)
+                                        .addComponent(autoControlOff)
+                                        .addComponent(autoControl3Elem)
+                                        .addGroup(jPanel27Layout.createSequentialGroup()
+                                                .addGroup(jPanel27Layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(autoControlMain1)
+                                                        .addComponent(autoControlAux1))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addGroup(jPanel27Layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(autoControlAux2)
+                                                        .addComponent(autoControlMain2))))
+                                .addGap(49, 49, 49))
+                        .addGroup(jPanel27Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel51)
+                                .addContainerGap()));
         jPanel27Layout.setVerticalGroup(
-            jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel27Layout.createSequentialGroup()
-                .addGap(8, 8, 8)
-                .addComponent(jLabel51)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(autoControlMain1)
-                    .addComponent(autoControlMain2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(autoControlAux2)
-                    .addComponent(autoControlAux1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(autoControlWaterLevel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(autoControl3Elem)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(autoControlOff)
-                .addContainerGap())
-        );
+                jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel27Layout.createSequentialGroup()
+                                .addGap(8, 8, 8)
+                                .addComponent(jLabel51)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(autoControlMain1)
+                                        .addComponent(autoControlMain2))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(autoControlAux2)
+                                        .addComponent(autoControlAux1))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(autoControlWaterLevel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(autoControl3Elem)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(autoControlOff)
+                                .addContainerGap()));
 
         jButton1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(jButton1, "ACK");
@@ -1633,96 +1793,178 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(annunciatorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(auxFWFlow1, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(auxFWFlow2, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
+                jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(drumLevel1, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(mainFWFlow1, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(mainFWFlow2, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(drumLevel2, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(fwTemp1, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(fwTemp2, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jPanel20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel24, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel26, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel25, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel27, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(289, Short.MAX_VALUE))
-        );
+                                        .addGroup(jPanel3Layout.createSequentialGroup()
+                                                .addContainerGap()
+                                                .addComponent(annunciatorPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(jPanel3Layout.createSequentialGroup()
+                                                .addGap(15, 15, 15)
+                                                .addGroup(jPanel3Layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(jPanel3Layout.createSequentialGroup()
+                                                                .addComponent(auxFWFlow1,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 315,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addPreferredGap(
+                                                                        javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                .addComponent(auxFWFlow2,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 315,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addGroup(jPanel3Layout.createSequentialGroup()
+                                                                .addGroup(jPanel3Layout.createParallelGroup(
+                                                                        javax.swing.GroupLayout.Alignment.LEADING)
+                                                                        .addComponent(drumLevel1,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                315,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                        .addComponent(mainFWFlow1,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                315,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                .addPreferredGap(
+                                                                        javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                .addGroup(jPanel3Layout.createParallelGroup(
+                                                                        javax.swing.GroupLayout.Alignment.LEADING)
+                                                                        .addComponent(mainFWFlow2,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                315,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                        .addComponent(drumLevel2,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                315,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                        .addGroup(jPanel3Layout.createSequentialGroup()
+                                                                .addComponent(fwTemp1,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 315,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addPreferredGap(
+                                                                        javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                .addComponent(fwTemp2,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 315,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(jPanel3Layout.createSequentialGroup()
+                                                .addContainerGap()
+                                                .addGroup(jPanel3Layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addComponent(jPanel20, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(jPanel24, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(jPanel3Layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jPanel26, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(jPanel25, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(jPanel27, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addContainerGap(289, Short.MAX_VALUE)));
         jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(annunciatorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(drumLevel1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(drumLevel2, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(mainFWFlow1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(mainFWFlow2, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(auxFWFlow1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(auxFWFlow2, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(fwTemp2, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(fwTemp1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(8, 8, 8)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(jPanel27, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(88, Short.MAX_VALUE))
-        );
+                jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(annunciatorPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(jPanel3Layout.createSequentialGroup()
+                                                .addGroup(jPanel3Layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(drumLevel1,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE, 65,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(drumLevel2,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE, 65,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(jPanel3Layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(mainFWFlow1,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE, 65,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(mainFWFlow2,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE, 65,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(jPanel3Layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addComponent(auxFWFlow1,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE, 65,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(auxFWFlow2,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE, 65,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(jPanel3Layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(fwTemp2, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(fwTemp1, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                65, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel3Layout.createSequentialGroup()
+                                                .addGroup(jPanel3Layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING,
+                                                                false)
+                                                        .addComponent(jPanel20, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(jPanel25, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                .addGap(8, 8, 8)
+                                                .addGroup(jPanel3Layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING,
+                                                                false)
+                                                        .addComponent(jPanel24, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(jPanel26, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                        .addComponent(jPanel27, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(88, Short.MAX_VALUE)));
 
         jScrollPane1.setViewportView(jPanel3);
 
-        org.openide.awt.Mnemonics.setLocalizedText(jMenu1, org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "CondensateUI.jMenu1.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jMenu1,
+                org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "CondensateUI.jMenu1.text")); // NOI18N
 
-        org.openide.awt.Mnemonics.setLocalizedText(jMenuItem6, org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.jMenuItem6.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jMenuItem6,
+                org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.jMenuItem6.text")); // NOI18N
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem6ActionPerformed(evt);
@@ -1738,7 +1980,8 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
         });
         jMenu1.add(jMenuItem3);
 
-        org.openide.awt.Mnemonics.setLocalizedText(jMenuItem10, org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.jMenuItem10.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jMenuItem10,
+                org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.jMenuItem10.text")); // NOI18N
         jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem10ActionPerformed(evt);
@@ -1746,7 +1989,8 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
         });
         jMenu1.add(jMenuItem10);
 
-        org.openide.awt.Mnemonics.setLocalizedText(jMenuItem12, org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.jMenuItem12.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jMenuItem12,
+                org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.jMenuItem12.text")); // NOI18N
         jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem12ActionPerformed(evt);
@@ -1762,7 +2006,8 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
         });
         jMenu1.add(jMenuItem1);
 
-        org.openide.awt.Mnemonics.setLocalizedText(jMenuItem2, org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.jMenuItem2.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jMenuItem2,
+                org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.jMenuItem2.text")); // NOI18N
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem2ActionPerformed(evt);
@@ -1770,7 +2015,8 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
         });
         jMenu1.add(jMenuItem2);
 
-        org.openide.awt.Mnemonics.setLocalizedText(jMenuItem4, org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "CondensateUI.jMenuItem4.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jMenuItem4,
+                org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "CondensateUI.jMenuItem4.text")); // NOI18N
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem4ActionPerformed(evt);
@@ -1778,7 +2024,8 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
         });
         jMenu1.add(jMenuItem4);
 
-        org.openide.awt.Mnemonics.setLocalizedText(jMenuItem5, org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.jMenuItem5.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jMenuItem5,
+                org.openide.util.NbBundle.getMessage(FeedwaterUI.class, "FeedwaterUI.jMenuItem5.text")); // NOI18N
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem5ActionPerformed(evt);
@@ -1793,104 +2040,103 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 747, Short.MAX_VALUE)
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 747, Short.MAX_VALUE));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItem3ActionPerformed
         UI.createOrContinue(CoreMap.class, false, false);
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    }// GEN-LAST:event_jMenuItem3ActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItem1ActionPerformed
         UI.createOrContinue(TGUI.class, true, false);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }// GEN-LAST:event_jMenuItem1ActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItem4ActionPerformed
         UI.createOrContinue(DearatorUI.class, true, false);
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+    }// GEN-LAST:event_jMenuItem4ActionPerformed
 
-    private void aFWStop1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aFWStop1ActionPerformed
+    private void aFWStop1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_aFWStop1ActionPerformed
         auxFeederValves.get(0).setState(1);
-    }//GEN-LAST:event_aFWStop1ActionPerformed
+    }// GEN-LAST:event_aFWStop1ActionPerformed
 
-    private void aFWStop1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_aFWStop1ItemStateChanged
+    private void aFWStop1ItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_aFWStop1ItemStateChanged
 
-    }//GEN-LAST:event_aFWStop1ItemStateChanged
+    }// GEN-LAST:event_aFWStop1ItemStateChanged
 
-    private void aFWClose1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aFWClose1ActionPerformed
+    private void aFWClose1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_aFWClose1ActionPerformed
         auxFeederValves.get(0).setState(0);
-    }//GEN-LAST:event_aFWClose1ActionPerformed
+    }// GEN-LAST:event_aFWClose1ActionPerformed
 
-    private void aFWClose1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_aFWClose1ItemStateChanged
+    private void aFWClose1ItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_aFWClose1ItemStateChanged
 
-    }//GEN-LAST:event_aFWClose1ItemStateChanged
+    }// GEN-LAST:event_aFWClose1ItemStateChanged
 
-    private void aFWOpen1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aFWOpen1ActionPerformed
+    private void aFWOpen1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_aFWOpen1ActionPerformed
         auxFeederValves.get(0).setState(2);
-    }//GEN-LAST:event_aFWOpen1ActionPerformed
+    }// GEN-LAST:event_aFWOpen1ActionPerformed
 
-    private void aFWOpen1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_aFWOpen1ItemStateChanged
+    private void aFWOpen1ItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_aFWOpen1ItemStateChanged
 
-    }//GEN-LAST:event_aFWOpen1ItemStateChanged
+    }// GEN-LAST:event_aFWOpen1ItemStateChanged
 
-    private void mFW2StopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mFW2StopActionPerformed
-        mainFeederValves.get((int)mFW2Spinner.getValue() + 2).setState(1);
-    }//GEN-LAST:event_mFW2StopActionPerformed
+    private void mFW2StopActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_mFW2StopActionPerformed
+        mainFeederValves.get((int) mFW2Spinner.getValue() + 2).setState(1);
+    }// GEN-LAST:event_mFW2StopActionPerformed
 
-    private void mFW2StopItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_mFW2StopItemStateChanged
+    private void mFW2StopItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_mFW2StopItemStateChanged
 
-    }//GEN-LAST:event_mFW2StopItemStateChanged
+    }// GEN-LAST:event_mFW2StopItemStateChanged
 
-    private void mFW2CloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mFW2CloseActionPerformed
-        mainFeederValves.get((int)mFW2Spinner.getValue() + 2).setState(0);
-    }//GEN-LAST:event_mFW2CloseActionPerformed
+    private void mFW2CloseActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_mFW2CloseActionPerformed
+        mainFeederValves.get((int) mFW2Spinner.getValue() + 2).setState(0);
+    }// GEN-LAST:event_mFW2CloseActionPerformed
 
-    private void mFW2CloseItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_mFW2CloseItemStateChanged
+    private void mFW2CloseItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_mFW2CloseItemStateChanged
 
-    }//GEN-LAST:event_mFW2CloseItemStateChanged
+    }// GEN-LAST:event_mFW2CloseItemStateChanged
 
-    private void mFW2OpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mFW2OpenActionPerformed
-        mainFeederValves.get((int)mFW2Spinner.getValue() + 2).setState(2);
-    }//GEN-LAST:event_mFW2OpenActionPerformed
+    private void mFW2OpenActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_mFW2OpenActionPerformed
+        mainFeederValves.get((int) mFW2Spinner.getValue() + 2).setState(2);
+    }// GEN-LAST:event_mFW2OpenActionPerformed
 
-    private void mFW2OpenItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_mFW2OpenItemStateChanged
+    private void mFW2OpenItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_mFW2OpenItemStateChanged
 
-    }//GEN-LAST:event_mFW2OpenItemStateChanged
+    }// GEN-LAST:event_mFW2OpenItemStateChanged
 
-    private void mFW1StopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mFW1StopActionPerformed
-        mainFeederValves.get((int)mFW1Spinner.getValue() - 1).setState(1);
-    }//GEN-LAST:event_mFW1StopActionPerformed
+    private void mFW1StopActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_mFW1StopActionPerformed
+        mainFeederValves.get((int) mFW1Spinner.getValue() - 1).setState(1);
+    }// GEN-LAST:event_mFW1StopActionPerformed
 
-    private void mFW1StopItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_mFW1StopItemStateChanged
+    private void mFW1StopItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_mFW1StopItemStateChanged
 
-    }//GEN-LAST:event_mFW1StopItemStateChanged
+    }// GEN-LAST:event_mFW1StopItemStateChanged
 
-    private void mFW1CloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mFW1CloseActionPerformed
-        mainFeederValves.get((int)mFW1Spinner.getValue() - 1).setState(0);
-    }//GEN-LAST:event_mFW1CloseActionPerformed
+    private void mFW1CloseActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_mFW1CloseActionPerformed
+        mainFeederValves.get((int) mFW1Spinner.getValue() - 1).setState(0);
+    }// GEN-LAST:event_mFW1CloseActionPerformed
 
-    private void mFW1CloseItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_mFW1CloseItemStateChanged
+    private void mFW1CloseItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_mFW1CloseItemStateChanged
 
-    }//GEN-LAST:event_mFW1CloseItemStateChanged
+    }// GEN-LAST:event_mFW1CloseItemStateChanged
 
-    private void mFW1OpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mFW1OpenActionPerformed
-        mainFeederValves.get((int)mFW1Spinner.getValue() - 1).setState(2);
-    }//GEN-LAST:event_mFW1OpenActionPerformed
+    private void mFW1OpenActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_mFW1OpenActionPerformed
+        mainFeederValves.get((int) mFW1Spinner.getValue() - 1).setState(2);
+    }// GEN-LAST:event_mFW1OpenActionPerformed
 
-    private void mFW1OpenItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_mFW1OpenItemStateChanged
+    private void mFW1OpenItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_mFW1OpenItemStateChanged
 
-    }//GEN-LAST:event_mFW1OpenItemStateChanged
+    }// GEN-LAST:event_mFW1OpenItemStateChanged
 
-    private void stopAuxFWPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopAuxFWPActionPerformed
-        auxFeedwaterPumps.get((int)auxFWPSpinner.getValue() - 1).setActive(false);
-        switch((int)auxFWPSpinner.getValue()) {
+    private void stopAuxFWPActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_stopAuxFWPActionPerformed
+        auxFeedwaterPumps.get((int) auxFWPSpinner.getValue() - 1).setActive(false);
+        switch ((int) auxFWPSpinner.getValue()) {
             case 1:
                 power2A1.setLedOn(false);
                 break;
@@ -1910,15 +2156,15 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
                 power2A6.setLedOn(false);
                 break;
         }
-    }//GEN-LAST:event_stopAuxFWPActionPerformed
+    }// GEN-LAST:event_stopAuxFWPActionPerformed
 
-    private void stopAuxFWPItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_stopAuxFWPItemStateChanged
+    private void stopAuxFWPItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_stopAuxFWPItemStateChanged
 
-    }//GEN-LAST:event_stopAuxFWPItemStateChanged
+    }// GEN-LAST:event_stopAuxFWPItemStateChanged
 
-    private void startAuxFWPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startAuxFWPActionPerformed
-        auxFeedwaterPumps.get((int)auxFWPSpinner.getValue() - 1).setActive(true);
-        switch((int)auxFWPSpinner.getValue()) {
+    private void startAuxFWPActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_startAuxFWPActionPerformed
+        auxFeedwaterPumps.get((int) auxFWPSpinner.getValue() - 1).setActive(true);
+        switch ((int) auxFWPSpinner.getValue()) {
             case 1:
                 power2A1.setLedOn(true);
                 break;
@@ -1938,39 +2184,39 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
                 power2A6.setLedOn(true);
                 break;
         }
-    }//GEN-LAST:event_startAuxFWPActionPerformed
+    }// GEN-LAST:event_startAuxFWPActionPerformed
 
-    private void startAuxFWPItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_startAuxFWPItemStateChanged
+    private void startAuxFWPItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_startAuxFWPItemStateChanged
 
-    }//GEN-LAST:event_startAuxFWPItemStateChanged
+    }// GEN-LAST:event_startAuxFWPItemStateChanged
 
-    private void jTextField11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField11ActionPerformed
+    private void jTextField11ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jTextField11ActionPerformed
 
-    }//GEN-LAST:event_jTextField11ActionPerformed
+    }// GEN-LAST:event_jTextField11ActionPerformed
 
-    private void jTextField10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField10ActionPerformed
+    private void jTextField10ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jTextField10ActionPerformed
 
-    }//GEN-LAST:event_jTextField10ActionPerformed
+    }// GEN-LAST:event_jTextField10ActionPerformed
 
-    private void trip2BActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_trip2BActionPerformed
+    private void trip2BActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_trip2BActionPerformed
 
-    }//GEN-LAST:event_trip2BActionPerformed
+    }// GEN-LAST:event_trip2BActionPerformed
 
-    private void mainTripActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mainTripActionPerformed
+    private void mainTripActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_mainTripActionPerformed
 
-    }//GEN-LAST:event_mainTripActionPerformed
+    }// GEN-LAST:event_mainTripActionPerformed
 
-    private void mainCavitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mainCavitActionPerformed
+    private void mainCavitActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_mainCavitActionPerformed
 
-    }//GEN-LAST:event_mainCavitActionPerformed
+    }// GEN-LAST:event_mainCavitActionPerformed
 
-    private void drum2LowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_drum2LowActionPerformed
+    private void drum2LowActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_drum2LowActionPerformed
 
-    }//GEN-LAST:event_drum2LowActionPerformed
+    }// GEN-LAST:event_drum2LowActionPerformed
 
-    private void stopMWFPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopMWFPActionPerformed
-        mainFeedwaterPumps.get((int)mFWPSpinner.getValue() - 1).setActive(false);
-        switch((int)mFWPSpinner.getValue()) {
+    private void stopMWFPActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_stopMWFPActionPerformed
+        mainFeedwaterPumps.get((int) mFWPSpinner.getValue() - 1).setActive(false);
+        switch ((int) mFWPSpinner.getValue()) {
             case 1:
                 powerFWP1.setLedOn(false);
                 break;
@@ -1993,15 +2239,15 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
                 powerFWP7.setLedOn(false);
                 break;
         }
-    }//GEN-LAST:event_stopMWFPActionPerformed
+    }// GEN-LAST:event_stopMWFPActionPerformed
 
-    private void stopMWFPItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_stopMWFPItemStateChanged
+    private void stopMWFPItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_stopMWFPItemStateChanged
 
-    }//GEN-LAST:event_stopMWFPItemStateChanged
+    }// GEN-LAST:event_stopMWFPItemStateChanged
 
-    private void startMFWPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startMFWPActionPerformed
-        mainFeedwaterPumps.get((int)mFWPSpinner.getValue() - 1).setActive(true);
-        switch((int)mFWPSpinner.getValue()) {
+    private void startMFWPActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_startMFWPActionPerformed
+        mainFeedwaterPumps.get((int) mFWPSpinner.getValue() - 1).setActive(true);
+        switch ((int) mFWPSpinner.getValue()) {
             case 1:
                 powerFWP1.setLedOn(true);
                 break;
@@ -2024,80 +2270,80 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
                 powerFWP7.setLedOn(true);
                 break;
         }
-    }//GEN-LAST:event_startMFWPActionPerformed
+    }// GEN-LAST:event_startMFWPActionPerformed
 
-    private void startMFWPItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_startMFWPItemStateChanged
+    private void startMFWPItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_startMFWPItemStateChanged
 
-    }//GEN-LAST:event_startMFWPItemStateChanged
+    }// GEN-LAST:event_startMFWPItemStateChanged
 
-    private void aFWOpen2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_aFWOpen2ItemStateChanged
+    private void aFWOpen2ItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_aFWOpen2ItemStateChanged
 
-    }//GEN-LAST:event_aFWOpen2ItemStateChanged
+    }// GEN-LAST:event_aFWOpen2ItemStateChanged
 
-    private void aFWOpen2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aFWOpen2ActionPerformed
+    private void aFWOpen2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_aFWOpen2ActionPerformed
         auxFeederValves.get(1).setState(2);
-    }//GEN-LAST:event_aFWOpen2ActionPerformed
+    }// GEN-LAST:event_aFWOpen2ActionPerformed
 
-    private void aFWClose2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_aFWClose2ItemStateChanged
+    private void aFWClose2ItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_aFWClose2ItemStateChanged
 
-    }//GEN-LAST:event_aFWClose2ItemStateChanged
+    }// GEN-LAST:event_aFWClose2ItemStateChanged
 
-    private void aFWClose2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aFWClose2ActionPerformed
+    private void aFWClose2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_aFWClose2ActionPerformed
         auxFeederValves.get(1).setState(0);
-    }//GEN-LAST:event_aFWClose2ActionPerformed
+    }// GEN-LAST:event_aFWClose2ActionPerformed
 
-    private void aFWStop2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_aFWStop2ItemStateChanged
+    private void aFWStop2ItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_aFWStop2ItemStateChanged
 
-    }//GEN-LAST:event_aFWStop2ItemStateChanged
+    }// GEN-LAST:event_aFWStop2ItemStateChanged
 
-    private void aFWStop2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aFWStop2ActionPerformed
+    private void aFWStop2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_aFWStop2ActionPerformed
         auxFeederValves.get(1).setState(1);
-    }//GEN-LAST:event_aFWStop2ActionPerformed
+    }// GEN-LAST:event_aFWStop2ActionPerformed
 
-    private void autoControlWaterLevelItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_autoControlWaterLevelItemStateChanged
+    private void autoControlWaterLevelItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_autoControlWaterLevelItemStateChanged
 
-    }//GEN-LAST:event_autoControlWaterLevelItemStateChanged
+    }// GEN-LAST:event_autoControlWaterLevelItemStateChanged
 
-    private void autoControlWaterLevelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autoControlWaterLevelActionPerformed
+    private void autoControlWaterLevelActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_autoControlWaterLevelActionPerformed
         autoControlAux1ActionPerformed(evt);
         autoControlAux2ActionPerformed(evt);
         autoControlMain1ActionPerformed(evt);
         autoControlMain2ActionPerformed(evt);
-    }//GEN-LAST:event_autoControlWaterLevelActionPerformed
+    }// GEN-LAST:event_autoControlWaterLevelActionPerformed
 
-    private void autoControlOffItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_autoControlOffItemStateChanged
+    private void autoControlOffItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_autoControlOffItemStateChanged
 
-    }//GEN-LAST:event_autoControlOffItemStateChanged
+    }// GEN-LAST:event_autoControlOffItemStateChanged
 
-    private void autoControlOffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autoControlOffActionPerformed
+    private void autoControlOffActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_autoControlOffActionPerformed
         autoControl.mainFeederControl.forEach(controller -> {
             controller.setEnabled(false);
         });
         autoControl.auxFeederControl.forEach(controller -> {
             controller.setEnabled(false);
         });
-    }//GEN-LAST:event_autoControlOffActionPerformed
+    }// GEN-LAST:event_autoControlOffActionPerformed
 
-    private void autoControl3ElemItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_autoControl3ElemItemStateChanged
+    private void autoControl3ElemItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_autoControl3ElemItemStateChanged
 
-    }//GEN-LAST:event_autoControl3ElemItemStateChanged
+    }// GEN-LAST:event_autoControl3ElemItemStateChanged
 
-    private void autoControl3ElemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autoControl3ElemActionPerformed
+    private void autoControl3ElemActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_autoControl3ElemActionPerformed
         autoControlAux1ActionPerformed(evt);
         autoControlAux2ActionPerformed(evt);
         autoControlMain1ActionPerformed(evt);
         autoControlMain2ActionPerformed(evt);
-    }//GEN-LAST:event_autoControl3ElemActionPerformed
+    }// GEN-LAST:event_autoControl3ElemActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItem2ActionPerformed
         UI.createOrContinue(CondensateUI.class, true, false);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }// GEN-LAST:event_jMenuItem2ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed
         annunciator.acknowledge();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }// GEN-LAST:event_jButton1ActionPerformed
 
-    private void autoControlAux1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autoControlAux1ActionPerformed
+    private void autoControlAux1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_autoControlAux1ActionPerformed
         if (autoControlAux1.isSelected()) {
             if (autoControl3Elem.isSelected()) {
                 autoControl.auxFeederControl.get(0).setEnabled(true);
@@ -2107,9 +2353,9 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
         } else {
             autoControl.auxFeederControl.get(0).setEnabled(false);
         }
-    }//GEN-LAST:event_autoControlAux1ActionPerformed
+    }// GEN-LAST:event_autoControlAux1ActionPerformed
 
-    private void autoControlAux2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autoControlAux2ActionPerformed
+    private void autoControlAux2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_autoControlAux2ActionPerformed
         if (autoControlAux2.isSelected()) {
             if (autoControl3Elem.isSelected()) {
                 autoControl.auxFeederControl.get(1).setEnabled(true);
@@ -2119,9 +2365,9 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
         } else {
             autoControl.auxFeederControl.get(1).setEnabled(false);
         }
-    }//GEN-LAST:event_autoControlAux2ActionPerformed
+    }// GEN-LAST:event_autoControlAux2ActionPerformed
 
-    private void autoControlMain1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autoControlMain1ActionPerformed
+    private void autoControlMain1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_autoControlMain1ActionPerformed
         if (autoControlMain1.isSelected()) {
             if (autoControl3Elem.isSelected()) {
                 autoControl.mainFeederControl.get(0).setEnabled(true);
@@ -2131,9 +2377,9 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
         } else {
             autoControl.mainFeederControl.get(0).setEnabled(false);
         }
-    }//GEN-LAST:event_autoControlMain1ActionPerformed
+    }// GEN-LAST:event_autoControlMain1ActionPerformed
 
-    private void autoControlMain2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autoControlMain2ActionPerformed
+    private void autoControlMain2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_autoControlMain2ActionPerformed
         if (autoControlMain2.isSelected()) {
             if (autoControl3Elem.isSelected()) {
                 autoControl.mainFeederControl.get(1).setEnabled(true);
@@ -2143,24 +2389,23 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
         } else {
             autoControl.mainFeederControl.get(1).setEnabled(false);
         }
-    }//GEN-LAST:event_autoControlMain2ActionPerformed
+    }// GEN-LAST:event_autoControlMain2ActionPerformed
 
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItem5ActionPerformed
         UI.createOrContinue(PCSUI.class, true, false);
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
+    }// GEN-LAST:event_jMenuItem5ActionPerformed
 
-    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItem10ActionPerformed
         UI.createOrContinue(SelsynPanel.class, false, false);
-    }//GEN-LAST:event_jMenuItem10ActionPerformed
+    }// GEN-LAST:event_jMenuItem10ActionPerformed
 
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItem6ActionPerformed
         NPPSim.ui.toFront();
-    }//GEN-LAST:event_jMenuItem6ActionPerformed
+    }// GEN-LAST:event_jMenuItem6ActionPerformed
 
-    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
+    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItem12ActionPerformed
         UI.createOrContinue(MCPUI.class, false, false);
-    }//GEN-LAST:event_jMenuItem12ActionPerformed
-
+    }// GEN-LAST:event_jMenuItem12ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField FWTemp;
@@ -2196,7 +2441,7 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
     private javax.swing.ButtonGroup buttonGroup5;
     private javax.swing.ButtonGroup buttonGroup6;
     private javax.swing.ButtonGroup buttonGroup7;
-    //private javax.swing.ButtonGroup buttonGroup8;
+    // private javax.swing.ButtonGroup buttonGroup8;
     private javax.swing.JTextField drum1High;
     private javax.swing.JTextField drum1Low;
     private javax.swing.JTextField drum2High;

@@ -6,7 +6,8 @@ import static com.darwish.nppsim.NPPSim.tg2;
 import java.util.ArrayList;
 
 /**
- * This is a pressure header where one or multiple pumps supply one or multiple components
+ * This is a pressure header where one or multiple pumps supply one or multiple
+ * components
  **/
 class PressureHeader extends WaterSteamComponent implements Connectable, UIReadable {
     private double zeroHeadFlow = 0, zeroFlowHead = 0;
@@ -18,7 +19,8 @@ class PressureHeader extends WaterSteamComponent implements Connectable, UIReada
         this.sources = sources;
     }
 
-    public PressureHeader() {};
+    public PressureHeader() {
+    };
 
     public void update() {
         double highestPressure = 0;
@@ -31,7 +33,7 @@ class PressureHeader extends WaterSteamComponent implements Connectable, UIReada
             highestPressure = sourcePressure > highestPressure ? sourcePressure : highestPressure;
         }
         zeroFlowHead = highestPressure;
-        zeroHeadFlow = zeroHeadFlowSum * 5; //make sure the pumps have some excess flow this will be changed later
+        zeroHeadFlow = zeroHeadFlowSum * 5; // make sure the pumps have some excess flow this will be changed later
         for (Pump thisSource : sources) {
             double sourceOutflow = thisSource.getHead() / pressureSum * waterOutflow;
             if (pressureSum == 0) {
@@ -39,9 +41,9 @@ class PressureHeader extends WaterSteamComponent implements Connectable, UIReada
             }
             thisSource.updateFlow(sourceOutflow);
         }
-        //if (waterTemperature < 0 || waterTemperature > 300) {
-        //    int e = 0;
-        //}
+        // if (waterTemperature < 0 || waterTemperature > 300) {
+        // int e = 0;
+        // }
         waterDensity = Loader.tables.getWaterDensityByTemp(waterTemperature);
         if (waterOutflow > zeroHeadFlow) {
             waterOutflow = zeroHeadFlow;
@@ -50,11 +52,11 @@ class PressureHeader extends WaterSteamComponent implements Connectable, UIReada
         if (calculatedPressure.isNaN()) {
             calculatedPressure = 0.10142;
         }
-//        if (zeroFlowHead == 0.10142) {
-//            calculatedPressure = 0.10142;
-//            pressure = 0.10142;
-//        }
-        pressure = (pressure * 50 + calculatedPressure) / 51; //gradually change pressure to dampen fluctuations
+        // if (zeroFlowHead == 0.10142) {
+        // calculatedPressure = 0.10142;
+        // pressure = 0.10142;
+        // }
+        pressure = (pressure * 50 + calculatedPressure) / 51; // gradually change pressure to dampen fluctuations
         resetFlows();
         waterMass = 0;
     }
@@ -106,8 +108,8 @@ class PressureHeader extends WaterSteamComponent implements Connectable, UIReada
     @Override
     public void updateWaterInflow(double flow, double tempC) {
         double[] inflowData = NPPMath.mixWater(waterMass, waterTemperature, flow, tempC);
-            waterMass = inflowData[0];
-            waterTemperature = inflowData[1];
+        waterMass = inflowData[0];
+        waterTemperature = inflowData[1];
     }
 
     @Override
@@ -116,7 +118,8 @@ class PressureHeader extends WaterSteamComponent implements Connectable, UIReada
     }
 }
 
-class SimplifiedCondensateHeader extends PressureHeader { //greatly simplified feedwater heater for the sake of the early alpha release
+class SimplifiedCondensateHeader extends PressureHeader { // greatly simplified feedwater heater for the sake of the
+                                                          // early alpha release
     private double thermalPower = 0.0;
     private double heatedWaterTemp = 20.0;
 
@@ -126,8 +129,10 @@ class SimplifiedCondensateHeader extends PressureHeader { //greatly simplified f
         double tg1SteamTemp = tg1.getSteamTemperature() / 1.45;
         double tg2SteamTemp = tg2.getSteamTemperature() / 1.45;
         double highestSteamTemp = tg1SteamTemp < tg2SteamTemp ? tg2SteamTemp : tg1SteamTemp;
-        thermalPower += (tg1.getSteamInflow() / 600.0) * 10000 * (tg1SteamTemp / 196.82) * ((tg1SteamTemp - waterTemperature) / 170.0);
-        thermalPower += (tg2.getSteamInflow() / 600.0) * 10000 * (tg2SteamTemp / 196.82) * ((tg2SteamTemp - waterTemperature) / 170.0);
+        thermalPower += (tg1.getSteamInflow() / 600.0) * 10000 * (tg1SteamTemp / 196.82)
+                * ((tg1SteamTemp - waterTemperature) / 170.0);
+        thermalPower += (tg2.getSteamInflow() / 600.0) * 10000 * (tg2SteamTemp / 196.82)
+                * ((tg2SteamTemp - waterTemperature) / 170.0);
         double deltaWaterTemp = thermalPower * 50 / (NPPMath.calculateSpecificHeatWater(waterTemperature) * waterMass);
         waterTemperature += Double.isNaN(deltaWaterTemp) || Double.isInfinite(deltaWaterTemp) ? 0.0 : deltaWaterTemp;
         if (waterTemperature > highestSteamTemp && waterTemperature > oldWaterTemp) {
@@ -157,8 +162,9 @@ class SimplePressureHeader extends WaterSteamComponent implements Connectable, U
 
     public SimplePressureHeader(Connectable[] drains, double volume) {
         this.drains = drains;
-        for (Connectable drain: drains) {
-            isolationValveArray.add(new WaterValve(100, 10, atmosphere, atmosphere)); //dummy valves just used for their position property
+        for (Connectable drain : drains) {
+            isolationValveArray.add(new WaterValve(100, 10, atmosphere, atmosphere)); // dummy valves just used for
+                                                                                      // their position property
         }
         initialWaterMass = volume / Loader.tables.getWaterDensityByTemp(20);
     }
@@ -181,7 +187,8 @@ class SimplePressureHeader extends WaterSteamComponent implements Connectable, U
         pressure = highestPressure;
         for (int i = 0; i < drains.length; i++) {
             Connectable thisDrain = drains[i];
-            double drainInflow = (double)(isolationValveArray.get(i).getPosition() / totalValvePositions) * waterInflow; //waterInflow / sources.length;
+            double drainInflow = (double) (isolationValveArray.get(i).getPosition() / totalValvePositions)
+                    * waterInflow; // waterInflow / sources.length;
             thisDrain.updateWaterInflow(drainInflow, waterTemperature);
         }
         resetFlows();
@@ -238,7 +245,8 @@ class SimplePressureHeader extends WaterSteamComponent implements Connectable, U
 
     @Override
     public double getWaterMass() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from
+                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
 
@@ -257,8 +265,9 @@ class SimpleSuctionHeader extends WaterSteamComponent implements Connectable, UI
 
     public SimpleSuctionHeader(Connectable[] sources, double volume) {
         this.sources = sources;
-        for (Connectable source: sources) {
-            isolationValveArray.add(new WaterValve(100, 10, atmosphere, atmosphere)); //dummy valves just used for their position property
+        for (Connectable source : sources) {
+            isolationValveArray.add(new WaterValve(100, 10, atmosphere, atmosphere)); // dummy valves just used for
+                                                                                      // their position property
         }
         initialWaterMass = volume / Loader.tables.getWaterDensityByTemp(20);
         waterMass = initialWaterMass;
@@ -270,7 +279,7 @@ class SimpleSuctionHeader extends WaterSteamComponent implements Connectable, UI
         waterTemperature = forcedInflowData[1];
         waterMass -= waterOutflow;
         waterOutflow = initialWaterMass - waterMass;
-        //double waterMass = initialWaterMass;
+        // double waterMass = initialWaterMass;
         isolationValveArray.forEach(valve -> {
             valve.update();
             totalValvePositions += valve.getPosition();
@@ -281,10 +290,12 @@ class SimpleSuctionHeader extends WaterSteamComponent implements Connectable, UI
             highestPressure = sourcePressure > highestPressure ? sourcePressure : highestPressure;
         }
         pressure = highestPressure;
-        if (waterOutflow >= 0) { // if inflow < outflow feed water from drains, otherwise push water back into drains
+        if (waterOutflow >= 0) { // if inflow < outflow feed water from drains, otherwise push water back into
+                                 // drains
             for (int i = 0; i < sources.length; i++) {
                 Connectable thisSource = sources[i];
-                Double sourceOutFlow = (double)(isolationValveArray.get(i).getPosition() / totalValvePositions) * waterOutflow; //waterOutflow / sources.length;
+                Double sourceOutFlow = (double) (isolationValveArray.get(i).getPosition() / totalValvePositions)
+                        * waterOutflow; // waterOutflow / sources.length;
                 if (sourceOutFlow.isNaN()) {
                     sourceOutFlow = 0.0;
                 }
@@ -298,7 +309,8 @@ class SimpleSuctionHeader extends WaterSteamComponent implements Connectable, UI
         } else {
             for (int i = 0; i < sources.length; i++) {
                 Connectable thisSource = sources[i];
-                Double sourceBackflow = (double)(isolationValveArray.get(i).getPosition() / totalValvePositions) * (0 - waterOutflow); //waterOutflow / sources.length;
+                Double sourceBackflow = (double) (isolationValveArray.get(i).getPosition() / totalValvePositions)
+                        * (0 - waterOutflow); // waterOutflow / sources.length;
                 if (sourceBackflow.isNaN()) {
                     sourceBackflow = 0.0;
                 }
@@ -365,11 +377,12 @@ class SimpleSuctionHeader extends WaterSteamComponent implements Connectable, UI
 }
 
 /**
-*  A water component where multiple inputs are combined into a single output. pressure = drain.pressure
-**/
+ * A water component where multiple inputs are combined into a single output.
+ * pressure = drain.pressure
+ **/
 class WaterMixer extends WaterSteamComponent implements Connectable, UIReadable {
     Connectable drain;
-    private final double  initialWaterMass;
+    private final double initialWaterMass;
     private double waterMass, waterInflowTemperature = 20.0;
     private double waterDensity = Loader.tables.getWaterDensityByTemp(waterTemperature);
 
@@ -404,7 +417,8 @@ class WaterMixer extends WaterSteamComponent implements Connectable, UIReadable 
 
     @Override
     public double getSteamDensity() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from
+                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
@@ -414,27 +428,32 @@ class WaterMixer extends WaterSteamComponent implements Connectable, UIReadable 
 
     @Override
     public double getSteamMass() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from
+                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public double getSteamVolume() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from
+                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public void updateSteamOutflow(double flow, double tempC) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from
+                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public void updateSteamInflow(double flow, double tempC) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from
+                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public void updateWaterOutflow(double flow, double tempC) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from
+                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override

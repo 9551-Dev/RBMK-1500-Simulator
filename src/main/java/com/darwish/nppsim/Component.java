@@ -19,7 +19,7 @@ abstract class WaterSteamComponent extends Component {
     protected double waterTemperature = 20.0, steamTemperature = 20.0;
     protected double waterLevel = 0.0;
     protected double pressure = 0.10142;
-    
+
     protected void resetFlows() {
         waterInflowRate = waterInflow;
         waterOutflowRate = waterOutflow;
@@ -46,19 +46,19 @@ abstract class WaterSteamComponent extends Component {
     public double getWaterOutflowRate() {
         return waterOutflowRate * 20;
     }
-    
+
     public double getWaterLevel() {
         return waterLevel;
     }
-    
+
     public double getWaterTemperature() {
         return waterTemperature;
     }
-    
+
     public double getSteamTemperature() {
         return steamTemperature;
     }
-    
+
     public double getPressure() {
         return pressure;
     }
@@ -72,7 +72,7 @@ abstract class WaterSteamSubComponent implements Serializable {
     protected double waterTemperature = 20.0, steamTemperature = 20.0;
     protected double waterLevel = 0.0;
     protected double pressure = 0.10142;
-    
+
     protected void resetFlows() {
         waterInflowRate = waterInflow;
         waterInflowRate = waterOutflow;
@@ -99,20 +99,20 @@ abstract class WaterSteamSubComponent implements Serializable {
     public double getWaterOutflowRate() {
         return waterOutflowRate * 20;
     }
-    
+
     public double getWaterLevel() {
         return waterLevel;
     }
-    
+
     public double getWaterTemperature() {
         return waterTemperature;
     }
-    
+
     public double getSteamTemperature() {
         return steamTemperature;
     }
-    
-    public double getPressure(){
+
+    public double getPressure() {
         return pressure;
     }
 }

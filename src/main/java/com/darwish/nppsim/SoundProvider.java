@@ -19,7 +19,8 @@ public class SoundProvider {
             ALARM_2 = loadAsset("/audio/alarm_2.wav");
             ALARM_2.setLoopPoints(0, ALARM_2.getFrameLength() - 1000);
         } catch (Exception e) {
-            new ErrorWindow("An error occured loading audio assets", ExceptionUtils.getStackTrace(e), false).setVisible(true);
+            new ErrorWindow("An error occured loading audio assets", ExceptionUtils.getStackTrace(e), false)
+                    .setVisible(true);
         }
     }
 

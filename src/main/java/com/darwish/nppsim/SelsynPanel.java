@@ -13,13 +13,13 @@ public class SelsynPanel extends javax.swing.JFrame implements UIUpdateable {
     private final Color dialLightColor = new Color(249, 249, 185);
     private final HashMap<ControlRodChannel, Selsyn> selsynBinding;
     private final ArrayList<ControlRodChannel> previousSelectedRods = new ArrayList<>();
-  
+
     public SelsynPanel() {
         initComponents();
         this.setTitle("Rod Position Indicators");
         selsynBinding = new HashMap<>();
         while (colNumber != 50) {
-            if (colNumber % 2 != 0 ) {
+            if (colNumber % 2 != 0) {
                 createRow();
             } else {
                 colNumber++;
@@ -33,51 +33,50 @@ public class SelsynPanel extends javax.swing.JFrame implements UIUpdateable {
         if (this.isVisible()) {
             java.awt.EventQueue.invokeLater(() -> {
                 selsynBinding.forEach((channel, selsyn) -> {
-                selsyn.setValue(channel.getPosition() * 7);
+                    selsyn.setValue(channel.getPosition() * 7);
                 });
             });
         }
     }
-    
+
     @Override
     public void initializeDialUpdateThread() {
         UI.uiThreads.add(
-            new Thread(() -> {
-                try {
-                    while (true) {
-                        if (this.isVisible()) {
-                            java.awt.EventQueue.invokeLater(() -> {
-                                if (!autoControl.automaticRodController.linkedChannels.isEmpty()) {
-                                    for (ControlRodChannel i: autoControl.automaticRodController.linkedChannels) {
-                                        selsynBinding.get(i).setValue(i.getPosition() * 7);
+                new Thread(() -> {
+                    try {
+                        while (true) {
+                            if (this.isVisible()) {
+                                java.awt.EventQueue.invokeLater(() -> {
+                                    if (!autoControl.automaticRodController.linkedChannels.isEmpty()) {
+                                        for (ControlRodChannel i : autoControl.automaticRodController.linkedChannels) {
+                                            selsynBinding.get(i).setValue(i.getPosition() * 7);
+                                        }
                                     }
-                                }
-                                if (NPPSim.autoControl.az1Control.isTripped()) {
-                                    selsynBinding.forEach((channel, selsyn) -> {
-                                        selsyn.setValue(channel.getPosition() * 7);
-                                    });
-                                }
-                                UI.selectedControlRods.forEach(channel -> {
-                                    selsynBinding.get(channel).setValue(channel.getPosition() * 7);
-                                    selsynBinding.get(channel).setDialColor(dialLightColor);
+                                    if (NPPSim.autoControl.az1Control.isTripped()) {
+                                        selsynBinding.forEach((channel, selsyn) -> {
+                                            selsyn.setValue(channel.getPosition() * 7);
+                                        });
+                                    }
+                                    UI.selectedControlRods.forEach(channel -> {
+                                        selsynBinding.get(channel).setValue(channel.getPosition() * 7);
+                                        selsynBinding.get(channel).setDialColor(dialLightColor);
 
+                                    });
+                                    previousSelectedRods.forEach(channel -> {
+                                        if (!UI.selectedControlRods.contains(channel)) {
+                                            selsynBinding.get(channel).setDialColor(Color.LIGHT_GRAY);
+                                        }
+                                    });
+                                    previousSelectedRods.clear();
+                                    previousSelectedRods.addAll(UI.selectedControlRods);
                                 });
-                                previousSelectedRods.forEach(channel -> {
-                                    if (!UI.selectedControlRods.contains(channel)) {
-                                        selsynBinding.get(channel).setDialColor(Color.LIGHT_GRAY);
-                                    }
-                                });
-                                previousSelectedRods.clear();
-                                previousSelectedRods.addAll(UI.selectedControlRods);
-                            });
+                            }
+                            Thread.sleep(UI.getUpdateRate());
                         }
-                        Thread.sleep(UI.getUpdateRate());
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            })
-        );
+                }));
         UI.uiThreads.get(UI.uiThreads.size() - 1).start();
     }
 
@@ -85,17 +84,17 @@ public class SelsynPanel extends javax.swing.JFrame implements UIUpdateable {
     public void setVisibility(boolean visible) {
         this.setVisible(visible);
     }
-    
+
     @Override
     public void discard() {
         this.setVisible(false);
     }
-    
+
     @Override
     public void acknowledge() {
 
     }
-    
+
     private javax.swing.JPanel createRow() {
         boolean fuelchannelIteratorActive = false;
         int fuelchannelIterator = 0;
@@ -111,7 +110,7 @@ public class SelsynPanel extends javax.swing.JFrame implements UIUpdateable {
             Channel currentChannel = NPPSim.core.coreArray.get(i + 3).get(50 - colNumber + 3);
             if (currentChannel instanceof ControlRodChannel) {
                 Selsyn selsyn = new Selsyn();
-                selsynBinding.put((ControlRodChannel)currentChannel, selsyn);
+                selsynBinding.put((ControlRodChannel) currentChannel, selsyn);
                 if (currentChannel instanceof SARChannel) {
                     selsyn.invert();
                 }
@@ -138,7 +137,7 @@ public class SelsynPanel extends javax.swing.JFrame implements UIUpdateable {
         colNumber++;
         return row;
     }
-    
+
     private javax.swing.JPanel createEmptySpace(int height) {
         javax.swing.JPanel button = new javax.swing.JPanel();
         button.setBackground(UI.BACKGROUND);
@@ -169,9 +168,10 @@ public class SelsynPanel extends javax.swing.JFrame implements UIUpdateable {
      * WARNING: Do NOT modify this code. The content of this method is always
      * regenerated by the Form Editor.
      */
-    
+
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -205,13 +205,11 @@ public class SelsynPanel extends javax.swing.JFrame implements UIUpdateable {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE)
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE));
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 429, Short.MAX_VALUE)
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 429, Short.MAX_VALUE));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

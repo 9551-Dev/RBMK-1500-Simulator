@@ -17,12 +17,12 @@ import org.jfree.chart.plot.dial.StandardDialScale;
 import org.jfree.data.general.DefaultValueDataset;
 
 public class Selsyn extends JPanel {
-    private static final Color DARKGREY = new Color(15,15,15);
-    private static final Color LABELGREY = new Color(30,30,30);
+    private static final Color DARKGREY = new Color(15, 15, 15);
+    private static final Color LABELGREY = new Color(30, 30, 30);
     private static final Color LT_GRAY = new Color(0xe0e0e0);
     private final DefaultValueDataset data;
     private final StandardDialFrame frame, innerFrame, centerFrame;
-    private final Font font; 
+    private final Font font;
     private final DialPointer.Pointer pointer;
     private final DecimalFormat decimalFormat;
     private DialBackground backgroundLayer;
@@ -96,23 +96,25 @@ public class Selsyn extends JPanel {
         chart = new JFreeChart(plot);
         chartPanel = new ChartPanel(chart) {
             @Override
-            public Dimension getMaximumSize(){
+            public Dimension getMaximumSize() {
                 return getCustomDimensions();
             }
+
             @Override
-            public Dimension getMinimumSize(){
+            public Dimension getMinimumSize() {
                 return getCustomDimensions();
             }
+
             @Override
-            public Dimension getPreferredSize(){
+            public Dimension getPreferredSize() {
                 return getCustomDimensions();
             }
-        }; 
+        };
         this.add(chartPanel);
     }
 
-    private Dimension getCustomDimensions(){
-        return new Dimension((int)(getBounds().width), (int)(getBounds().height));
+    private Dimension getCustomDimensions() {
+        return new Dimension((int) (getBounds().width), (int) (getBounds().height));
     }
 
     private void display() {
@@ -136,20 +138,20 @@ public class Selsyn extends JPanel {
         chart.setBackgroundPaint(LT_GRAY);
         chartPanel = new ChartPanel(chart) {
             @Override
-            public Dimension getMaximumSize(){
+            public Dimension getMaximumSize() {
                 return getCustomDimensions();
             }
+
             @Override
-            public Dimension getMinimumSize(){
+            public Dimension getMinimumSize() {
                 return getCustomDimensions();
             }
+
             @Override
-            public Dimension getPreferredSize(){
+            public Dimension getPreferredSize() {
                 return getCustomDimensions();
             }
-        }; 
+        };
         this.add(chartPanel);
     }
 }
-
-

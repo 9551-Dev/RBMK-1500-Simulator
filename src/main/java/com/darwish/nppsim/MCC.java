@@ -21,13 +21,13 @@ public class MCC extends Component {
         drum1 = new SeparatorDrum();
         drum2 = new SeparatorDrum();
 
-        for (ArrayList<Channel> x: core.coreArray) {
+        for (ArrayList<Channel> x : core.coreArray) {
             for (int i = 0; i < x.size(); i++) {
                 if (x.get(i) instanceof FuelChannel) {
                     if (i < 28) {
-                        fuelChannels2.add((FuelChannel)x.get(i));
+                        fuelChannels2.add((FuelChannel) x.get(i));
                     } else {
-                        fuelChannels1.add((FuelChannel)x.get(i));
+                        fuelChannels1.add((FuelChannel) x.get(i));
                     }
                 }
             }
@@ -38,8 +38,8 @@ public class MCC extends Component {
         fuelChannels2.forEach(channel -> {
             steamWaterPipes2.add(new SteamWaterPipe(channel, drum2));
         });
-        sHeader1 = new SimpleSuctionHeader(new Connectable[] {drum1}, 74.9);
-        sHeader2 = new SimpleSuctionHeader(new Connectable[] {drum2}, 74.9);
+        sHeader1 = new SimpleSuctionHeader(new Connectable[] { drum1 }, 74.9);
+        sHeader2 = new SimpleSuctionHeader(new Connectable[] { drum2 }, 74.9);
         sHeader1.isolationValveArray.get(0).position = 1.0f;
         sHeader2.isolationValveArray.get(0).position = 1.0f;
         pHeader1 = new MCPPressureHeader(fuelChannels1);
@@ -58,7 +58,7 @@ public class MCC extends Component {
         private final double nominalWaterVolume;
         private double initialSteamMass; // this would be air in reality
         private double steamMass = 0.0; // kg
-        private double waterMass = 223089.51; //223,5 m3 (2 drums + downcomers) //305837.26; // 306.4 m3 at 20C
+        private double waterMass = 223089.51; // 223,5 m3 (2 drums + downcomers) //305837.26; // 306.4 m3 at 20C
         private double steamProduction = 0.0; // kg/s
         private double thermalLoss = 0.0; // conductive energy loss Mwt
 
@@ -89,7 +89,8 @@ public class MCC extends Component {
             if (waterInflow < 0) {
                 waterMass += waterInflow;
             } else {
-                double[] inflowData = NPPMath.mixWater(waterMass, waterTemperature, waterInflow, waterInflowTemperature);
+                double[] inflowData = NPPMath.mixWater(waterMass, waterTemperature, waterInflow,
+                        waterInflowTemperature);
                 waterMass = inflowData[0];
                 waterTemperature = inflowData[1];
             }
@@ -104,9 +105,16 @@ public class MCC extends Component {
             } else {
                 steamMass += steamInflow;
                 double oldWaterTemp = waterTemperature;
-                waterTemperature += ((Loader.tables.getSteamEnthalpyByTemperature(steamInflowTemperature) - Loader.tables.getSteamEnthalpyByTemperature(waterTemperature)) * steamInflow) / (specificHeatWater * waterMass);
+                waterTemperature += ((Loader.tables.getSteamEnthalpyByTemperature(steamInflowTemperature)
+                        - Loader.tables.getSteamEnthalpyByTemperature(waterTemperature)) * steamInflow)
+                        / (specificHeatWater * waterMass);
                 specificHeatWater = NPPMath.calculateSpecificHeatWater(waterTemperature);
-                deltaEnergy += (Loader.tables.getSteamEnthalpyByTemperature(waterTemperature) - Loader.tables.getSteamEnthalpyByTemperature(oldWaterTemp)) * steamInflow; //correct for difference in new steamTemp and new waterTemp after energy transfer
+                deltaEnergy += (Loader.tables.getSteamEnthalpyByTemperature(waterTemperature)
+                        - Loader.tables.getSteamEnthalpyByTemperature(oldWaterTemp)) * steamInflow; // correct for
+                                                                                                    // difference in new
+                                                                                                    // steamTemp and new
+                                                                                                    // waterTemp after
+                                                                                                    // energy transfer
             }
 
             steamTemperature = waterTemperature;
@@ -127,7 +135,8 @@ public class MCC extends Component {
             specificDensityWater = Loader.tables.getWaterDensityByTemp(waterTemperature);
             waterVolume = waterMass * specificDensityWater;
             steamVolume = volume - waterVolume;
-            double deltaSteamMass = steamVolume / Loader.tables.getSteamDensityByPressure(potentialPressure) - (steamMass + initialSteamMass);
+            double deltaSteamMass = steamVolume / Loader.tables.getSteamDensityByPressure(potentialPressure)
+                    - (steamMass + initialSteamMass);
             if (steamMass + deltaSteamMass < 0) {
                 deltaSteamMass = 0 - steamMass;
             }
@@ -243,45 +252,45 @@ public class MCC extends Component {
     }
 
     protected class SteamWaterPipe implements Serializable {
-    private final FuelChannel source;
-    private final Connectable drain;
-    private double steamFlow = 0.0, steamTemp = 0.0;
-    private double waterFlow = 0.0, waterTemp = 0.0;
+        private final FuelChannel source;
+        private final Connectable drain;
+        private double steamFlow = 0.0, steamTemp = 0.0;
+        private double waterFlow = 0.0, waterTemp = 0.0;
 
-    SteamWaterPipe(FuelChannel source, Connectable drain) {
-        this.source = source;
-        this.drain = drain;
-        source.setDrain(drain);
-    }
+        SteamWaterPipe(FuelChannel source, Connectable drain) {
+            this.source = source;
+            this.drain = drain;
+            source.setDrain(drain);
+        }
 
-    public void update() {
-        if (source.getSteamVolume() == 0) {
-            steamFlow = source.getSteamMass();
-        } else {
-            double ratio = source.getSteamVolume() / (source.getSteamVolume() + drain.getSteamVolume());
-            double totalMass = source.getSteamMass() + drain.getSteamMass();
-            steamFlow = source.getSteamMass() - (ratio * totalMass);
+        public void update() {
+            if (source.getSteamVolume() == 0) {
+                steamFlow = source.getSteamMass();
+            } else {
+                double ratio = source.getSteamVolume() / (source.getSteamVolume() + drain.getSteamVolume());
+                double totalMass = source.getSteamMass() + drain.getSteamMass();
+                steamFlow = source.getSteamMass() - (ratio * totalMass);
+            }
+            if (steamFlow >= 0) {
+                steamTemp = source.getSteamTemperature();
+            } else {
+                steamTemp = drain.getSteamTemperature();
+            }
+            waterFlow = source.getWaterOutflow();
+            if (waterFlow < 0) { // reverse flow will need drain watertemp, otherwise source watertemp
+                waterTemp = drain.getWaterTemperature();
+            } else {
+                waterTemp = source.getWaterTemperature();
+            }
+            // source waterOutFlow is not updated here as source does that by itself
+            if (Double.isNaN(steamFlow)) {
+                steamFlow = 0;
+            }
+            source.updateSteamOutflow(steamFlow, steamTemp);
+            drain.updateSteamInflow(steamFlow, steamTemp);
+            drain.updateWaterInflow(waterFlow, waterTemp);
         }
-        if (steamFlow >= 0) {
-            steamTemp = source.getSteamTemperature();
-        } else {
-            steamTemp = drain.getSteamTemperature();
-        }
-        waterFlow = source.getWaterOutflow();
-        if (waterFlow < 0) { // reverse flow will need drain watertemp, otherwise source watertemp
-            waterTemp = drain.getWaterTemperature();
-        } else {
-            waterTemp = source.getWaterTemperature();
-        }
-        // source waterOutFlow is not updated here as source does that by itself
-        if (Double.isNaN(steamFlow)) {
-            steamFlow = 0;
-        }
-        source.updateSteamOutflow(steamFlow, steamTemp);
-        drain.updateSteamInflow(steamFlow, steamTemp);
-        drain.updateWaterInflow(waterFlow, waterTemp);
     }
-}
 
     protected class MCPPressureHeader extends WaterSteamSubComponent implements Connectable, UIReadable {
         final List<FuelChannel> drains;
@@ -300,21 +309,24 @@ public class MCC extends Component {
         public void update() {
             waterMass -= waterOutflow;
             waterOutflowRate += waterOutflow;
-            double[] waterInflowData = NPPMath.mixWater(waterMass, waterTemperature, waterInflow, waterInflowTemperature);
+            double[] waterInflowData = NPPMath.mixWater(waterMass, waterTemperature, waterInflow,
+                    waterInflowTemperature);
             waterTemperature = waterInflowData[1];
             waterMass = waterInflowData[0];
-            //waterTemperature -= (0.5 * waterTemperature - 10) * 0.0000004;
+            // waterTemperature -= (0.5 * waterTemperature - 10) * 0.0000004;
             specificDensityWater = Loader.tables.getWaterDensityByTemp(waterTemperature);
             waterVolume = specificDensityWater * waterMass;
             waterOutflow = (waterVolume - volume) / specificDensityWater;
             if (waterOutflow < 0) {
                 if (drains.size() == 835) {
-                    double[] inflowData = NPPMath.mixWater(waterMass, waterTemperature, 0 - waterOutflow, mcc.drum1.getWaterTemperature());
+                    double[] inflowData = NPPMath.mixWater(waterMass, waterTemperature, 0 - waterOutflow,
+                            mcc.drum1.getWaterTemperature());
                     waterMass = inflowData[0];
                     waterTemperature = inflowData[1];
                     mcc.drum1.updateWaterOutflow(0 - waterOutflow, mcc.drum1.getWaterTemperature());
                 } else {
-                    double[] inflowData = NPPMath.mixWater(waterMass, waterTemperature, 0 - waterOutflow, mcc.drum2.getWaterTemperature());
+                    double[] inflowData = NPPMath.mixWater(waterMass, waterTemperature, 0 - waterOutflow,
+                            mcc.drum2.getWaterTemperature());
                     waterMass = inflowData[0];
                     waterTemperature = inflowData[1];
                     mcc.drum2.updateWaterOutflow(0 - waterOutflow, mcc.drum2.getWaterTemperature());
@@ -322,7 +334,7 @@ public class MCC extends Component {
             } else {
                 waterMass -= waterOutflow;
                 double flowPerDrain = waterOutflow / drains.size();
-                for (Connectable i: drains) {
+                for (Connectable i : drains) {
                     i.updateWaterInflow(flowPerDrain, waterTemperature);
                 }
             }
@@ -369,12 +381,10 @@ public class MCC extends Component {
         @Override
         public void updateSteamOutflow(double flow, double tempC) {
 
-
         }
 
         @Override
         public void updateSteamInflow(double flow, double tempC) {
-
 
         }
 
@@ -386,7 +396,7 @@ public class MCC extends Component {
         @Override
         public void updateWaterInflow(double flow, double tempC) {
             waterInflow += flow;
-            waterInflowTemperature = tempC; //tempC will be equal for all mcp's
+            waterInflowTemperature = tempC; // tempC will be equal for all mcp's
         }
 
         public void setBypassState(boolean open) {
@@ -399,7 +409,8 @@ public class MCC extends Component {
 
         @Override
         public double getWaterMass() {
-            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from
+                                                                           // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
         }
     }
 
@@ -410,10 +421,10 @@ public class MCC extends Component {
             });
         });
         autoControl.resetTimeUpdatedFlag();
-        for (SteamWaterPipe i: steamWaterPipes1) {
+        for (SteamWaterPipe i : steamWaterPipes1) {
             i.update();
         }
-        for (SteamWaterPipe i: steamWaterPipes2) {
+        for (SteamWaterPipe i : steamWaterPipes2) {
             i.update();
         }
         drum1.update();
@@ -429,21 +440,21 @@ public class MCC extends Component {
 
     public void setThermalPower(double thermalPower) {
         final double perChannel = thermalPower / (fuelChannels1.size() + fuelChannels2.size());
-        for (FuelChannel i: fuelChannels1) {
+        for (FuelChannel i : fuelChannels1) {
             i.setThermalPower(perChannel);
         }
-        for (FuelChannel i: fuelChannels2) {
+        for (FuelChannel i : fuelChannels2) {
             i.setThermalPower(perChannel);
         }
     }
 
     public void setWaterTemp(double tempC) {
         double saturatedPress = Loader.tables.getSteamPressureByTemp(tempC);
-        for (FuelChannel i: fuelChannels1) {
+        for (FuelChannel i : fuelChannels1) {
             i.setWaterTemp(tempC);
             i.setSteamPressure(saturatedPress);
         }
-        for (FuelChannel i: fuelChannels2) {
+        for (FuelChannel i : fuelChannels2) {
             i.setWaterTemp(tempC);
             i.setSteamPressure(saturatedPress);
         }

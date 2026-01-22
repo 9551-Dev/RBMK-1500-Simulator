@@ -38,50 +38,64 @@ public class AutoControl extends Component {
     AZ1Control az1Control;
     FASRControl fasrControl;
     FluidAutomaticRodController automaticRodController, lepController;
-    //AutomaticRodController ar1Control, ar2Control, ar12Control, larControl;
+    // AutomaticRodController ar1Control, ar2Control, ar12Control, larControl;
     ArrayList<ControlRodChannel> ar1 = new ArrayList<>();
     ArrayList<ControlRodChannel> ar2 = new ArrayList<>();
     ArrayList<ControlRodChannel> lar = new ArrayList<>();
-    private long simulationTime = 0; //simulation time in seconds
+    private long simulationTime = 0; // simulation time in seconds
     private boolean timeUpdated = false;
 
     public AutoControl() {
-        condenserWaterLevelControl.add(new OutflowWaterLevelControl(tg1.condenser, new WaterValve[] {condensate1B.get(0).dischargeValve, condensate1B.get(1).dischargeValve, condensate1B.get(2).dischargeValve}));
-        condenserWaterLevelControl.add(new OutflowWaterLevelControl(tg2.condenser, new WaterValve[] {condensate2B.get(0).dischargeValve, condensate2B.get(1).dischargeValve, condensate2B.get(2).dischargeValve}));
+        condenserWaterLevelControl
+                .add(new OutflowWaterLevelControl(tg1.condenser, new WaterValve[] { condensate1B.get(0).dischargeValve,
+                        condensate1B.get(1).dischargeValve, condensate1B.get(2).dischargeValve }));
+        condenserWaterLevelControl
+                .add(new OutflowWaterLevelControl(tg2.condenser, new WaterValve[] { condensate2B.get(0).dischargeValve,
+                        condensate2B.get(1).dischargeValve, condensate2B.get(2).dischargeValve }));
         dearatorValves.forEach(valve -> {
-            dearatorWaterControl.add(new InflowWaterLevelControl(valve.drain, new WaterValve[] {valve}));
-            dearatorPressureControl.add(new InletSteamPressureControl(valve.drain, new SteamValve[] {((Dearator)valve.drain).steamInlet}));
+            dearatorWaterControl.add(new InflowWaterLevelControl(valve.drain, new WaterValve[] { valve }));
+            dearatorPressureControl.add(new InletSteamPressureControl(valve.drain,
+                    new SteamValve[] { ((Dearator) valve.drain).steamInlet }));
         });
-        short valveIterator[] = {0};
+        short valveIterator[] = { 0 };
         pcs.dearatorMakeupValves.forEach(valve -> {
-            dearatorMakeupControl.add(new InflowWaterLevelControl(valve.drain, new WaterValve[] {valve}));
-            dearatorWaterAndMakeupControl.add(new InflowWaterLevelControl(valve.drain, new WaterValve[] {dearatorWaterControl.get(valveIterator[0]).valveArray[0], valve}));
+            dearatorMakeupControl.add(new InflowWaterLevelControl(valve.drain, new WaterValve[] { valve }));
+            dearatorWaterAndMakeupControl.add(new InflowWaterLevelControl(valve.drain,
+                    new WaterValve[] { dearatorWaterControl.get(valveIterator[0]).valveArray[0], valve }));
             valveIterator[0]++;
         });
-        auxFeederControl.add(new InflowWaterLevelControl(mcc.drum1, new WaterValve[] {auxFeederValves.get(0)}));
-        auxFeederControl.add(new InflowWaterLevelControl(mcc.drum2, new WaterValve[] {auxFeederValves.get(1)}));
+        auxFeederControl.add(new InflowWaterLevelControl(mcc.drum1, new WaterValve[] { auxFeederValves.get(0) }));
+        auxFeederControl.add(new InflowWaterLevelControl(mcc.drum2, new WaterValve[] { auxFeederValves.get(1) }));
         mainFeederControl.add(new InflowWaterLevelControl(
-            mcc.drum1,
-            new WaterValve[] {mainFeederValves.get(0), mainFeederValves.get(1), mainFeederValves.get(2)})
-        );
+                mcc.drum1,
+                new WaterValve[] { mainFeederValves.get(0), mainFeederValves.get(1), mainFeederValves.get(2) }));
         mainFeederControl.add(new InflowWaterLevelControl(
-            mcc.drum2,
-            new WaterValve[] {mainFeederValves.get(3), mainFeederValves.get(4), mainFeederValves.get(5)})
-        );
-        sdv_cControl.add(new OutletSteamPressureControl(mcc.drum1, new SteamValve[] {sdv_c.get(0), sdv_c.get(1), sdv_c.get(2), sdv_c.get(3), sdv_c.get(4), sdv_c.get(5), sdv_c.get(6), sdv_c.get(7)}));
-        sdv_cControl.add(new OutletSteamPressureControl(mcc.drum2, new SteamValve[] {sdv_c.get(0), sdv_c.get(1), sdv_c.get(2),sdv_c.get(3), sdv_c.get(4), sdv_c.get(5), sdv_c.get(6), sdv_c.get(7)}));
-        sdv_aControl.add(new OutletSteamPressureControl(mcc.drum1, new SteamValve[] {sdv_a.get(0)}));
-        sdv_aControl.add(new OutletSteamPressureControl(mcc.drum2, new SteamValve[] {sdv_a.get(1)}));
-        msv1Control.add(new OutletSteamPressureControl(mcc.drum1, new SteamValve[] {msvLoop1.get(0)}));
-        msv1Control.add(new OutletSteamPressureControl(mcc.drum1, new SteamValve[] {msvLoop1.get(1), msvLoop1.get(2)}));
-        msv1Control.add(new OutletSteamPressureControl(mcc.drum1, new SteamValve[] {msvLoop1.get(3), msvLoop1.get(4), msvLoop1.get(5)}));
-        msv2Control.add(new OutletSteamPressureControl(mcc.drum2, new SteamValve[] {msvLoop2.get(0)}));
-        msv2Control.add(new OutletSteamPressureControl(mcc.drum2, new SteamValve[] {msvLoop2.get(1), msvLoop2.get(2)}));
-        msv2Control.add(new OutletSteamPressureControl(mcc.drum2, new SteamValve[] {msvLoop2.get(3), msvLoop2.get(4), msvLoop2.get(5)}));
-        tgValveControl.add(new OutletSteamPressureControl(mcc.drum1, new SteamValve[] {TG1InletValves.get(0), TG1InletValves.get(1)}));
-        tgValveControl.add(new OutletSteamPressureControl(mcc.drum2, new SteamValve[] {TG1InletValves.get(0), TG1InletValves.get(1)}));
-        tgValveControl.add(new OutletSteamPressureControl(mcc.drum1, new SteamValve[] {TG2InletValves.get(0), TG2InletValves.get(1)}));
-        tgValveControl.add(new OutletSteamPressureControl(mcc.drum2, new SteamValve[] {TG2InletValves.get(0), TG2InletValves.get(1)}));
+                mcc.drum2,
+                new WaterValve[] { mainFeederValves.get(3), mainFeederValves.get(4), mainFeederValves.get(5) }));
+        sdv_cControl.add(new OutletSteamPressureControl(mcc.drum1, new SteamValve[] { sdv_c.get(0), sdv_c.get(1),
+                sdv_c.get(2), sdv_c.get(3), sdv_c.get(4), sdv_c.get(5), sdv_c.get(6), sdv_c.get(7) }));
+        sdv_cControl.add(new OutletSteamPressureControl(mcc.drum2, new SteamValve[] { sdv_c.get(0), sdv_c.get(1),
+                sdv_c.get(2), sdv_c.get(3), sdv_c.get(4), sdv_c.get(5), sdv_c.get(6), sdv_c.get(7) }));
+        sdv_aControl.add(new OutletSteamPressureControl(mcc.drum1, new SteamValve[] { sdv_a.get(0) }));
+        sdv_aControl.add(new OutletSteamPressureControl(mcc.drum2, new SteamValve[] { sdv_a.get(1) }));
+        msv1Control.add(new OutletSteamPressureControl(mcc.drum1, new SteamValve[] { msvLoop1.get(0) }));
+        msv1Control
+                .add(new OutletSteamPressureControl(mcc.drum1, new SteamValve[] { msvLoop1.get(1), msvLoop1.get(2) }));
+        msv1Control.add(new OutletSteamPressureControl(mcc.drum1,
+                new SteamValve[] { msvLoop1.get(3), msvLoop1.get(4), msvLoop1.get(5) }));
+        msv2Control.add(new OutletSteamPressureControl(mcc.drum2, new SteamValve[] { msvLoop2.get(0) }));
+        msv2Control
+                .add(new OutletSteamPressureControl(mcc.drum2, new SteamValve[] { msvLoop2.get(1), msvLoop2.get(2) }));
+        msv2Control.add(new OutletSteamPressureControl(mcc.drum2,
+                new SteamValve[] { msvLoop2.get(3), msvLoop2.get(4), msvLoop2.get(5) }));
+        tgValveControl.add(new OutletSteamPressureControl(mcc.drum1,
+                new SteamValve[] { TG1InletValves.get(0), TG1InletValves.get(1) }));
+        tgValveControl.add(new OutletSteamPressureControl(mcc.drum2,
+                new SteamValve[] { TG1InletValves.get(0), TG1InletValves.get(1) }));
+        tgValveControl.add(new OutletSteamPressureControl(mcc.drum1,
+                new SteamValve[] { TG2InletValves.get(0), TG2InletValves.get(1) }));
+        tgValveControl.add(new OutletSteamPressureControl(mcc.drum2,
+                new SteamValve[] { TG2InletValves.get(0), TG2InletValves.get(1) }));
         tgValveControl.forEach(controller -> {
             controller.setpoint = 6.90;
         });
@@ -94,13 +108,13 @@ public class AutoControl extends Component {
             controller.activationTreshold = 6.98;
         });
         sdv_aControl.forEach(controller -> {
-        controller.setEnabled(true);
-        controller.setpoint = 7.06;
-        controller.activationTreshold = 7.06;
+            controller.setEnabled(true);
+            controller.setpoint = 7.06;
+            controller.activationTreshold = 7.06;
         });
-        //activate msv controllers and set setpoints for group 1(0), 2(1-2), 3(3-5)
+        // activate msv controllers and set setpoints for group 1(0), 2(1-2), 3(3-5)
         msv1Control.forEach(controller -> {
-        controller.setEnabled(true);
+            controller.setEnabled(true);
         });
         msv1Control.get(0).setpoint = 7.36;
         msv1Control.get(0).activationTreshold = 7.36;
@@ -110,7 +124,7 @@ public class AutoControl extends Component {
         msv1Control.get(2).activationTreshold = 7.55;
 
         msv2Control.forEach(controller -> {
-        controller.setEnabled(true);
+            controller.setEnabled(true);
         });
         msv2Control.get(0).setpoint = 7.36;
         msv2Control.get(0).activationTreshold = 7.36;
@@ -125,11 +139,11 @@ public class AutoControl extends Component {
         core.coreArray.forEach(row -> {
             row.forEach(channel -> {
                 if (channel instanceof ACRChannel) {
-                    ar1.add((ControlRodChannel)channel);
+                    ar1.add((ControlRodChannel) channel);
                 } else if (channel instanceof SACRChannel) {
-                    ar2.add((ControlRodChannel)channel);
+                    ar2.add((ControlRodChannel) channel);
                 } else if (channel instanceof LACChannel) {
-                    lar.add((ControlRodChannel)channel);
+                    lar.add((ControlRodChannel) channel);
                 }
             });
         });
@@ -140,20 +154,23 @@ public class AutoControl extends Component {
         sdv_c.forEach(valve -> {
             valve.setLocked(valve.drain.getPressure() > 0.023 || valve.drain.getSteamTemperature() > 100.0);
         });
-        if(sdv_cControl.get(0).isEnabled()) {
-            Runnable controller = mcc.drum1.getPressure() > mcc.drum2.getPressure() ? sdv_cControl.get(0)::update: sdv_cControl.get(1)::update;
+        if (sdv_cControl.get(0).isEnabled()) {
+            Runnable controller = mcc.drum1.getPressure() > mcc.drum2.getPressure() ? sdv_cControl.get(0)::update
+                    : sdv_cControl.get(1)::update;
             controller.run();
         }
-        if(tgValveControl.get(0).isEnabled()) {
-            Runnable controller = mcc.drum1.getPressure() > mcc.drum2.getPressure() ? tgValveControl.get(0)::update: tgValveControl.get(1)::update;
+        if (tgValveControl.get(0).isEnabled()) {
+            Runnable controller = mcc.drum1.getPressure() > mcc.drum2.getPressure() ? tgValveControl.get(0)::update
+                    : tgValveControl.get(1)::update;
             controller.run();
         }
-        if(tgValveControl.get(2).isEnabled()) {
-            Runnable controller = mcc.drum1.getPressure() > mcc.drum2.getPressure() ? tgValveControl.get(2)::update: tgValveControl.get(3)::update;
+        if (tgValveControl.get(2).isEnabled()) {
+            Runnable controller = mcc.drum1.getPressure() > mcc.drum2.getPressure() ? tgValveControl.get(2)::update
+                    : tgValveControl.get(3)::update;
             controller.run();
         }
         condenserWaterLevelControl.forEach(controller -> {
-            if(controller.isEnabled()) {
+            if (controller.isEnabled()) {
                 controller.update();
             }
         });
@@ -177,22 +194,22 @@ public class AutoControl extends Component {
             }
         });
         mainFeederControl.forEach(controller -> {
-            if(controller.isEnabled()) {
+            if (controller.isEnabled()) {
                 controller.update();
             }
         });
         sdv_aControl.forEach(controller -> {
-            if(controller.isEnabled()) {
+            if (controller.isEnabled()) {
                 controller.update();
             }
         });
         msv1Control.forEach(controller -> {
-            if(controller.isEnabled()) {
+            if (controller.isEnabled()) {
                 controller.update();
             }
         });
         msv2Control.forEach(controller -> {
-            if(controller.isEnabled()) {
+            if (controller.isEnabled()) {
                 controller.update();
             }
         });
@@ -227,15 +244,15 @@ public class AutoControl extends Component {
             deltaLevel = currentLevel - previousLevel;
             deltaLevelSetpoint = (setpoint - currentLevel) / 200;
             if (deltaLevel > deltaLevelSetpoint + 0.001) {
-                for (WaterValve valve: valveArray) {
+                for (WaterValve valve : valveArray) {
                     valve.setAutoState(0);
                 }
             } else if (deltaLevel < deltaLevelSetpoint - 0.001) {
-                for (WaterValve valve: valveArray) {
+                for (WaterValve valve : valveArray) {
                     valve.setAutoState(2);
                 }
             } else {
-                for (WaterValve valve: valveArray) {
+                for (WaterValve valve : valveArray) {
                     valve.setAutoState(1);
                 }
             }
@@ -253,7 +270,7 @@ public class AutoControl extends Component {
         public void setEnabled(boolean enabled) {
             this.enabled = enabled;
             if (!enabled) {
-                for (WaterValve valve: valveArray) {
+                for (WaterValve valve : valveArray) {
                     valve.setAutoState(1);
                 }
             }
@@ -272,15 +289,15 @@ public class AutoControl extends Component {
             deltaLevel = currentLevel - previousLevel;
             deltaLevelSetpoint = (setpoint - currentLevel) / 200;
             if (deltaLevel > deltaLevelSetpoint + 0.001) {
-                for (WaterValve valve: valveArray) {
+                for (WaterValve valve : valveArray) {
                     valve.setAutoState(2);
                 }
             } else if (deltaLevel < deltaLevelSetpoint - 0.001) {
-                for (WaterValve valve: valveArray) {
+                for (WaterValve valve : valveArray) {
                     valve.setAutoState(0);
                 }
             } else {
-                for (WaterValve valve: valveArray) {
+                for (WaterValve valve : valveArray) {
                     valve.setAutoState(1);
                 }
             }
@@ -305,15 +322,15 @@ public class AutoControl extends Component {
             deltaPressure = currentPressure - previousPressure;
             deltaPressureSetpoint = (setpoint - currentPressure) / 200;
             if (deltaPressure > deltaPressureSetpoint + 0.0001) {
-                for (SteamValve valve: valveArray) {
+                for (SteamValve valve : valveArray) {
                     valve.setAutoState(0);
                 }
             } else if (deltaPressure < deltaPressureSetpoint - 0.0001) {
-                for (SteamValve valve: valveArray) {
+                for (SteamValve valve : valveArray) {
                     valve.setAutoState(2);
                 }
             } else {
-                for (SteamValve valve: valveArray) {
+                for (SteamValve valve : valveArray) {
                     valve.setAutoState(1);
                 }
             }
@@ -335,7 +352,7 @@ public class AutoControl extends Component {
         public void setEnabled(boolean enabled) {
             this.enabled = enabled;
             if (!enabled) {
-                for (SteamValve valve: valveArray) {
+                for (SteamValve valve : valveArray) {
                     valve.setAutoState(1);
                 }
             }
@@ -355,15 +372,16 @@ public class AutoControl extends Component {
             deltaPressure = currentPressure - previousPressure;
             deltaPressureSetpoint = (setpoint - currentPressure) / 200;
             if (deltaPressure < deltaPressureSetpoint - 0.0001) {
-                for (SteamValve valve: valveArray) {
+                for (SteamValve valve : valveArray) {
                     valve.setAutoState(0);
                 }
-            } else if (deltaPressure > deltaPressureSetpoint + 0.0001 && (target.getPressure() > activationTreshold || valveArray[0].getPosition() != 0.0)) {
-                for (SteamValve valve: valveArray) {
+            } else if (deltaPressure > deltaPressureSetpoint + 0.0001
+                    && (target.getPressure() > activationTreshold || valveArray[0].getPosition() != 0.0)) {
+                for (SteamValve valve : valveArray) {
                     valve.setAutoState(2);
                 }
             } else {
-                for (SteamValve valve: valveArray) {
+                for (SteamValve valve : valveArray) {
                     valve.setAutoState(1);
                 }
             }
@@ -384,7 +402,7 @@ public class AutoControl extends Component {
             if (mcc.drum1.getPressure() > 7.26 || mcc.drum2.getPressure() > 7.26) {
                 trip("High Drum Pressure");
             }
-            if (mcc.drum1.getWaterLevel() > 30 || mcc.drum2.getWaterLevel() > 30 ) {
+            if (mcc.drum1.getWaterLevel() > 30 || mcc.drum2.getWaterLevel() > 30) {
                 trip("High Water Level");
             }
             if (mcc.drum1.getWaterLevel() < -40 || mcc.drum2.getWaterLevel() < -40) {
@@ -455,7 +473,7 @@ public class AutoControl extends Component {
         }
     }
 
-     class FASRControl implements Serializable {
+    class FASRControl implements Serializable {
         private boolean tripped = false, sequenceLock = false;
         private ArrayList<FASRChannel> channels = new ArrayList<>();
 
@@ -463,14 +481,14 @@ public class AutoControl extends Component {
             core.coreArray.forEach(row -> {
                 row.forEach(channel -> {
                     if (channel instanceof FASRChannel) {
-                        channels.add((FASRChannel)channel);
+                        channels.add((FASRChannel) channel);
                     }
                 });
             });
         }
 
         public void update() {
-            for (FASRChannel channel: channels) {
+            for (FASRChannel channel : channels) {
                 if (channel.getPosition() > 0) {
                     sequenceLock = true;
                     return;
@@ -533,6 +551,7 @@ public class AutoControl extends Component {
         final ControlRodChannel[] linkedChannels;
         final ArrayList<ControlRodChannel> toControl = new ArrayList<>();
         private boolean enabled = false, error = false, limit = false, busy = false;
+
         public AutomaticRodController(ControlRodChannel[] linkedChannels) {
             this.linkedChannels = linkedChannels;
         }
@@ -546,7 +565,7 @@ public class AutoControl extends Component {
             boolean lowerLimit = false;
             boolean checkError = false;
             boolean checkBusy = false;
-            for (ControlRodChannel channel: linkedChannels) {
+            for (ControlRodChannel channel : linkedChannels) {
                 averagePower += channel.getNeutronPopulation()[0];
                 if (channel.getPosition() == 0) {
                     upperLimit = true;
@@ -557,12 +576,12 @@ public class AutoControl extends Component {
             averagePower /= linkedChannels.length;
             ro = core.getReactivity();
             roSetpoint = 0 + ((setpoint - thermalPower) / 20000);
-            if (ro  > roSetpoint + 0.00005) {
+            if (ro > roSetpoint + 0.00005) {
                 limit = lowerLimit;
                 if (limit) {
                     checkError = true;
                 }
-                for (ControlRodChannel channel: linkedChannels) {
+                for (ControlRodChannel channel : linkedChannels) {
                     if (channel.getNeutronPopulation()[0] < averagePower * 0.95) {
                         toControl.remove(channel);
                     }
@@ -570,7 +589,7 @@ public class AutoControl extends Component {
                 if (toControl.isEmpty()) {
                     toControl.addAll(Arrays.asList(linkedChannels));
                 }
-                for (ControlRodChannel rod: toControl) {
+                for (ControlRodChannel rod : toControl) {
                     rod.setAutoState(2);
                     if (rod.getPosition() < 1) {
                         checkBusy = true;
@@ -581,12 +600,12 @@ public class AutoControl extends Component {
                 if (fasrControl.getSequenceBlock()) {
                     error = true;
                     busy = false;
-                    for (ControlRodChannel rod: linkedChannels) {
+                    for (ControlRodChannel rod : linkedChannels) {
                         rod.setAutoState(1);
                     }
                     return;
                 }
-                for (ControlRodChannel channel: linkedChannels) {
+                for (ControlRodChannel channel : linkedChannels) {
                     if (channel.getNeutronPopulation()[0] > averagePower * 1.05) {
                         toControl.remove(channel);
                     }
@@ -594,7 +613,7 @@ public class AutoControl extends Component {
                 if (toControl.isEmpty()) {
                     toControl.addAll(Arrays.asList(linkedChannels));
                 }
-                for (ControlRodChannel rod: toControl) {
+                for (ControlRodChannel rod : toControl) {
                     rod.setAutoState(0);
                     if (rod.getPosition() > 0) {
                         checkBusy = true;
@@ -603,7 +622,7 @@ public class AutoControl extends Component {
             } else {
                 limit = false;
                 busy = false;
-                for (ControlRodChannel rod: linkedChannels) {
+                for (ControlRodChannel rod : linkedChannels) {
                     rod.setAutoState(1);
                 }
             }
@@ -618,7 +637,7 @@ public class AutoControl extends Component {
         public void setEnabled(boolean enabled) {
             this.enabled = enabled;
             if (!enabled) {
-                for (ControlRodChannel channel: linkedChannels) {
+                for (ControlRodChannel channel : linkedChannels) {
                     channel.setAutoState(1);
                 }
             }
@@ -667,26 +686,26 @@ public class AutoControl extends Component {
     }
 
     class FluidAutomaticRodController implements Serializable {
-    private double setpoint = 0.0;
-    double ro, roSetpoint, thermalPower, averagePower;
-    final ArrayList<ControlRodChannel> linkedChannels = new ArrayList<>();
-    final ArrayList<ControlRodChannel> toControl = new ArrayList<>();
-    private final boolean[] enabled = {false, false, false}; //{lar, 1ar, 2ar}
-    private final boolean[] error = {false, false, false};
-    private final boolean[] limit = {false, false, false};
-    private final boolean[] busy = {false, false, false};
+        private double setpoint = 0.0;
+        double ro, roSetpoint, thermalPower, averagePower;
+        final ArrayList<ControlRodChannel> linkedChannels = new ArrayList<>();
+        final ArrayList<ControlRodChannel> toControl = new ArrayList<>();
+        private final boolean[] enabled = { false, false, false }; // {lar, 1ar, 2ar}
+        private final boolean[] error = { false, false, false };
+        private final boolean[] limit = { false, false, false };
+        private final boolean[] busy = { false, false, false };
 
         public void update() {
             thermalPower = core.getThermalPower();
             toControl.clear();
             toControl.addAll(linkedChannels);
             averagePower = 0;
-            boolean upperLimit[] = {false, false, false};
-            boolean lowerLimit[] = {false, false, false};
-            boolean checkError[] = {false, false, false};
-            boolean checkBusy[] = {false, false, false};
+            boolean upperLimit[] = { false, false, false };
+            boolean lowerLimit[] = { false, false, false };
+            boolean checkError[] = { false, false, false };
+            boolean checkBusy[] = { false, false, false };
             boolean fineControl = true;
-            for (ControlRodChannel channel: linkedChannels) {
+            for (ControlRodChannel channel : linkedChannels) {
                 averagePower += channel.getNeutronPopulation()[0];
                 if (channel.getPosition() == 0) {
                     if (ar1.contains(channel)) {
@@ -709,8 +728,8 @@ public class AutoControl extends Component {
             averagePower /= linkedChannels.size();
             ro = core.getReactivity();
             roSetpoint = 0 + ((setpoint - thermalPower) / 50000);
-            if (ro  > roSetpoint + 0.00001) {
-                if (ro  > roSetpoint + 0.0001) {
+            if (ro > roSetpoint + 0.00001) {
+                if (ro > roSetpoint + 0.0001) {
                     fineControl = false;
                 }
                 for (int i = 0; i < 3; i++) {
@@ -720,7 +739,7 @@ public class AutoControl extends Component {
                     }
                 }
                 if (!(limit[0] || limit[1] || limit[2])) {
-                    for (ControlRodChannel channel: linkedChannels) {
+                    for (ControlRodChannel channel : linkedChannels) {
                         if (channel.getNeutronPopulation()[0] < averagePower * 0.99) {
                             toControl.remove(channel);
                             channel.setAutoState(0);
@@ -730,7 +749,7 @@ public class AutoControl extends Component {
                 if (toControl.isEmpty()) {
                     toControl.addAll(linkedChannels);
                 }
-                for (ControlRodChannel rod: toControl) {
+                for (ControlRodChannel rod : toControl) {
                     if (rod.getPosition() < 1) {
                         if (fineControl) {
                             rod.setAutoState(1);
@@ -751,7 +770,7 @@ public class AutoControl extends Component {
                     }
                 }
             } else if (ro < roSetpoint - 0.00001) {
-                if (ro  < roSetpoint - 0.0001) {
+                if (ro < roSetpoint - 0.0001) {
                     fineControl = false;
                 }
                 for (int i = 0; i < 3; i++) {
@@ -762,13 +781,13 @@ public class AutoControl extends Component {
                         error[i] = true;
                         busy[i] = false;
                     }
-                    for (ControlRodChannel rod: linkedChannels) {
+                    for (ControlRodChannel rod : linkedChannels) {
                         rod.setAutoState(1);
                     }
                     return;
                 }
                 if (!(limit[0] || limit[1] || limit[2])) {
-                    for (ControlRodChannel channel: linkedChannels) {
+                    for (ControlRodChannel channel : linkedChannels) {
                         if (channel.getNeutronPopulation()[0] > averagePower * 1.01) {
                             toControl.remove(channel);
                             channel.setAutoState(2);
@@ -778,7 +797,7 @@ public class AutoControl extends Component {
                 if (toControl.isEmpty()) {
                     toControl.addAll(linkedChannels);
                 }
-                for (ControlRodChannel rod: toControl) {
+                for (ControlRodChannel rod : toControl) {
                     if (rod.getPosition() > 0) {
                         if (fineControl) {
                             rod.setAutoState(1);
@@ -803,14 +822,14 @@ public class AutoControl extends Component {
                     busy[i] = false;
                     limit[i] = false;
                 }
-                for (ControlRodChannel rod: linkedChannels) {
+                for (ControlRodChannel rod : linkedChannels) {
                     rod.setAutoState(1);
                 }
             }
             for (int i = 0; i < 3; i++) {
-                    error[i] = checkError[i];
-                    busy[i] = checkBusy[i];
-                }
+                error[i] = checkError[i];
+                busy[i] = checkBusy[i];
+            }
         }
 
         public void setSetpoint(double setpoint) {
@@ -846,7 +865,7 @@ public class AutoControl extends Component {
         }
 
         public void disableLar() {
-            if(!enabled[0]) {
+            if (!enabled[0]) {
                 return;
             }
             lar.forEach(channel -> {

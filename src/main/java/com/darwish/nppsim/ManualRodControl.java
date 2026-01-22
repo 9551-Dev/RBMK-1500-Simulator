@@ -13,12 +13,14 @@ public class ManualRodControl extends javax.swing.JPanel {
     static final Color FASR_ON = new FASRChannel().uiData.UISelsynColor.brighter().brighter().brighter();
     static final Color FASR_OFF = new FASRChannel().uiData.UISelsynColor.darker();
     ArrayList<FASRChannel> fasrChannels;
+
     /**
      * Creates new form ManualRodControl
      */
     public ManualRodControl() {
         initComponents();
-        if (NPPSim.mcc == null) { //return when the IDE tries to create this object as the mcc will not be initialized 
+        if (NPPSim.mcc == null) { // return when the IDE tries to create this object as the mcc will not be
+                                  // initialized
             return;
         }
         ArrayList<ArrayList<Channel>> core = NPPSim.core.coreArray;
@@ -27,21 +29,22 @@ public class ManualRodControl extends javax.swing.JPanel {
         core.forEach(row -> {
             for (int i = 0; i < row.size(); i++) {
                 if (row.get(i) instanceof FASRChannel) {
-                    fasrChannels.add((FASRChannel)row.get(i));
+                    fasrChannels.add((FASRChannel) row.get(i));
                 }
             }
-        }); 
+        });
         boolean found;
-        for (Component i: this.getComponents()) {
-            for (Component b: ((JPanel)i).getComponents()) {
+        for (Component i : this.getComponents()) {
+            for (Component b : ((JPanel) i).getComponents()) {
                 if (b instanceof JToggleButton) {
                     found = false;
-                    JToggleButton button = (JToggleButton)b;
+                    JToggleButton button = (JToggleButton) b;
                     for (int x = 55; x > 0; x--) {
                         for (int y = 55; y > 0; y--) {
                             Channel channel = core.get(y).get(x);
-                            if (channel instanceof ControlRodChannel && !rodButtonBinding.containsKey((ControlRodChannel)channel)) {
-                                rodButtonBinding.put((ControlRodChannel)channel, button);
+                            if (channel instanceof ControlRodChannel
+                                    && !rodButtonBinding.containsKey((ControlRodChannel) channel)) {
+                                rodButtonBinding.put((ControlRodChannel) channel, button);
                                 button.setText(channel.uiData.positionString);
                                 button.setForeground(Color.BLACK);
                                 button.setBackground(channel.uiData.UISelsynColor.darker());
@@ -56,11 +59,11 @@ public class ManualRodControl extends javax.swing.JPanel {
                                 });
                                 button.addActionListener((java.awt.event.ActionEvent evt) -> {
                                     if (button.isSelected()) {
-                                        UI.selectedControlRods.add((ControlRodChannel)channel);
+                                        UI.selectedControlRods.add((ControlRodChannel) channel);
                                     } else {
-                                        UI.selectedControlRods.remove((ControlRodChannel)channel);
+                                        UI.selectedControlRods.remove((ControlRodChannel) channel);
                                         button.setBackground(channel.uiData.UISelsynColor.darker());
-                                        ((ControlRodChannel)channel).setState(1);
+                                        ((ControlRodChannel) channel).setState(1);
                                     }
                                 });
                                 found = true;
@@ -77,7 +80,7 @@ public class ManualRodControl extends javax.swing.JPanel {
             }
         }
     }
-    
+
     public void resetSelection() {
         rodButtonBinding.forEach((channel, button) -> {
             button.setSelected(false);
@@ -85,9 +88,10 @@ public class ManualRodControl extends javax.swing.JPanel {
         });
         UI.selectedControlRods.clear();
     }
-    
-    public void update() { //updated every 50 ms
-        boolean blinker = Annunciator.annunciatorBlinker; //save in variable because value might flip during method exection
+
+    public void update() { // updated every 50 ms
+        boolean blinker = Annunciator.annunciatorBlinker; // save in variable because value might flip during method
+                                                          // exection
         fasrChannels.forEach(channel -> {
             if (channel.getPosition() > 0 && !rodButtonBinding.get(channel).isSelected()) {
                 if (blinker) {
@@ -95,17 +99,18 @@ public class ManualRodControl extends javax.swing.JPanel {
                 } else {
                     rodButtonBinding.get(channel).setBackground(FASR_OFF);
                 }
-            } 
+            }
         });
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
      * regenerated by the Form Editor.
      */
-    
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jPanel4 = new javax.swing.JPanel();
@@ -637,13 +642,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel25Layout = new javax.swing.GroupLayout(jPanel25);
         jPanel25.setLayout(jPanel25Layout);
         jPanel25Layout.setHorizontalGroup(
-            jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel25Layout.setVerticalGroup(
-            jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel4.add(jPanel25);
 
@@ -652,13 +655,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel26Layout = new javax.swing.GroupLayout(jPanel26);
         jPanel26.setLayout(jPanel26Layout);
         jPanel26Layout.setHorizontalGroup(
-            jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel26Layout.setVerticalGroup(
-            jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel4.add(jPanel26);
 
@@ -667,13 +668,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel27Layout = new javax.swing.GroupLayout(jPanel27);
         jPanel27.setLayout(jPanel27Layout);
         jPanel27Layout.setHorizontalGroup(
-            jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel27Layout.setVerticalGroup(
-            jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel4.add(jPanel27);
 
@@ -682,13 +681,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel28Layout = new javax.swing.GroupLayout(jPanel28);
         jPanel28.setLayout(jPanel28Layout);
         jPanel28Layout.setHorizontalGroup(
-            jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel28Layout.setVerticalGroup(
-            jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel4.add(jPanel28);
 
@@ -697,13 +694,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel29Layout = new javax.swing.GroupLayout(jPanel29);
         jPanel29.setLayout(jPanel29Layout);
         jPanel29Layout.setHorizontalGroup(
-            jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel29Layout.setVerticalGroup(
-            jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel4.add(jPanel29);
 
@@ -712,13 +707,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel30Layout = new javax.swing.GroupLayout(jPanel30);
         jPanel30.setLayout(jPanel30Layout);
         jPanel30Layout.setHorizontalGroup(
-            jPanel30Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel30Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel30Layout.setVerticalGroup(
-            jPanel30Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel30Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel4.add(jPanel30);
 
@@ -727,13 +720,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel31Layout = new javax.swing.GroupLayout(jPanel31);
         jPanel31.setLayout(jPanel31Layout);
         jPanel31Layout.setHorizontalGroup(
-            jPanel31Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel31Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel31Layout.setVerticalGroup(
-            jPanel31Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel31Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel4.add(jPanel31);
 
@@ -742,13 +733,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel32Layout = new javax.swing.GroupLayout(jPanel32);
         jPanel32.setLayout(jPanel32Layout);
         jPanel32Layout.setHorizontalGroup(
-            jPanel32Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel32Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel32Layout.setVerticalGroup(
-            jPanel32Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel32Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel4.add(jPanel32);
 
@@ -765,13 +754,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel33Layout = new javax.swing.GroupLayout(jPanel33);
         jPanel33.setLayout(jPanel33Layout);
         jPanel33Layout.setHorizontalGroup(
-            jPanel33Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel33Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel33Layout.setVerticalGroup(
-            jPanel33Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel33Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel4.add(jPanel33);
 
@@ -783,13 +770,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel34Layout = new javax.swing.GroupLayout(jPanel34);
         jPanel34.setLayout(jPanel34Layout);
         jPanel34Layout.setHorizontalGroup(
-            jPanel34Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel34Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel34Layout.setVerticalGroup(
-            jPanel34Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel34Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel4.add(jPanel34);
 
@@ -801,13 +786,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel35Layout = new javax.swing.GroupLayout(jPanel35);
         jPanel35.setLayout(jPanel35Layout);
         jPanel35Layout.setHorizontalGroup(
-            jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel35Layout.setVerticalGroup(
-            jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel4.add(jPanel35);
 
@@ -820,13 +803,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel36Layout = new javax.swing.GroupLayout(jPanel36);
         jPanel36.setLayout(jPanel36Layout);
         jPanel36Layout.setHorizontalGroup(
-            jPanel36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel36Layout.setVerticalGroup(
-            jPanel36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel4.add(jPanel36);
 
@@ -840,13 +821,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel37Layout = new javax.swing.GroupLayout(jPanel37);
         jPanel37.setLayout(jPanel37Layout);
         jPanel37Layout.setHorizontalGroup(
-            jPanel37Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel37Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel37Layout.setVerticalGroup(
-            jPanel37Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel37Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel3.add(jPanel37);
 
@@ -855,13 +834,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel38Layout = new javax.swing.GroupLayout(jPanel38);
         jPanel38.setLayout(jPanel38Layout);
         jPanel38Layout.setHorizontalGroup(
-            jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel38Layout.setVerticalGroup(
-            jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel3.add(jPanel38);
 
@@ -870,13 +847,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel39Layout = new javax.swing.GroupLayout(jPanel39);
         jPanel39.setLayout(jPanel39Layout);
         jPanel39Layout.setHorizontalGroup(
-            jPanel39Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel39Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel39Layout.setVerticalGroup(
-            jPanel39Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel39Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel3.add(jPanel39);
 
@@ -885,13 +860,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel40Layout = new javax.swing.GroupLayout(jPanel40);
         jPanel40.setLayout(jPanel40Layout);
         jPanel40Layout.setHorizontalGroup(
-            jPanel40Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel40Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel40Layout.setVerticalGroup(
-            jPanel40Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel40Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel3.add(jPanel40);
 
@@ -900,13 +873,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel41Layout = new javax.swing.GroupLayout(jPanel41);
         jPanel41.setLayout(jPanel41Layout);
         jPanel41Layout.setHorizontalGroup(
-            jPanel41Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel41Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel41Layout.setVerticalGroup(
-            jPanel41Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel41Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel3.add(jPanel41);
 
@@ -918,13 +889,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel42Layout = new javax.swing.GroupLayout(jPanel42);
         jPanel42.setLayout(jPanel42Layout);
         jPanel42Layout.setHorizontalGroup(
-            jPanel42Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel42Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel42Layout.setVerticalGroup(
-            jPanel42Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel42Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel3.add(jPanel42);
 
@@ -936,13 +905,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel43Layout = new javax.swing.GroupLayout(jPanel43);
         jPanel43.setLayout(jPanel43Layout);
         jPanel43Layout.setHorizontalGroup(
-            jPanel43Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel43Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel43Layout.setVerticalGroup(
-            jPanel43Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel43Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel3.add(jPanel43);
 
@@ -954,13 +921,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel44Layout = new javax.swing.GroupLayout(jPanel44);
         jPanel44.setLayout(jPanel44Layout);
         jPanel44Layout.setHorizontalGroup(
-            jPanel44Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel44Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel44Layout.setVerticalGroup(
-            jPanel44Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel44Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel3.add(jPanel44);
 
@@ -972,13 +937,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel45Layout = new javax.swing.GroupLayout(jPanel45);
         jPanel45.setLayout(jPanel45Layout);
         jPanel45Layout.setHorizontalGroup(
-            jPanel45Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel45Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel45Layout.setVerticalGroup(
-            jPanel45Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel45Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel3.add(jPanel45);
 
@@ -990,13 +953,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel46Layout = new javax.swing.GroupLayout(jPanel46);
         jPanel46.setLayout(jPanel46Layout);
         jPanel46Layout.setHorizontalGroup(
-            jPanel46Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel46Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel46Layout.setVerticalGroup(
-            jPanel46Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel46Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel3.add(jPanel46);
 
@@ -1009,13 +970,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel59Layout = new javax.swing.GroupLayout(jPanel59);
         jPanel59.setLayout(jPanel59Layout);
         jPanel59Layout.setHorizontalGroup(
-            jPanel59Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel59Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel59Layout.setVerticalGroup(
-            jPanel59Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel59Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel3.add(jPanel59);
 
@@ -1033,13 +992,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel47Layout = new javax.swing.GroupLayout(jPanel47);
         jPanel47.setLayout(jPanel47Layout);
         jPanel47Layout.setHorizontalGroup(
-            jPanel47Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel47Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel47Layout.setVerticalGroup(
-            jPanel47Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel47Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel2.add(jPanel47);
 
@@ -1048,13 +1005,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel48Layout = new javax.swing.GroupLayout(jPanel48);
         jPanel48.setLayout(jPanel48Layout);
         jPanel48Layout.setHorizontalGroup(
-            jPanel48Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel48Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel48Layout.setVerticalGroup(
-            jPanel48Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel48Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel2.add(jPanel48);
 
@@ -1063,13 +1018,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel49Layout = new javax.swing.GroupLayout(jPanel49);
         jPanel49.setLayout(jPanel49Layout);
         jPanel49Layout.setHorizontalGroup(
-            jPanel49Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel49Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel49Layout.setVerticalGroup(
-            jPanel49Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel49Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel2.add(jPanel49);
 
@@ -1078,13 +1031,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel50Layout = new javax.swing.GroupLayout(jPanel50);
         jPanel50.setLayout(jPanel50Layout);
         jPanel50Layout.setHorizontalGroup(
-            jPanel50Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel50Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel50Layout.setVerticalGroup(
-            jPanel50Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel50Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel2.add(jPanel50);
 
@@ -1096,13 +1047,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel51Layout = new javax.swing.GroupLayout(jPanel51);
         jPanel51.setLayout(jPanel51Layout);
         jPanel51Layout.setHorizontalGroup(
-            jPanel51Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel51Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel51Layout.setVerticalGroup(
-            jPanel51Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel51Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel2.add(jPanel51);
 
@@ -1114,13 +1063,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel52Layout = new javax.swing.GroupLayout(jPanel52);
         jPanel52.setLayout(jPanel52Layout);
         jPanel52Layout.setHorizontalGroup(
-            jPanel52Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel52Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel52Layout.setVerticalGroup(
-            jPanel52Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel52Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel2.add(jPanel52);
 
@@ -1132,13 +1079,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel53Layout = new javax.swing.GroupLayout(jPanel53);
         jPanel53.setLayout(jPanel53Layout);
         jPanel53Layout.setHorizontalGroup(
-            jPanel53Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel53Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel53Layout.setVerticalGroup(
-            jPanel53Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel53Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel2.add(jPanel53);
 
@@ -1150,13 +1095,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel54Layout = new javax.swing.GroupLayout(jPanel54);
         jPanel54.setLayout(jPanel54Layout);
         jPanel54Layout.setHorizontalGroup(
-            jPanel54Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel54Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel54Layout.setVerticalGroup(
-            jPanel54Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel54Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel2.add(jPanel54);
 
@@ -1168,13 +1111,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel55Layout = new javax.swing.GroupLayout(jPanel55);
         jPanel55.setLayout(jPanel55Layout);
         jPanel55Layout.setHorizontalGroup(
-            jPanel55Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel55Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel55Layout.setVerticalGroup(
-            jPanel55Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel55Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel2.add(jPanel55);
 
@@ -1187,13 +1128,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel56Layout = new javax.swing.GroupLayout(jPanel56);
         jPanel56.setLayout(jPanel56Layout);
         jPanel56Layout.setHorizontalGroup(
-            jPanel56Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel56Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel56Layout.setVerticalGroup(
-            jPanel56Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel56Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel2.add(jPanel56);
 
@@ -1206,13 +1145,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel57Layout = new javax.swing.GroupLayout(jPanel57);
         jPanel57.setLayout(jPanel57Layout);
         jPanel57Layout.setHorizontalGroup(
-            jPanel57Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel57Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel57Layout.setVerticalGroup(
-            jPanel57Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel57Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel2.add(jPanel57);
 
@@ -1225,13 +1162,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel58Layout = new javax.swing.GroupLayout(jPanel58);
         jPanel58.setLayout(jPanel58Layout);
         jPanel58Layout.setHorizontalGroup(
-            jPanel58Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel58Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel58Layout.setVerticalGroup(
-            jPanel58Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel58Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel2.add(jPanel58);
 
@@ -1245,13 +1180,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel61Layout = new javax.swing.GroupLayout(jPanel61);
         jPanel61.setLayout(jPanel61Layout);
         jPanel61Layout.setHorizontalGroup(
-            jPanel61Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel61Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel61Layout.setVerticalGroup(
-            jPanel61Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel61Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel60.add(jPanel61);
 
@@ -1260,13 +1193,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel62Layout = new javax.swing.GroupLayout(jPanel62);
         jPanel62.setLayout(jPanel62Layout);
         jPanel62Layout.setHorizontalGroup(
-            jPanel62Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel62Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel62Layout.setVerticalGroup(
-            jPanel62Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel62Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel60.add(jPanel62);
 
@@ -1275,13 +1206,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel64Layout = new javax.swing.GroupLayout(jPanel64);
         jPanel64.setLayout(jPanel64Layout);
         jPanel64Layout.setHorizontalGroup(
-            jPanel64Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel64Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel64Layout.setVerticalGroup(
-            jPanel64Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel64Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel60.add(jPanel64);
 
@@ -1293,13 +1222,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel65Layout = new javax.swing.GroupLayout(jPanel65);
         jPanel65.setLayout(jPanel65Layout);
         jPanel65Layout.setHorizontalGroup(
-            jPanel65Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel65Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel65Layout.setVerticalGroup(
-            jPanel65Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel65Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel60.add(jPanel65);
 
@@ -1311,13 +1238,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel66Layout = new javax.swing.GroupLayout(jPanel66);
         jPanel66.setLayout(jPanel66Layout);
         jPanel66Layout.setHorizontalGroup(
-            jPanel66Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel66Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel66Layout.setVerticalGroup(
-            jPanel66Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel66Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel60.add(jPanel66);
 
@@ -1326,13 +1251,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel74Layout = new javax.swing.GroupLayout(jPanel74);
         jPanel74.setLayout(jPanel74Layout);
         jPanel74Layout.setHorizontalGroup(
-            jPanel74Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel74Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel74Layout.setVerticalGroup(
-            jPanel74Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel74Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel60.add(jPanel74);
 
@@ -1341,13 +1264,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel77Layout = new javax.swing.GroupLayout(jPanel77);
         jPanel77.setLayout(jPanel77Layout);
         jPanel77Layout.setHorizontalGroup(
-            jPanel77Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel77Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel77Layout.setVerticalGroup(
-            jPanel77Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel77Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel60.add(jPanel77);
 
@@ -1359,13 +1280,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel67Layout = new javax.swing.GroupLayout(jPanel67);
         jPanel67.setLayout(jPanel67Layout);
         jPanel67Layout.setHorizontalGroup(
-            jPanel67Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel67Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel67Layout.setVerticalGroup(
-            jPanel67Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel67Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel60.add(jPanel67);
 
@@ -1377,13 +1296,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel68Layout = new javax.swing.GroupLayout(jPanel68);
         jPanel68.setLayout(jPanel68Layout);
         jPanel68Layout.setHorizontalGroup(
-            jPanel68Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel68Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel68Layout.setVerticalGroup(
-            jPanel68Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel68Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel60.add(jPanel68);
 
@@ -1396,13 +1313,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel69Layout = new javax.swing.GroupLayout(jPanel69);
         jPanel69.setLayout(jPanel69Layout);
         jPanel69Layout.setHorizontalGroup(
-            jPanel69Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel69Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel69Layout.setVerticalGroup(
-            jPanel69Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel69Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel60.add(jPanel69);
 
@@ -1411,13 +1326,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel73Layout = new javax.swing.GroupLayout(jPanel73);
         jPanel73.setLayout(jPanel73Layout);
         jPanel73Layout.setHorizontalGroup(
-            jPanel73Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel73Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel73Layout.setVerticalGroup(
-            jPanel73Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel73Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel60.add(jPanel73);
 
@@ -1426,13 +1339,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel70Layout = new javax.swing.GroupLayout(jPanel70);
         jPanel70.setLayout(jPanel70Layout);
         jPanel70Layout.setHorizontalGroup(
-            jPanel70Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel70Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel70Layout.setVerticalGroup(
-            jPanel70Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel70Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel60.add(jPanel70);
 
@@ -1445,13 +1356,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel71Layout = new javax.swing.GroupLayout(jPanel71);
         jPanel71.setLayout(jPanel71Layout);
         jPanel71Layout.setHorizontalGroup(
-            jPanel71Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel71Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel71Layout.setVerticalGroup(
-            jPanel71Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel71Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel60.add(jPanel71);
 
@@ -1464,13 +1373,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel72Layout = new javax.swing.GroupLayout(jPanel72);
         jPanel72.setLayout(jPanel72Layout);
         jPanel72Layout.setHorizontalGroup(
-            jPanel72Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel72Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel72Layout.setVerticalGroup(
-            jPanel72Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel72Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel60.add(jPanel72);
 
@@ -1479,13 +1386,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel76Layout = new javax.swing.GroupLayout(jPanel76);
         jPanel76.setLayout(jPanel76Layout);
         jPanel76Layout.setHorizontalGroup(
-            jPanel76Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel76Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel76Layout.setVerticalGroup(
-            jPanel76Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel76Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel60.add(jPanel76);
 
@@ -1499,13 +1404,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel75Layout = new javax.swing.GroupLayout(jPanel75);
         jPanel75.setLayout(jPanel75Layout);
         jPanel75Layout.setHorizontalGroup(
-            jPanel75Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel75Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel75Layout.setVerticalGroup(
-            jPanel75Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel75Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel63.add(jPanel75);
 
@@ -1514,13 +1417,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel78Layout = new javax.swing.GroupLayout(jPanel78);
         jPanel78.setLayout(jPanel78Layout);
         jPanel78Layout.setHorizontalGroup(
-            jPanel78Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel78Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel78Layout.setVerticalGroup(
-            jPanel78Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel78Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel63.add(jPanel78);
 
@@ -1532,13 +1433,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel79Layout = new javax.swing.GroupLayout(jPanel79);
         jPanel79.setLayout(jPanel79Layout);
         jPanel79Layout.setHorizontalGroup(
-            jPanel79Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel79Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel79Layout.setVerticalGroup(
-            jPanel79Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel79Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel63.add(jPanel79);
 
@@ -1550,13 +1449,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel80Layout = new javax.swing.GroupLayout(jPanel80);
         jPanel80.setLayout(jPanel80Layout);
         jPanel80Layout.setHorizontalGroup(
-            jPanel80Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel80Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel80Layout.setVerticalGroup(
-            jPanel80Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel80Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel63.add(jPanel80);
 
@@ -1568,13 +1465,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel81Layout = new javax.swing.GroupLayout(jPanel81);
         jPanel81.setLayout(jPanel81Layout);
         jPanel81Layout.setHorizontalGroup(
-            jPanel81Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel81Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel81Layout.setVerticalGroup(
-            jPanel81Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel81Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel63.add(jPanel81);
 
@@ -1586,13 +1481,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel82Layout = new javax.swing.GroupLayout(jPanel82);
         jPanel82.setLayout(jPanel82Layout);
         jPanel82Layout.setHorizontalGroup(
-            jPanel82Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel82Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel82Layout.setVerticalGroup(
-            jPanel82Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel82Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel63.add(jPanel82);
 
@@ -1604,13 +1497,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel83Layout = new javax.swing.GroupLayout(jPanel83);
         jPanel83.setLayout(jPanel83Layout);
         jPanel83Layout.setHorizontalGroup(
-            jPanel83Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel83Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel83Layout.setVerticalGroup(
-            jPanel83Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel83Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel63.add(jPanel83);
 
@@ -1623,13 +1514,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel84Layout = new javax.swing.GroupLayout(jPanel84);
         jPanel84.setLayout(jPanel84Layout);
         jPanel84Layout.setHorizontalGroup(
-            jPanel84Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel84Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel84Layout.setVerticalGroup(
-            jPanel84Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel84Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel63.add(jPanel84);
 
@@ -1642,13 +1531,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel85Layout = new javax.swing.GroupLayout(jPanel85);
         jPanel85.setLayout(jPanel85Layout);
         jPanel85Layout.setHorizontalGroup(
-            jPanel85Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel85Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel85Layout.setVerticalGroup(
-            jPanel85Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel85Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel63.add(jPanel85);
 
@@ -1661,13 +1548,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel86Layout = new javax.swing.GroupLayout(jPanel86);
         jPanel86.setLayout(jPanel86Layout);
         jPanel86Layout.setHorizontalGroup(
-            jPanel86Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel86Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel86Layout.setVerticalGroup(
-            jPanel86Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel86Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel63.add(jPanel86);
 
@@ -1680,13 +1565,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel87Layout = new javax.swing.GroupLayout(jPanel87);
         jPanel87.setLayout(jPanel87Layout);
         jPanel87Layout.setHorizontalGroup(
-            jPanel87Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel87Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel87Layout.setVerticalGroup(
-            jPanel87Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel87Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel63.add(jPanel87);
 
@@ -1704,13 +1587,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel89Layout = new javax.swing.GroupLayout(jPanel89);
         jPanel89.setLayout(jPanel89Layout);
         jPanel89Layout.setHorizontalGroup(
-            jPanel89Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel89Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel89Layout.setVerticalGroup(
-            jPanel89Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel89Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel88.add(jPanel89);
 
@@ -1722,13 +1603,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel91Layout = new javax.swing.GroupLayout(jPanel91);
         jPanel91.setLayout(jPanel91Layout);
         jPanel91Layout.setHorizontalGroup(
-            jPanel91Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel91Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel91Layout.setVerticalGroup(
-            jPanel91Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel91Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel88.add(jPanel91);
 
@@ -1740,13 +1619,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel92Layout = new javax.swing.GroupLayout(jPanel92);
         jPanel92.setLayout(jPanel92Layout);
         jPanel92Layout.setHorizontalGroup(
-            jPanel92Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel92Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel92Layout.setVerticalGroup(
-            jPanel92Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel92Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel88.add(jPanel92);
 
@@ -1758,13 +1635,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel93Layout = new javax.swing.GroupLayout(jPanel93);
         jPanel93.setLayout(jPanel93Layout);
         jPanel93Layout.setHorizontalGroup(
-            jPanel93Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel93Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel93Layout.setVerticalGroup(
-            jPanel93Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel93Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel88.add(jPanel93);
 
@@ -1776,13 +1651,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel94Layout = new javax.swing.GroupLayout(jPanel94);
         jPanel94.setLayout(jPanel94Layout);
         jPanel94Layout.setHorizontalGroup(
-            jPanel94Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel94Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel94Layout.setVerticalGroup(
-            jPanel94Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel94Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel88.add(jPanel94);
 
@@ -1797,13 +1670,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel95Layout = new javax.swing.GroupLayout(jPanel95);
         jPanel95.setLayout(jPanel95Layout);
         jPanel95Layout.setHorizontalGroup(
-            jPanel95Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel95Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel95Layout.setVerticalGroup(
-            jPanel95Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel95Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel88.add(jPanel95);
 
@@ -1816,13 +1687,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel96Layout = new javax.swing.GroupLayout(jPanel96);
         jPanel96.setLayout(jPanel96Layout);
         jPanel96Layout.setHorizontalGroup(
-            jPanel96Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel96Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel96Layout.setVerticalGroup(
-            jPanel96Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel96Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel88.add(jPanel96);
 
@@ -1835,13 +1704,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel97Layout = new javax.swing.GroupLayout(jPanel97);
         jPanel97.setLayout(jPanel97Layout);
         jPanel97Layout.setHorizontalGroup(
-            jPanel97Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel97Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel97Layout.setVerticalGroup(
-            jPanel97Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel97Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel88.add(jPanel97);
 
@@ -1854,13 +1721,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel98Layout = new javax.swing.GroupLayout(jPanel98);
         jPanel98.setLayout(jPanel98Layout);
         jPanel98Layout.setHorizontalGroup(
-            jPanel98Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel98Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel98Layout.setVerticalGroup(
-            jPanel98Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel98Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel88.add(jPanel98);
 
@@ -1873,13 +1738,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel99Layout = new javax.swing.GroupLayout(jPanel99);
         jPanel99.setLayout(jPanel99Layout);
         jPanel99Layout.setHorizontalGroup(
-            jPanel99Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel99Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel99Layout.setVerticalGroup(
-            jPanel99Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel99Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel88.add(jPanel99);
 
@@ -1892,13 +1755,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel100Layout = new javax.swing.GroupLayout(jPanel100);
         jPanel100.setLayout(jPanel100Layout);
         jPanel100Layout.setHorizontalGroup(
-            jPanel100Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel100Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel100Layout.setVerticalGroup(
-            jPanel100Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel100Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel88.add(jPanel100);
 
@@ -1911,13 +1772,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel101Layout = new javax.swing.GroupLayout(jPanel101);
         jPanel101.setLayout(jPanel101Layout);
         jPanel101Layout.setHorizontalGroup(
-            jPanel101Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel101Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel101Layout.setVerticalGroup(
-            jPanel101Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel101Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel88.add(jPanel101);
 
@@ -1931,13 +1790,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel102Layout = new javax.swing.GroupLayout(jPanel102);
         jPanel102.setLayout(jPanel102Layout);
         jPanel102Layout.setHorizontalGroup(
-            jPanel102Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel102Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel102Layout.setVerticalGroup(
-            jPanel102Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel102Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel90.add(jPanel102);
 
@@ -1946,13 +1803,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel103Layout = new javax.swing.GroupLayout(jPanel103);
         jPanel103.setLayout(jPanel103Layout);
         jPanel103Layout.setHorizontalGroup(
-            jPanel103Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel103Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel103Layout.setVerticalGroup(
-            jPanel103Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel103Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel90.add(jPanel103);
 
@@ -1964,13 +1819,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel104Layout = new javax.swing.GroupLayout(jPanel104);
         jPanel104.setLayout(jPanel104Layout);
         jPanel104Layout.setHorizontalGroup(
-            jPanel104Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel104Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel104Layout.setVerticalGroup(
-            jPanel104Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel104Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel90.add(jPanel104);
 
@@ -1982,13 +1835,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel105Layout = new javax.swing.GroupLayout(jPanel105);
         jPanel105.setLayout(jPanel105Layout);
         jPanel105Layout.setHorizontalGroup(
-            jPanel105Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel105Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel105Layout.setVerticalGroup(
-            jPanel105Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel105Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel90.add(jPanel105);
 
@@ -2000,13 +1851,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel106Layout = new javax.swing.GroupLayout(jPanel106);
         jPanel106.setLayout(jPanel106Layout);
         jPanel106Layout.setHorizontalGroup(
-            jPanel106Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel106Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel106Layout.setVerticalGroup(
-            jPanel106Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel106Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel90.add(jPanel106);
 
@@ -2018,13 +1867,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel107Layout = new javax.swing.GroupLayout(jPanel107);
         jPanel107.setLayout(jPanel107Layout);
         jPanel107Layout.setHorizontalGroup(
-            jPanel107Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel107Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel107Layout.setVerticalGroup(
-            jPanel107Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel107Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel90.add(jPanel107);
 
@@ -2037,13 +1884,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel108Layout = new javax.swing.GroupLayout(jPanel108);
         jPanel108.setLayout(jPanel108Layout);
         jPanel108Layout.setHorizontalGroup(
-            jPanel108Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel108Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel108Layout.setVerticalGroup(
-            jPanel108Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel108Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel90.add(jPanel108);
 
@@ -2056,13 +1901,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel109Layout = new javax.swing.GroupLayout(jPanel109);
         jPanel109.setLayout(jPanel109Layout);
         jPanel109Layout.setHorizontalGroup(
-            jPanel109Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel109Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel109Layout.setVerticalGroup(
-            jPanel109Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel109Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel90.add(jPanel109);
 
@@ -2075,13 +1918,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel110Layout = new javax.swing.GroupLayout(jPanel110);
         jPanel110.setLayout(jPanel110Layout);
         jPanel110Layout.setHorizontalGroup(
-            jPanel110Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel110Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel110Layout.setVerticalGroup(
-            jPanel110Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel110Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel90.add(jPanel110);
 
@@ -2094,13 +1935,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel111Layout = new javax.swing.GroupLayout(jPanel111);
         jPanel111.setLayout(jPanel111Layout);
         jPanel111Layout.setHorizontalGroup(
-            jPanel111Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel111Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel111Layout.setVerticalGroup(
-            jPanel111Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel111Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel90.add(jPanel111);
 
@@ -2113,13 +1952,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel112Layout = new javax.swing.GroupLayout(jPanel112);
         jPanel112.setLayout(jPanel112Layout);
         jPanel112Layout.setHorizontalGroup(
-            jPanel112Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel112Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel112Layout.setVerticalGroup(
-            jPanel112Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel112Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel90.add(jPanel112);
 
@@ -2137,13 +1974,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel114Layout = new javax.swing.GroupLayout(jPanel114);
         jPanel114.setLayout(jPanel114Layout);
         jPanel114Layout.setHorizontalGroup(
-            jPanel114Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel114Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel114Layout.setVerticalGroup(
-            jPanel114Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel114Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel113.add(jPanel114);
 
@@ -2155,13 +1990,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel115Layout = new javax.swing.GroupLayout(jPanel115);
         jPanel115.setLayout(jPanel115Layout);
         jPanel115Layout.setHorizontalGroup(
-            jPanel115Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel115Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel115Layout.setVerticalGroup(
-            jPanel115Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel115Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel113.add(jPanel115);
 
@@ -2170,13 +2003,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel116Layout = new javax.swing.GroupLayout(jPanel116);
         jPanel116.setLayout(jPanel116Layout);
         jPanel116Layout.setHorizontalGroup(
-            jPanel116Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel116Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel116Layout.setVerticalGroup(
-            jPanel116Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel116Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel113.add(jPanel116);
 
@@ -2185,13 +2016,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel117Layout = new javax.swing.GroupLayout(jPanel117);
         jPanel117.setLayout(jPanel117Layout);
         jPanel117Layout.setHorizontalGroup(
-            jPanel117Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel117Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel117Layout.setVerticalGroup(
-            jPanel117Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel117Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel113.add(jPanel117);
 
@@ -2203,13 +2032,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel118Layout = new javax.swing.GroupLayout(jPanel118);
         jPanel118.setLayout(jPanel118Layout);
         jPanel118Layout.setHorizontalGroup(
-            jPanel118Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel118Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel118Layout.setVerticalGroup(
-            jPanel118Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel118Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel113.add(jPanel118);
 
@@ -2221,13 +2048,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel119Layout = new javax.swing.GroupLayout(jPanel119);
         jPanel119.setLayout(jPanel119Layout);
         jPanel119Layout.setHorizontalGroup(
-            jPanel119Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel119Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel119Layout.setVerticalGroup(
-            jPanel119Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel119Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel113.add(jPanel119);
 
@@ -2240,13 +2065,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel120Layout = new javax.swing.GroupLayout(jPanel120);
         jPanel120.setLayout(jPanel120Layout);
         jPanel120Layout.setHorizontalGroup(
-            jPanel120Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel120Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel120Layout.setVerticalGroup(
-            jPanel120Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel120Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel113.add(jPanel120);
 
@@ -2255,13 +2078,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel121Layout = new javax.swing.GroupLayout(jPanel121);
         jPanel121.setLayout(jPanel121Layout);
         jPanel121Layout.setHorizontalGroup(
-            jPanel121Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel121Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel121Layout.setVerticalGroup(
-            jPanel121Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel121Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel113.add(jPanel121);
 
@@ -2270,13 +2091,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel122Layout = new javax.swing.GroupLayout(jPanel122);
         jPanel122.setLayout(jPanel122Layout);
         jPanel122Layout.setHorizontalGroup(
-            jPanel122Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel122Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel122Layout.setVerticalGroup(
-            jPanel122Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel122Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel113.add(jPanel122);
 
@@ -2289,13 +2108,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel123Layout = new javax.swing.GroupLayout(jPanel123);
         jPanel123.setLayout(jPanel123Layout);
         jPanel123Layout.setHorizontalGroup(
-            jPanel123Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel123Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel123Layout.setVerticalGroup(
-            jPanel123Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel123Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel113.add(jPanel123);
 
@@ -2308,13 +2125,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel124Layout = new javax.swing.GroupLayout(jPanel124);
         jPanel124.setLayout(jPanel124Layout);
         jPanel124Layout.setHorizontalGroup(
-            jPanel124Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel124Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel124Layout.setVerticalGroup(
-            jPanel124Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel124Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel113.add(jPanel124);
 
@@ -2327,13 +2142,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel125Layout = new javax.swing.GroupLayout(jPanel125);
         jPanel125.setLayout(jPanel125Layout);
         jPanel125Layout.setHorizontalGroup(
-            jPanel125Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel125Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel125Layout.setVerticalGroup(
-            jPanel125Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel125Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel113.add(jPanel125);
 
@@ -2342,13 +2155,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel126Layout = new javax.swing.GroupLayout(jPanel126);
         jPanel126.setLayout(jPanel126Layout);
         jPanel126Layout.setHorizontalGroup(
-            jPanel126Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel126Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel126Layout.setVerticalGroup(
-            jPanel126Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel126Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel113.add(jPanel126);
 
@@ -2357,13 +2168,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel128Layout = new javax.swing.GroupLayout(jPanel128);
         jPanel128.setLayout(jPanel128Layout);
         jPanel128Layout.setHorizontalGroup(
-            jPanel128Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel128Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel128Layout.setVerticalGroup(
-            jPanel128Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel128Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel113.add(jPanel128);
 
@@ -2376,13 +2185,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel127Layout = new javax.swing.GroupLayout(jPanel127);
         jPanel127.setLayout(jPanel127Layout);
         jPanel127Layout.setHorizontalGroup(
-            jPanel127Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel127Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel127Layout.setVerticalGroup(
-            jPanel127Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel127Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel113.add(jPanel127);
 
@@ -2399,13 +2206,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel131Layout = new javax.swing.GroupLayout(jPanel131);
         jPanel131.setLayout(jPanel131Layout);
         jPanel131Layout.setHorizontalGroup(
-            jPanel131Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel131Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel131Layout.setVerticalGroup(
-            jPanel131Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel131Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel129.add(jPanel131);
 
@@ -2417,13 +2222,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel132Layout = new javax.swing.GroupLayout(jPanel132);
         jPanel132.setLayout(jPanel132Layout);
         jPanel132Layout.setHorizontalGroup(
-            jPanel132Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel132Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel132Layout.setVerticalGroup(
-            jPanel132Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel132Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel129.add(jPanel132);
 
@@ -2435,13 +2238,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel133Layout = new javax.swing.GroupLayout(jPanel133);
         jPanel133.setLayout(jPanel133Layout);
         jPanel133Layout.setHorizontalGroup(
-            jPanel133Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel133Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel133Layout.setVerticalGroup(
-            jPanel133Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel133Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel129.add(jPanel133);
 
@@ -2453,13 +2254,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel134Layout = new javax.swing.GroupLayout(jPanel134);
         jPanel134.setLayout(jPanel134Layout);
         jPanel134Layout.setHorizontalGroup(
-            jPanel134Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel134Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel134Layout.setVerticalGroup(
-            jPanel134Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel134Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel129.add(jPanel134);
 
@@ -2472,13 +2271,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel135Layout = new javax.swing.GroupLayout(jPanel135);
         jPanel135.setLayout(jPanel135Layout);
         jPanel135Layout.setHorizontalGroup(
-            jPanel135Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel135Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel135Layout.setVerticalGroup(
-            jPanel135Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel135Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel129.add(jPanel135);
 
@@ -2491,13 +2288,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel136Layout = new javax.swing.GroupLayout(jPanel136);
         jPanel136.setLayout(jPanel136Layout);
         jPanel136Layout.setHorizontalGroup(
-            jPanel136Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel136Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel136Layout.setVerticalGroup(
-            jPanel136Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel136Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel129.add(jPanel136);
 
@@ -2510,13 +2305,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel137Layout = new javax.swing.GroupLayout(jPanel137);
         jPanel137.setLayout(jPanel137Layout);
         jPanel137Layout.setHorizontalGroup(
-            jPanel137Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel137Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel137Layout.setVerticalGroup(
-            jPanel137Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel137Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel129.add(jPanel137);
 
@@ -2529,13 +2322,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel138Layout = new javax.swing.GroupLayout(jPanel138);
         jPanel138.setLayout(jPanel138Layout);
         jPanel138Layout.setHorizontalGroup(
-            jPanel138Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel138Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel138Layout.setVerticalGroup(
-            jPanel138Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel138Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel129.add(jPanel138);
 
@@ -2548,13 +2339,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel139Layout = new javax.swing.GroupLayout(jPanel139);
         jPanel139.setLayout(jPanel139Layout);
         jPanel139Layout.setHorizontalGroup(
-            jPanel139Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel139Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel139Layout.setVerticalGroup(
-            jPanel139Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel139Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel129.add(jPanel139);
 
@@ -2567,13 +2356,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel140Layout = new javax.swing.GroupLayout(jPanel140);
         jPanel140.setLayout(jPanel140Layout);
         jPanel140Layout.setHorizontalGroup(
-            jPanel140Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel140Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel140Layout.setVerticalGroup(
-            jPanel140Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel140Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel129.add(jPanel140);
 
@@ -2586,13 +2373,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel141Layout = new javax.swing.GroupLayout(jPanel141);
         jPanel141.setLayout(jPanel141Layout);
         jPanel141Layout.setHorizontalGroup(
-            jPanel141Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel141Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel141Layout.setVerticalGroup(
-            jPanel141Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel141Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel129.add(jPanel141);
 
@@ -2610,13 +2395,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel142Layout = new javax.swing.GroupLayout(jPanel142);
         jPanel142.setLayout(jPanel142Layout);
         jPanel142Layout.setHorizontalGroup(
-            jPanel142Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel142Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel142Layout.setVerticalGroup(
-            jPanel142Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel142Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel130.add(jPanel142);
 
@@ -2628,13 +2411,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel143Layout = new javax.swing.GroupLayout(jPanel143);
         jPanel143.setLayout(jPanel143Layout);
         jPanel143Layout.setHorizontalGroup(
-            jPanel143Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel143Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel143Layout.setVerticalGroup(
-            jPanel143Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel143Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel130.add(jPanel143);
 
@@ -2646,13 +2427,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel144Layout = new javax.swing.GroupLayout(jPanel144);
         jPanel144.setLayout(jPanel144Layout);
         jPanel144Layout.setHorizontalGroup(
-            jPanel144Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel144Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel144Layout.setVerticalGroup(
-            jPanel144Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel144Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel130.add(jPanel144);
 
@@ -2664,13 +2443,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel145Layout = new javax.swing.GroupLayout(jPanel145);
         jPanel145.setLayout(jPanel145Layout);
         jPanel145Layout.setHorizontalGroup(
-            jPanel145Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel145Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel145Layout.setVerticalGroup(
-            jPanel145Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel145Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel130.add(jPanel145);
 
@@ -2683,13 +2460,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel146Layout = new javax.swing.GroupLayout(jPanel146);
         jPanel146.setLayout(jPanel146Layout);
         jPanel146Layout.setHorizontalGroup(
-            jPanel146Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel146Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel146Layout.setVerticalGroup(
-            jPanel146Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel146Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel130.add(jPanel146);
 
@@ -2706,13 +2481,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel147Layout = new javax.swing.GroupLayout(jPanel147);
         jPanel147.setLayout(jPanel147Layout);
         jPanel147Layout.setHorizontalGroup(
-            jPanel147Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel147Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel147Layout.setVerticalGroup(
-            jPanel147Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel147Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel130.add(jPanel147);
 
@@ -2725,13 +2498,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel148Layout = new javax.swing.GroupLayout(jPanel148);
         jPanel148.setLayout(jPanel148Layout);
         jPanel148Layout.setHorizontalGroup(
-            jPanel148Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel148Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel148Layout.setVerticalGroup(
-            jPanel148Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel148Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel130.add(jPanel148);
 
@@ -2744,13 +2515,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel149Layout = new javax.swing.GroupLayout(jPanel149);
         jPanel149.setLayout(jPanel149Layout);
         jPanel149Layout.setHorizontalGroup(
-            jPanel149Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel149Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel149Layout.setVerticalGroup(
-            jPanel149Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel149Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel130.add(jPanel149);
 
@@ -2763,13 +2532,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel150Layout = new javax.swing.GroupLayout(jPanel150);
         jPanel150.setLayout(jPanel150Layout);
         jPanel150Layout.setHorizontalGroup(
-            jPanel150Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel150Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel150Layout.setVerticalGroup(
-            jPanel150Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel150Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel130.add(jPanel150);
 
@@ -2782,13 +2549,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel151Layout = new javax.swing.GroupLayout(jPanel151);
         jPanel151.setLayout(jPanel151Layout);
         jPanel151Layout.setHorizontalGroup(
-            jPanel151Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel151Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel151Layout.setVerticalGroup(
-            jPanel151Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel151Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel130.add(jPanel151);
 
@@ -2801,13 +2566,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel152Layout = new javax.swing.GroupLayout(jPanel152);
         jPanel152.setLayout(jPanel152Layout);
         jPanel152Layout.setHorizontalGroup(
-            jPanel152Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel152Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel152Layout.setVerticalGroup(
-            jPanel152Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel152Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel130.add(jPanel152);
 
@@ -2828,13 +2591,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel154Layout = new javax.swing.GroupLayout(jPanel154);
         jPanel154.setLayout(jPanel154Layout);
         jPanel154Layout.setHorizontalGroup(
-            jPanel154Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel154Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel154Layout.setVerticalGroup(
-            jPanel154Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel154Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel153.add(jPanel154);
 
@@ -2846,13 +2607,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel155Layout = new javax.swing.GroupLayout(jPanel155);
         jPanel155.setLayout(jPanel155Layout);
         jPanel155Layout.setHorizontalGroup(
-            jPanel155Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel155Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel155Layout.setVerticalGroup(
-            jPanel155Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel155Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel153.add(jPanel155);
 
@@ -2864,13 +2623,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel156Layout = new javax.swing.GroupLayout(jPanel156);
         jPanel156.setLayout(jPanel156Layout);
         jPanel156Layout.setHorizontalGroup(
-            jPanel156Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel156Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel156Layout.setVerticalGroup(
-            jPanel156Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel156Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel153.add(jPanel156);
 
@@ -2883,13 +2640,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel157Layout = new javax.swing.GroupLayout(jPanel157);
         jPanel157.setLayout(jPanel157Layout);
         jPanel157Layout.setHorizontalGroup(
-            jPanel157Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel157Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel157Layout.setVerticalGroup(
-            jPanel157Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel157Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel153.add(jPanel157);
 
@@ -2902,13 +2657,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel158Layout = new javax.swing.GroupLayout(jPanel158);
         jPanel158.setLayout(jPanel158Layout);
         jPanel158Layout.setHorizontalGroup(
-            jPanel158Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel158Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel158Layout.setVerticalGroup(
-            jPanel158Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel158Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel153.add(jPanel158);
 
@@ -2921,13 +2674,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel159Layout = new javax.swing.GroupLayout(jPanel159);
         jPanel159.setLayout(jPanel159Layout);
         jPanel159Layout.setHorizontalGroup(
-            jPanel159Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel159Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel159Layout.setVerticalGroup(
-            jPanel159Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel159Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel153.add(jPanel159);
 
@@ -2940,13 +2691,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel160Layout = new javax.swing.GroupLayout(jPanel160);
         jPanel160.setLayout(jPanel160Layout);
         jPanel160Layout.setHorizontalGroup(
-            jPanel160Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel160Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel160Layout.setVerticalGroup(
-            jPanel160Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel160Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel153.add(jPanel160);
 
@@ -2959,13 +2708,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel161Layout = new javax.swing.GroupLayout(jPanel161);
         jPanel161.setLayout(jPanel161Layout);
         jPanel161Layout.setHorizontalGroup(
-            jPanel161Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel161Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel161Layout.setVerticalGroup(
-            jPanel161Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel161Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel153.add(jPanel161);
 
@@ -2978,13 +2725,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel162Layout = new javax.swing.GroupLayout(jPanel162);
         jPanel162.setLayout(jPanel162Layout);
         jPanel162Layout.setHorizontalGroup(
-            jPanel162Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel162Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel162Layout.setVerticalGroup(
-            jPanel162Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel162Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel153.add(jPanel162);
 
@@ -2997,13 +2742,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel163Layout = new javax.swing.GroupLayout(jPanel163);
         jPanel163.setLayout(jPanel163Layout);
         jPanel163Layout.setHorizontalGroup(
-            jPanel163Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel163Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel163Layout.setVerticalGroup(
-            jPanel163Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel163Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel153.add(jPanel163);
 
@@ -3016,13 +2759,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel164Layout = new javax.swing.GroupLayout(jPanel164);
         jPanel164.setLayout(jPanel164Layout);
         jPanel164Layout.setHorizontalGroup(
-            jPanel164Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel164Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel164Layout.setVerticalGroup(
-            jPanel164Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel164Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel153.add(jPanel164);
 
@@ -3040,13 +2781,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel174Layout = new javax.swing.GroupLayout(jPanel174);
         jPanel174.setLayout(jPanel174Layout);
         jPanel174Layout.setHorizontalGroup(
-            jPanel174Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel174Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel174Layout.setVerticalGroup(
-            jPanel174Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel174Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel165.add(jPanel174);
 
@@ -3058,13 +2797,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel166Layout = new javax.swing.GroupLayout(jPanel166);
         jPanel166.setLayout(jPanel166Layout);
         jPanel166Layout.setHorizontalGroup(
-            jPanel166Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel166Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel166Layout.setVerticalGroup(
-            jPanel166Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel166Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel165.add(jPanel166);
 
@@ -3076,13 +2813,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel167Layout = new javax.swing.GroupLayout(jPanel167);
         jPanel167.setLayout(jPanel167Layout);
         jPanel167Layout.setHorizontalGroup(
-            jPanel167Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel167Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel167Layout.setVerticalGroup(
-            jPanel167Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel167Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel165.add(jPanel167);
 
@@ -3095,13 +2830,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel168Layout = new javax.swing.GroupLayout(jPanel168);
         jPanel168.setLayout(jPanel168Layout);
         jPanel168Layout.setHorizontalGroup(
-            jPanel168Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel168Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel168Layout.setVerticalGroup(
-            jPanel168Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel168Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel165.add(jPanel168);
 
@@ -3110,13 +2843,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel169Layout = new javax.swing.GroupLayout(jPanel169);
         jPanel169.setLayout(jPanel169Layout);
         jPanel169Layout.setHorizontalGroup(
-            jPanel169Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel169Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel169Layout.setVerticalGroup(
-            jPanel169Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel169Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel165.add(jPanel169);
 
@@ -3125,13 +2856,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel170Layout = new javax.swing.GroupLayout(jPanel170);
         jPanel170.setLayout(jPanel170Layout);
         jPanel170Layout.setHorizontalGroup(
-            jPanel170Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel170Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel170Layout.setVerticalGroup(
-            jPanel170Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel170Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel165.add(jPanel170);
 
@@ -3144,13 +2873,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel171Layout = new javax.swing.GroupLayout(jPanel171);
         jPanel171.setLayout(jPanel171Layout);
         jPanel171Layout.setHorizontalGroup(
-            jPanel171Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel171Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel171Layout.setVerticalGroup(
-            jPanel171Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel171Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel165.add(jPanel171);
 
@@ -3163,13 +2890,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel172Layout = new javax.swing.GroupLayout(jPanel172);
         jPanel172.setLayout(jPanel172Layout);
         jPanel172Layout.setHorizontalGroup(
-            jPanel172Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel172Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel172Layout.setVerticalGroup(
-            jPanel172Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel172Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel165.add(jPanel172);
 
@@ -3182,13 +2907,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel173Layout = new javax.swing.GroupLayout(jPanel173);
         jPanel173.setLayout(jPanel173Layout);
         jPanel173Layout.setHorizontalGroup(
-            jPanel173Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel173Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel173Layout.setVerticalGroup(
-            jPanel173Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel173Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel165.add(jPanel173);
 
@@ -3197,13 +2920,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel175Layout = new javax.swing.GroupLayout(jPanel175);
         jPanel175.setLayout(jPanel175Layout);
         jPanel175Layout.setHorizontalGroup(
-            jPanel175Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel175Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel175Layout.setVerticalGroup(
-            jPanel175Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel175Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel165.add(jPanel175);
 
@@ -3212,13 +2933,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel176Layout = new javax.swing.GroupLayout(jPanel176);
         jPanel176.setLayout(jPanel176Layout);
         jPanel176Layout.setHorizontalGroup(
-            jPanel176Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel176Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel176Layout.setVerticalGroup(
-            jPanel176Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel176Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel165.add(jPanel176);
 
@@ -3231,13 +2950,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel177Layout = new javax.swing.GroupLayout(jPanel177);
         jPanel177.setLayout(jPanel177Layout);
         jPanel177Layout.setHorizontalGroup(
-            jPanel177Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel177Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel177Layout.setVerticalGroup(
-            jPanel177Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel177Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel165.add(jPanel177);
 
@@ -3250,13 +2967,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel178Layout = new javax.swing.GroupLayout(jPanel178);
         jPanel178.setLayout(jPanel178Layout);
         jPanel178Layout.setHorizontalGroup(
-            jPanel178Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel178Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel178Layout.setVerticalGroup(
-            jPanel178Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel178Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel165.add(jPanel178);
 
@@ -3269,13 +2984,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel179Layout = new javax.swing.GroupLayout(jPanel179);
         jPanel179.setLayout(jPanel179Layout);
         jPanel179Layout.setHorizontalGroup(
-            jPanel179Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel179Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel179Layout.setVerticalGroup(
-            jPanel179Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel179Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel165.add(jPanel179);
 
@@ -3292,13 +3005,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel181Layout = new javax.swing.GroupLayout(jPanel181);
         jPanel181.setLayout(jPanel181Layout);
         jPanel181Layout.setHorizontalGroup(
-            jPanel181Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel181Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel181Layout.setVerticalGroup(
-            jPanel181Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel181Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel180.add(jPanel181);
 
@@ -3310,13 +3021,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel182Layout = new javax.swing.GroupLayout(jPanel182);
         jPanel182.setLayout(jPanel182Layout);
         jPanel182Layout.setHorizontalGroup(
-            jPanel182Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel182Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel182Layout.setVerticalGroup(
-            jPanel182Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel182Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel180.add(jPanel182);
 
@@ -3329,13 +3038,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel183Layout = new javax.swing.GroupLayout(jPanel183);
         jPanel183.setLayout(jPanel183Layout);
         jPanel183Layout.setHorizontalGroup(
-            jPanel183Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel183Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel183Layout.setVerticalGroup(
-            jPanel183Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel183Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel180.add(jPanel183);
 
@@ -3348,13 +3055,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel184Layout = new javax.swing.GroupLayout(jPanel184);
         jPanel184.setLayout(jPanel184Layout);
         jPanel184Layout.setHorizontalGroup(
-            jPanel184Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel184Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel184Layout.setVerticalGroup(
-            jPanel184Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel184Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel180.add(jPanel184);
 
@@ -3367,13 +3072,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel185Layout = new javax.swing.GroupLayout(jPanel185);
         jPanel185.setLayout(jPanel185Layout);
         jPanel185Layout.setHorizontalGroup(
-            jPanel185Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel185Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel185Layout.setVerticalGroup(
-            jPanel185Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel185Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel180.add(jPanel185);
 
@@ -3386,13 +3089,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel186Layout = new javax.swing.GroupLayout(jPanel186);
         jPanel186.setLayout(jPanel186Layout);
         jPanel186Layout.setHorizontalGroup(
-            jPanel186Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel186Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel186Layout.setVerticalGroup(
-            jPanel186Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel186Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel180.add(jPanel186);
 
@@ -3405,13 +3106,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel187Layout = new javax.swing.GroupLayout(jPanel187);
         jPanel187.setLayout(jPanel187Layout);
         jPanel187Layout.setHorizontalGroup(
-            jPanel187Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel187Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel187Layout.setVerticalGroup(
-            jPanel187Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel187Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel180.add(jPanel187);
 
@@ -3424,13 +3123,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel188Layout = new javax.swing.GroupLayout(jPanel188);
         jPanel188.setLayout(jPanel188Layout);
         jPanel188Layout.setHorizontalGroup(
-            jPanel188Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel188Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel188Layout.setVerticalGroup(
-            jPanel188Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel188Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel180.add(jPanel188);
 
@@ -3443,13 +3140,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel189Layout = new javax.swing.GroupLayout(jPanel189);
         jPanel189.setLayout(jPanel189Layout);
         jPanel189Layout.setHorizontalGroup(
-            jPanel189Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel189Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel189Layout.setVerticalGroup(
-            jPanel189Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel189Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel180.add(jPanel189);
 
@@ -3462,13 +3157,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel190Layout = new javax.swing.GroupLayout(jPanel190);
         jPanel190.setLayout(jPanel190Layout);
         jPanel190Layout.setHorizontalGroup(
-            jPanel190Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel190Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel190Layout.setVerticalGroup(
-            jPanel190Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel190Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel180.add(jPanel190);
 
@@ -3481,13 +3174,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel191Layout = new javax.swing.GroupLayout(jPanel191);
         jPanel191.setLayout(jPanel191Layout);
         jPanel191Layout.setHorizontalGroup(
-            jPanel191Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel191Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel191Layout.setVerticalGroup(
-            jPanel191Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel191Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel180.add(jPanel191);
 
@@ -3505,13 +3196,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel193Layout = new javax.swing.GroupLayout(jPanel193);
         jPanel193.setLayout(jPanel193Layout);
         jPanel193Layout.setHorizontalGroup(
-            jPanel193Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel193Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel193Layout.setVerticalGroup(
-            jPanel193Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel193Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel192.add(jPanel193);
 
@@ -3523,13 +3212,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel194Layout = new javax.swing.GroupLayout(jPanel194);
         jPanel194.setLayout(jPanel194Layout);
         jPanel194Layout.setHorizontalGroup(
-            jPanel194Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel194Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel194Layout.setVerticalGroup(
-            jPanel194Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel194Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel192.add(jPanel194);
 
@@ -3542,13 +3229,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel195Layout = new javax.swing.GroupLayout(jPanel195);
         jPanel195.setLayout(jPanel195Layout);
         jPanel195Layout.setHorizontalGroup(
-            jPanel195Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel195Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel195Layout.setVerticalGroup(
-            jPanel195Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel195Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel192.add(jPanel195);
 
@@ -3561,13 +3246,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel196Layout = new javax.swing.GroupLayout(jPanel196);
         jPanel196.setLayout(jPanel196Layout);
         jPanel196Layout.setHorizontalGroup(
-            jPanel196Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel196Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel196Layout.setVerticalGroup(
-            jPanel196Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel196Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel192.add(jPanel196);
 
@@ -3580,13 +3263,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel197Layout = new javax.swing.GroupLayout(jPanel197);
         jPanel197.setLayout(jPanel197Layout);
         jPanel197Layout.setHorizontalGroup(
-            jPanel197Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel197Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel197Layout.setVerticalGroup(
-            jPanel197Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel197Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel192.add(jPanel197);
 
@@ -3599,13 +3280,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel198Layout = new javax.swing.GroupLayout(jPanel198);
         jPanel198.setLayout(jPanel198Layout);
         jPanel198Layout.setHorizontalGroup(
-            jPanel198Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel198Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel198Layout.setVerticalGroup(
-            jPanel198Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel198Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel192.add(jPanel198);
 
@@ -3618,13 +3297,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel199Layout = new javax.swing.GroupLayout(jPanel199);
         jPanel199.setLayout(jPanel199Layout);
         jPanel199Layout.setHorizontalGroup(
-            jPanel199Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel199Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel199Layout.setVerticalGroup(
-            jPanel199Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel199Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel192.add(jPanel199);
 
@@ -3637,13 +3314,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel200Layout = new javax.swing.GroupLayout(jPanel200);
         jPanel200.setLayout(jPanel200Layout);
         jPanel200Layout.setHorizontalGroup(
-            jPanel200Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel200Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel200Layout.setVerticalGroup(
-            jPanel200Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel200Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel192.add(jPanel200);
 
@@ -3656,13 +3331,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel201Layout = new javax.swing.GroupLayout(jPanel201);
         jPanel201.setLayout(jPanel201Layout);
         jPanel201Layout.setHorizontalGroup(
-            jPanel201Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel201Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel201Layout.setVerticalGroup(
-            jPanel201Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel201Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel192.add(jPanel201);
 
@@ -3675,13 +3348,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel202Layout = new javax.swing.GroupLayout(jPanel202);
         jPanel202.setLayout(jPanel202Layout);
         jPanel202Layout.setHorizontalGroup(
-            jPanel202Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel202Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel202Layout.setVerticalGroup(
-            jPanel202Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel202Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel192.add(jPanel202);
 
@@ -3694,13 +3365,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel203Layout = new javax.swing.GroupLayout(jPanel203);
         jPanel203.setLayout(jPanel203Layout);
         jPanel203Layout.setHorizontalGroup(
-            jPanel203Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel203Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel203Layout.setVerticalGroup(
-            jPanel203Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel203Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel192.add(jPanel203);
 
@@ -3721,13 +3390,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel205Layout = new javax.swing.GroupLayout(jPanel205);
         jPanel205.setLayout(jPanel205Layout);
         jPanel205Layout.setHorizontalGroup(
-            jPanel205Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel205Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel205Layout.setVerticalGroup(
-            jPanel205Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel205Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel204.add(jPanel205);
 
@@ -3740,13 +3407,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel206Layout = new javax.swing.GroupLayout(jPanel206);
         jPanel206.setLayout(jPanel206Layout);
         jPanel206Layout.setHorizontalGroup(
-            jPanel206Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel206Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel206Layout.setVerticalGroup(
-            jPanel206Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel206Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel204.add(jPanel206);
 
@@ -3759,13 +3424,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel207Layout = new javax.swing.GroupLayout(jPanel207);
         jPanel207.setLayout(jPanel207Layout);
         jPanel207Layout.setHorizontalGroup(
-            jPanel207Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel207Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel207Layout.setVerticalGroup(
-            jPanel207Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel207Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel204.add(jPanel207);
 
@@ -3778,13 +3441,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel208Layout = new javax.swing.GroupLayout(jPanel208);
         jPanel208.setLayout(jPanel208Layout);
         jPanel208Layout.setHorizontalGroup(
-            jPanel208Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel208Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel208Layout.setVerticalGroup(
-            jPanel208Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel208Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel204.add(jPanel208);
 
@@ -3797,13 +3458,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel209Layout = new javax.swing.GroupLayout(jPanel209);
         jPanel209.setLayout(jPanel209Layout);
         jPanel209Layout.setHorizontalGroup(
-            jPanel209Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel209Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel209Layout.setVerticalGroup(
-            jPanel209Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel209Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel204.add(jPanel209);
 
@@ -3816,13 +3475,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel210Layout = new javax.swing.GroupLayout(jPanel210);
         jPanel210.setLayout(jPanel210Layout);
         jPanel210Layout.setHorizontalGroup(
-            jPanel210Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel210Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel210Layout.setVerticalGroup(
-            jPanel210Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel210Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel204.add(jPanel210);
 
@@ -3835,13 +3492,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel211Layout = new javax.swing.GroupLayout(jPanel211);
         jPanel211.setLayout(jPanel211Layout);
         jPanel211Layout.setHorizontalGroup(
-            jPanel211Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel211Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel211Layout.setVerticalGroup(
-            jPanel211Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel211Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel204.add(jPanel211);
 
@@ -3854,13 +3509,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel212Layout = new javax.swing.GroupLayout(jPanel212);
         jPanel212.setLayout(jPanel212Layout);
         jPanel212Layout.setHorizontalGroup(
-            jPanel212Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel212Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel212Layout.setVerticalGroup(
-            jPanel212Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel212Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel204.add(jPanel212);
 
@@ -3873,13 +3526,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel213Layout = new javax.swing.GroupLayout(jPanel213);
         jPanel213.setLayout(jPanel213Layout);
         jPanel213Layout.setHorizontalGroup(
-            jPanel213Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel213Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel213Layout.setVerticalGroup(
-            jPanel213Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel213Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel204.add(jPanel213);
 
@@ -3892,13 +3543,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel214Layout = new javax.swing.GroupLayout(jPanel214);
         jPanel214.setLayout(jPanel214Layout);
         jPanel214Layout.setHorizontalGroup(
-            jPanel214Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel214Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel214Layout.setVerticalGroup(
-            jPanel214Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel214Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel204.add(jPanel214);
 
@@ -3911,13 +3560,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel215Layout = new javax.swing.GroupLayout(jPanel215);
         jPanel215.setLayout(jPanel215Layout);
         jPanel215Layout.setHorizontalGroup(
-            jPanel215Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel215Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel215Layout.setVerticalGroup(
-            jPanel215Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel215Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel204.add(jPanel215);
 
@@ -3935,13 +3582,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel217Layout = new javax.swing.GroupLayout(jPanel217);
         jPanel217.setLayout(jPanel217Layout);
         jPanel217Layout.setHorizontalGroup(
-            jPanel217Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel217Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel217Layout.setVerticalGroup(
-            jPanel217Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel217Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel216.add(jPanel217);
 
@@ -3954,13 +3599,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel218Layout = new javax.swing.GroupLayout(jPanel218);
         jPanel218.setLayout(jPanel218Layout);
         jPanel218Layout.setHorizontalGroup(
-            jPanel218Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel218Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel218Layout.setVerticalGroup(
-            jPanel218Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel218Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel216.add(jPanel218);
 
@@ -3969,13 +3612,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel219Layout = new javax.swing.GroupLayout(jPanel219);
         jPanel219.setLayout(jPanel219Layout);
         jPanel219Layout.setHorizontalGroup(
-            jPanel219Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel219Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel219Layout.setVerticalGroup(
-            jPanel219Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel219Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel216.add(jPanel219);
 
@@ -3984,13 +3625,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel220Layout = new javax.swing.GroupLayout(jPanel220);
         jPanel220.setLayout(jPanel220Layout);
         jPanel220Layout.setHorizontalGroup(
-            jPanel220Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel220Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel220Layout.setVerticalGroup(
-            jPanel220Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel220Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel216.add(jPanel220);
 
@@ -4003,13 +3642,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel221Layout = new javax.swing.GroupLayout(jPanel221);
         jPanel221.setLayout(jPanel221Layout);
         jPanel221Layout.setHorizontalGroup(
-            jPanel221Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel221Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel221Layout.setVerticalGroup(
-            jPanel221Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel221Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel216.add(jPanel221);
 
@@ -4022,13 +3659,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel222Layout = new javax.swing.GroupLayout(jPanel222);
         jPanel222.setLayout(jPanel222Layout);
         jPanel222Layout.setHorizontalGroup(
-            jPanel222Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel222Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel222Layout.setVerticalGroup(
-            jPanel222Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel222Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel216.add(jPanel222);
 
@@ -4041,13 +3676,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel223Layout = new javax.swing.GroupLayout(jPanel223);
         jPanel223.setLayout(jPanel223Layout);
         jPanel223Layout.setHorizontalGroup(
-            jPanel223Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel223Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel223Layout.setVerticalGroup(
-            jPanel223Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel223Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel216.add(jPanel223);
 
@@ -4056,13 +3689,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel224Layout = new javax.swing.GroupLayout(jPanel224);
         jPanel224.setLayout(jPanel224Layout);
         jPanel224Layout.setHorizontalGroup(
-            jPanel224Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel224Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel224Layout.setVerticalGroup(
-            jPanel224Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel224Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel216.add(jPanel224);
 
@@ -4071,13 +3702,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel225Layout = new javax.swing.GroupLayout(jPanel225);
         jPanel225.setLayout(jPanel225Layout);
         jPanel225Layout.setHorizontalGroup(
-            jPanel225Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel225Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel225Layout.setVerticalGroup(
-            jPanel225Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel225Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel216.add(jPanel225);
 
@@ -4090,13 +3719,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel226Layout = new javax.swing.GroupLayout(jPanel226);
         jPanel226.setLayout(jPanel226Layout);
         jPanel226Layout.setHorizontalGroup(
-            jPanel226Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel226Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel226Layout.setVerticalGroup(
-            jPanel226Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel226Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel216.add(jPanel226);
 
@@ -4109,13 +3736,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel227Layout = new javax.swing.GroupLayout(jPanel227);
         jPanel227.setLayout(jPanel227Layout);
         jPanel227Layout.setHorizontalGroup(
-            jPanel227Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel227Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel227Layout.setVerticalGroup(
-            jPanel227Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel227Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel216.add(jPanel227);
 
@@ -4128,13 +3753,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel228Layout = new javax.swing.GroupLayout(jPanel228);
         jPanel228.setLayout(jPanel228Layout);
         jPanel228Layout.setHorizontalGroup(
-            jPanel228Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel228Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel228Layout.setVerticalGroup(
-            jPanel228Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel228Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel216.add(jPanel228);
 
@@ -4143,13 +3766,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel229Layout = new javax.swing.GroupLayout(jPanel229);
         jPanel229.setLayout(jPanel229Layout);
         jPanel229Layout.setHorizontalGroup(
-            jPanel229Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel229Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel229Layout.setVerticalGroup(
-            jPanel229Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel229Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel216.add(jPanel229);
 
@@ -4158,13 +3779,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel230Layout = new javax.swing.GroupLayout(jPanel230);
         jPanel230.setLayout(jPanel230Layout);
         jPanel230Layout.setHorizontalGroup(
-            jPanel230Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel230Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel230Layout.setVerticalGroup(
-            jPanel230Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel230Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel216.add(jPanel230);
 
@@ -4177,13 +3796,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel231Layout = new javax.swing.GroupLayout(jPanel231);
         jPanel231.setLayout(jPanel231Layout);
         jPanel231Layout.setHorizontalGroup(
-            jPanel231Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel231Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel231Layout.setVerticalGroup(
-            jPanel231Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel231Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel216.add(jPanel231);
 
@@ -4197,13 +3814,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel233Layout = new javax.swing.GroupLayout(jPanel233);
         jPanel233.setLayout(jPanel233Layout);
         jPanel233Layout.setHorizontalGroup(
-            jPanel233Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel233Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel233Layout.setVerticalGroup(
-            jPanel233Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel233Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel232.add(jPanel233);
 
@@ -4212,13 +3827,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel234Layout = new javax.swing.GroupLayout(jPanel234);
         jPanel234.setLayout(jPanel234Layout);
         jPanel234Layout.setHorizontalGroup(
-            jPanel234Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel234Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel234Layout.setVerticalGroup(
-            jPanel234Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel234Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel232.add(jPanel234);
 
@@ -4231,13 +3844,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel235Layout = new javax.swing.GroupLayout(jPanel235);
         jPanel235.setLayout(jPanel235Layout);
         jPanel235Layout.setHorizontalGroup(
-            jPanel235Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel235Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel235Layout.setVerticalGroup(
-            jPanel235Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel235Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel232.add(jPanel235);
 
@@ -4250,13 +3861,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel236Layout = new javax.swing.GroupLayout(jPanel236);
         jPanel236.setLayout(jPanel236Layout);
         jPanel236Layout.setHorizontalGroup(
-            jPanel236Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel236Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel236Layout.setVerticalGroup(
-            jPanel236Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel236Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel232.add(jPanel236);
 
@@ -4269,13 +3878,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel237Layout = new javax.swing.GroupLayout(jPanel237);
         jPanel237.setLayout(jPanel237Layout);
         jPanel237Layout.setHorizontalGroup(
-            jPanel237Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel237Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel237Layout.setVerticalGroup(
-            jPanel237Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel237Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel232.add(jPanel237);
 
@@ -4288,13 +3895,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel238Layout = new javax.swing.GroupLayout(jPanel238);
         jPanel238.setLayout(jPanel238Layout);
         jPanel238Layout.setHorizontalGroup(
-            jPanel238Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel238Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel238Layout.setVerticalGroup(
-            jPanel238Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel238Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel232.add(jPanel238);
 
@@ -4307,13 +3912,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel239Layout = new javax.swing.GroupLayout(jPanel239);
         jPanel239.setLayout(jPanel239Layout);
         jPanel239Layout.setHorizontalGroup(
-            jPanel239Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel239Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel239Layout.setVerticalGroup(
-            jPanel239Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel239Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel232.add(jPanel239);
 
@@ -4326,13 +3929,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel240Layout = new javax.swing.GroupLayout(jPanel240);
         jPanel240.setLayout(jPanel240Layout);
         jPanel240Layout.setHorizontalGroup(
-            jPanel240Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel240Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel240Layout.setVerticalGroup(
-            jPanel240Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel240Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel232.add(jPanel240);
 
@@ -4345,13 +3946,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel241Layout = new javax.swing.GroupLayout(jPanel241);
         jPanel241.setLayout(jPanel241Layout);
         jPanel241Layout.setHorizontalGroup(
-            jPanel241Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel241Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel241Layout.setVerticalGroup(
-            jPanel241Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel241Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel232.add(jPanel241);
 
@@ -4364,13 +3963,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel242Layout = new javax.swing.GroupLayout(jPanel242);
         jPanel242.setLayout(jPanel242Layout);
         jPanel242Layout.setHorizontalGroup(
-            jPanel242Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel242Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel242Layout.setVerticalGroup(
-            jPanel242Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel242Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel232.add(jPanel242);
 
@@ -4383,13 +3980,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel243Layout = new javax.swing.GroupLayout(jPanel243);
         jPanel243.setLayout(jPanel243Layout);
         jPanel243Layout.setHorizontalGroup(
-            jPanel243Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel243Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel243Layout.setVerticalGroup(
-            jPanel243Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel243Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel232.add(jPanel243);
 
@@ -4402,13 +3997,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel308Layout = new javax.swing.GroupLayout(jPanel308);
         jPanel308.setLayout(jPanel308Layout);
         jPanel308Layout.setHorizontalGroup(
-            jPanel308Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel308Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel308Layout.setVerticalGroup(
-            jPanel308Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel308Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel232.add(jPanel308);
 
@@ -4426,13 +4019,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel245Layout = new javax.swing.GroupLayout(jPanel245);
         jPanel245.setLayout(jPanel245Layout);
         jPanel245Layout.setHorizontalGroup(
-            jPanel245Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel245Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel245Layout.setVerticalGroup(
-            jPanel245Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel245Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel244.add(jPanel245);
 
@@ -4445,13 +4036,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel246Layout = new javax.swing.GroupLayout(jPanel246);
         jPanel246.setLayout(jPanel246Layout);
         jPanel246Layout.setHorizontalGroup(
-            jPanel246Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel246Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel246Layout.setVerticalGroup(
-            jPanel246Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel246Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel244.add(jPanel246);
 
@@ -4464,13 +4053,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel247Layout = new javax.swing.GroupLayout(jPanel247);
         jPanel247.setLayout(jPanel247Layout);
         jPanel247Layout.setHorizontalGroup(
-            jPanel247Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel247Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel247Layout.setVerticalGroup(
-            jPanel247Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel247Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel244.add(jPanel247);
 
@@ -4483,13 +4070,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel248Layout = new javax.swing.GroupLayout(jPanel248);
         jPanel248.setLayout(jPanel248Layout);
         jPanel248Layout.setHorizontalGroup(
-            jPanel248Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel248Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel248Layout.setVerticalGroup(
-            jPanel248Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel248Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel244.add(jPanel248);
 
@@ -4502,13 +4087,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel249Layout = new javax.swing.GroupLayout(jPanel249);
         jPanel249.setLayout(jPanel249Layout);
         jPanel249Layout.setHorizontalGroup(
-            jPanel249Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel249Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel249Layout.setVerticalGroup(
-            jPanel249Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel249Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel244.add(jPanel249);
 
@@ -4521,13 +4104,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel250Layout = new javax.swing.GroupLayout(jPanel250);
         jPanel250.setLayout(jPanel250Layout);
         jPanel250Layout.setHorizontalGroup(
-            jPanel250Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel250Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel250Layout.setVerticalGroup(
-            jPanel250Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel250Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel244.add(jPanel250);
 
@@ -4540,13 +4121,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel251Layout = new javax.swing.GroupLayout(jPanel251);
         jPanel251.setLayout(jPanel251Layout);
         jPanel251Layout.setHorizontalGroup(
-            jPanel251Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel251Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel251Layout.setVerticalGroup(
-            jPanel251Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel251Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel244.add(jPanel251);
 
@@ -4559,13 +4138,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel252Layout = new javax.swing.GroupLayout(jPanel252);
         jPanel252.setLayout(jPanel252Layout);
         jPanel252Layout.setHorizontalGroup(
-            jPanel252Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel252Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel252Layout.setVerticalGroup(
-            jPanel252Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel252Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel244.add(jPanel252);
 
@@ -4578,13 +4155,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel253Layout = new javax.swing.GroupLayout(jPanel253);
         jPanel253.setLayout(jPanel253Layout);
         jPanel253Layout.setHorizontalGroup(
-            jPanel253Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel253Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel253Layout.setVerticalGroup(
-            jPanel253Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel253Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel244.add(jPanel253);
 
@@ -4597,13 +4172,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel254Layout = new javax.swing.GroupLayout(jPanel254);
         jPanel254.setLayout(jPanel254Layout);
         jPanel254Layout.setHorizontalGroup(
-            jPanel254Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel254Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel254Layout.setVerticalGroup(
-            jPanel254Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel254Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel244.add(jPanel254);
 
@@ -4616,13 +4189,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel255Layout = new javax.swing.GroupLayout(jPanel255);
         jPanel255.setLayout(jPanel255Layout);
         jPanel255Layout.setHorizontalGroup(
-            jPanel255Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel255Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel255Layout.setVerticalGroup(
-            jPanel255Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel255Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel244.add(jPanel255);
 
@@ -4635,13 +4206,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel256Layout = new javax.swing.GroupLayout(jPanel256);
         jPanel256.setLayout(jPanel256Layout);
         jPanel256Layout.setHorizontalGroup(
-            jPanel256Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel256Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel256Layout.setVerticalGroup(
-            jPanel256Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel256Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel244.add(jPanel256);
 
@@ -4655,13 +4224,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel258Layout = new javax.swing.GroupLayout(jPanel258);
         jPanel258.setLayout(jPanel258Layout);
         jPanel258Layout.setHorizontalGroup(
-            jPanel258Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel258Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel258Layout.setVerticalGroup(
-            jPanel258Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel258Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel257.add(jPanel258);
 
@@ -4670,13 +4237,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel259Layout = new javax.swing.GroupLayout(jPanel259);
         jPanel259.setLayout(jPanel259Layout);
         jPanel259Layout.setHorizontalGroup(
-            jPanel259Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel259Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel259Layout.setVerticalGroup(
-            jPanel259Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel259Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel257.add(jPanel259);
 
@@ -4689,13 +4254,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel260Layout = new javax.swing.GroupLayout(jPanel260);
         jPanel260.setLayout(jPanel260Layout);
         jPanel260Layout.setHorizontalGroup(
-            jPanel260Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel260Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel260Layout.setVerticalGroup(
-            jPanel260Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel260Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel257.add(jPanel260);
 
@@ -4708,13 +4271,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel261Layout = new javax.swing.GroupLayout(jPanel261);
         jPanel261.setLayout(jPanel261Layout);
         jPanel261Layout.setHorizontalGroup(
-            jPanel261Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel261Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel261Layout.setVerticalGroup(
-            jPanel261Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel261Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel257.add(jPanel261);
 
@@ -4727,13 +4288,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel262Layout = new javax.swing.GroupLayout(jPanel262);
         jPanel262.setLayout(jPanel262Layout);
         jPanel262Layout.setHorizontalGroup(
-            jPanel262Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel262Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel262Layout.setVerticalGroup(
-            jPanel262Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel262Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel257.add(jPanel262);
 
@@ -4746,13 +4305,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel263Layout = new javax.swing.GroupLayout(jPanel263);
         jPanel263.setLayout(jPanel263Layout);
         jPanel263Layout.setHorizontalGroup(
-            jPanel263Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel263Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel263Layout.setVerticalGroup(
-            jPanel263Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel263Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel257.add(jPanel263);
 
@@ -4765,13 +4322,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel264Layout = new javax.swing.GroupLayout(jPanel264);
         jPanel264.setLayout(jPanel264Layout);
         jPanel264Layout.setHorizontalGroup(
-            jPanel264Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel264Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel264Layout.setVerticalGroup(
-            jPanel264Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel264Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel257.add(jPanel264);
 
@@ -4784,13 +4339,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel265Layout = new javax.swing.GroupLayout(jPanel265);
         jPanel265.setLayout(jPanel265Layout);
         jPanel265Layout.setHorizontalGroup(
-            jPanel265Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel265Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel265Layout.setVerticalGroup(
-            jPanel265Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel265Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel257.add(jPanel265);
 
@@ -4803,13 +4356,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel266Layout = new javax.swing.GroupLayout(jPanel266);
         jPanel266.setLayout(jPanel266Layout);
         jPanel266Layout.setHorizontalGroup(
-            jPanel266Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel266Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel266Layout.setVerticalGroup(
-            jPanel266Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel266Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel257.add(jPanel266);
 
@@ -4822,13 +4373,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel267Layout = new javax.swing.GroupLayout(jPanel267);
         jPanel267.setLayout(jPanel267Layout);
         jPanel267Layout.setHorizontalGroup(
-            jPanel267Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel267Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel267Layout.setVerticalGroup(
-            jPanel267Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel267Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel257.add(jPanel267);
 
@@ -4841,13 +4390,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel268Layout = new javax.swing.GroupLayout(jPanel268);
         jPanel268.setLayout(jPanel268Layout);
         jPanel268Layout.setHorizontalGroup(
-            jPanel268Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel268Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel268Layout.setVerticalGroup(
-            jPanel268Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel268Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel257.add(jPanel268);
 
@@ -4865,13 +4412,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel270Layout = new javax.swing.GroupLayout(jPanel270);
         jPanel270.setLayout(jPanel270Layout);
         jPanel270Layout.setHorizontalGroup(
-            jPanel270Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel270Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel270Layout.setVerticalGroup(
-            jPanel270Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel270Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel269.add(jPanel270);
 
@@ -4880,13 +4425,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel271Layout = new javax.swing.GroupLayout(jPanel271);
         jPanel271.setLayout(jPanel271Layout);
         jPanel271Layout.setHorizontalGroup(
-            jPanel271Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel271Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel271Layout.setVerticalGroup(
-            jPanel271Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel271Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel269.add(jPanel271);
 
@@ -4895,13 +4438,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel272Layout = new javax.swing.GroupLayout(jPanel272);
         jPanel272.setLayout(jPanel272Layout);
         jPanel272Layout.setHorizontalGroup(
-            jPanel272Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel272Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel272Layout.setVerticalGroup(
-            jPanel272Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel272Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel269.add(jPanel272);
 
@@ -4914,13 +4455,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel273Layout = new javax.swing.GroupLayout(jPanel273);
         jPanel273.setLayout(jPanel273Layout);
         jPanel273Layout.setHorizontalGroup(
-            jPanel273Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel273Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel273Layout.setVerticalGroup(
-            jPanel273Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel273Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel269.add(jPanel273);
 
@@ -4933,13 +4472,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel274Layout = new javax.swing.GroupLayout(jPanel274);
         jPanel274.setLayout(jPanel274Layout);
         jPanel274Layout.setHorizontalGroup(
-            jPanel274Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel274Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel274Layout.setVerticalGroup(
-            jPanel274Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel274Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel269.add(jPanel274);
 
@@ -4948,13 +4485,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel275Layout = new javax.swing.GroupLayout(jPanel275);
         jPanel275.setLayout(jPanel275Layout);
         jPanel275Layout.setHorizontalGroup(
-            jPanel275Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel275Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel275Layout.setVerticalGroup(
-            jPanel275Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel275Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel269.add(jPanel275);
 
@@ -4963,13 +4498,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel276Layout = new javax.swing.GroupLayout(jPanel276);
         jPanel276.setLayout(jPanel276Layout);
         jPanel276Layout.setHorizontalGroup(
-            jPanel276Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel276Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel276Layout.setVerticalGroup(
-            jPanel276Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel276Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel269.add(jPanel276);
 
@@ -4982,13 +4515,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel277Layout = new javax.swing.GroupLayout(jPanel277);
         jPanel277.setLayout(jPanel277Layout);
         jPanel277Layout.setHorizontalGroup(
-            jPanel277Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel277Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel277Layout.setVerticalGroup(
-            jPanel277Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel277Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel269.add(jPanel277);
 
@@ -5001,13 +4532,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel278Layout = new javax.swing.GroupLayout(jPanel278);
         jPanel278.setLayout(jPanel278Layout);
         jPanel278Layout.setHorizontalGroup(
-            jPanel278Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel278Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel278Layout.setVerticalGroup(
-            jPanel278Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel278Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel269.add(jPanel278);
 
@@ -5020,13 +4549,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel279Layout = new javax.swing.GroupLayout(jPanel279);
         jPanel279.setLayout(jPanel279Layout);
         jPanel279Layout.setHorizontalGroup(
-            jPanel279Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel279Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel279Layout.setVerticalGroup(
-            jPanel279Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel279Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel269.add(jPanel279);
 
@@ -5035,13 +4562,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel280Layout = new javax.swing.GroupLayout(jPanel280);
         jPanel280.setLayout(jPanel280Layout);
         jPanel280Layout.setHorizontalGroup(
-            jPanel280Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel280Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel280Layout.setVerticalGroup(
-            jPanel280Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel280Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel269.add(jPanel280);
 
@@ -5050,13 +4575,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel281Layout = new javax.swing.GroupLayout(jPanel281);
         jPanel281.setLayout(jPanel281Layout);
         jPanel281Layout.setHorizontalGroup(
-            jPanel281Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel281Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel281Layout.setVerticalGroup(
-            jPanel281Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel281Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel269.add(jPanel281);
 
@@ -5069,13 +4592,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel282Layout = new javax.swing.GroupLayout(jPanel282);
         jPanel282.setLayout(jPanel282Layout);
         jPanel282Layout.setHorizontalGroup(
-            jPanel282Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel282Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel282Layout.setVerticalGroup(
-            jPanel282Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel282Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel269.add(jPanel282);
 
@@ -5088,13 +4609,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel283Layout = new javax.swing.GroupLayout(jPanel283);
         jPanel283.setLayout(jPanel283Layout);
         jPanel283Layout.setHorizontalGroup(
-            jPanel283Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel283Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel283Layout.setVerticalGroup(
-            jPanel283Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel283Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel269.add(jPanel283);
 
@@ -5103,13 +4622,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel284Layout = new javax.swing.GroupLayout(jPanel284);
         jPanel284.setLayout(jPanel284Layout);
         jPanel284Layout.setHorizontalGroup(
-            jPanel284Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel284Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel284Layout.setVerticalGroup(
-            jPanel284Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel284Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel269.add(jPanel284);
 
@@ -5123,13 +4640,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel285Layout = new javax.swing.GroupLayout(jPanel285);
         jPanel285.setLayout(jPanel285Layout);
         jPanel285Layout.setHorizontalGroup(
-            jPanel285Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel285Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel285Layout.setVerticalGroup(
-            jPanel285Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel285Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel5.add(jPanel285);
 
@@ -5138,13 +4653,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel286Layout = new javax.swing.GroupLayout(jPanel286);
         jPanel286.setLayout(jPanel286Layout);
         jPanel286Layout.setHorizontalGroup(
-            jPanel286Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel286Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel286Layout.setVerticalGroup(
-            jPanel286Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel286Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel5.add(jPanel286);
 
@@ -5153,13 +4666,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel287Layout = new javax.swing.GroupLayout(jPanel287);
         jPanel287.setLayout(jPanel287Layout);
         jPanel287Layout.setHorizontalGroup(
-            jPanel287Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel287Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel287Layout.setVerticalGroup(
-            jPanel287Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel287Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel5.add(jPanel287);
 
@@ -5168,13 +4679,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel288Layout = new javax.swing.GroupLayout(jPanel288);
         jPanel288.setLayout(jPanel288Layout);
         jPanel288Layout.setHorizontalGroup(
-            jPanel288Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel288Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel288Layout.setVerticalGroup(
-            jPanel288Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel288Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel5.add(jPanel288);
 
@@ -5187,13 +4696,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel289Layout = new javax.swing.GroupLayout(jPanel289);
         jPanel289.setLayout(jPanel289Layout);
         jPanel289Layout.setHorizontalGroup(
-            jPanel289Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel289Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel289Layout.setVerticalGroup(
-            jPanel289Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel289Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel5.add(jPanel289);
 
@@ -5206,13 +4713,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel290Layout = new javax.swing.GroupLayout(jPanel290);
         jPanel290.setLayout(jPanel290Layout);
         jPanel290Layout.setHorizontalGroup(
-            jPanel290Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel290Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel290Layout.setVerticalGroup(
-            jPanel290Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel290Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel5.add(jPanel290);
 
@@ -5225,13 +4730,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel291Layout = new javax.swing.GroupLayout(jPanel291);
         jPanel291.setLayout(jPanel291Layout);
         jPanel291Layout.setHorizontalGroup(
-            jPanel291Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel291Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel291Layout.setVerticalGroup(
-            jPanel291Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel291Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel5.add(jPanel291);
 
@@ -5244,13 +4747,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel292Layout = new javax.swing.GroupLayout(jPanel292);
         jPanel292.setLayout(jPanel292Layout);
         jPanel292Layout.setHorizontalGroup(
-            jPanel292Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel292Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel292Layout.setVerticalGroup(
-            jPanel292Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel292Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel5.add(jPanel292);
 
@@ -5263,13 +4764,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel293Layout = new javax.swing.GroupLayout(jPanel293);
         jPanel293.setLayout(jPanel293Layout);
         jPanel293Layout.setHorizontalGroup(
-            jPanel293Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel293Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel293Layout.setVerticalGroup(
-            jPanel293Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel293Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel5.add(jPanel293);
 
@@ -5282,13 +4781,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel294Layout = new javax.swing.GroupLayout(jPanel294);
         jPanel294.setLayout(jPanel294Layout);
         jPanel294Layout.setHorizontalGroup(
-            jPanel294Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel294Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel294Layout.setVerticalGroup(
-            jPanel294Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel294Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel5.add(jPanel294);
 
@@ -5301,13 +4798,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel295Layout = new javax.swing.GroupLayout(jPanel295);
         jPanel295.setLayout(jPanel295Layout);
         jPanel295Layout.setHorizontalGroup(
-            jPanel295Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel295Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel295Layout.setVerticalGroup(
-            jPanel295Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel295Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel5.add(jPanel295);
 
@@ -5320,13 +4815,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel296Layout = new javax.swing.GroupLayout(jPanel296);
         jPanel296.setLayout(jPanel296Layout);
         jPanel296Layout.setHorizontalGroup(
-            jPanel296Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel296Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel296Layout.setVerticalGroup(
-            jPanel296Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel296Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel5.add(jPanel296);
 
@@ -5340,13 +4833,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel297Layout = new javax.swing.GroupLayout(jPanel297);
         jPanel297.setLayout(jPanel297Layout);
         jPanel297Layout.setHorizontalGroup(
-            jPanel297Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel297Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel297Layout.setVerticalGroup(
-            jPanel297Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel297Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel6.add(jPanel297);
 
@@ -5355,13 +4846,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel298Layout = new javax.swing.GroupLayout(jPanel298);
         jPanel298.setLayout(jPanel298Layout);
         jPanel298Layout.setHorizontalGroup(
-            jPanel298Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel298Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel298Layout.setVerticalGroup(
-            jPanel298Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel298Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel6.add(jPanel298);
 
@@ -5370,13 +4859,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel299Layout = new javax.swing.GroupLayout(jPanel299);
         jPanel299.setLayout(jPanel299Layout);
         jPanel299Layout.setHorizontalGroup(
-            jPanel299Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel299Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel299Layout.setVerticalGroup(
-            jPanel299Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel299Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel6.add(jPanel299);
 
@@ -5385,13 +4872,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel300Layout = new javax.swing.GroupLayout(jPanel300);
         jPanel300.setLayout(jPanel300Layout);
         jPanel300Layout.setHorizontalGroup(
-            jPanel300Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel300Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel300Layout.setVerticalGroup(
-            jPanel300Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel300Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel6.add(jPanel300);
 
@@ -5400,13 +4885,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel301Layout = new javax.swing.GroupLayout(jPanel301);
         jPanel301.setLayout(jPanel301Layout);
         jPanel301Layout.setHorizontalGroup(
-            jPanel301Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel301Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel301Layout.setVerticalGroup(
-            jPanel301Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel301Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel6.add(jPanel301);
 
@@ -5419,13 +4902,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel302Layout = new javax.swing.GroupLayout(jPanel302);
         jPanel302.setLayout(jPanel302Layout);
         jPanel302Layout.setHorizontalGroup(
-            jPanel302Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel302Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel302Layout.setVerticalGroup(
-            jPanel302Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel302Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel6.add(jPanel302);
 
@@ -5438,13 +4919,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel303Layout = new javax.swing.GroupLayout(jPanel303);
         jPanel303.setLayout(jPanel303Layout);
         jPanel303Layout.setHorizontalGroup(
-            jPanel303Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel303Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel303Layout.setVerticalGroup(
-            jPanel303Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel303Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel6.add(jPanel303);
 
@@ -5457,13 +4936,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel304Layout = new javax.swing.GroupLayout(jPanel304);
         jPanel304.setLayout(jPanel304Layout);
         jPanel304Layout.setHorizontalGroup(
-            jPanel304Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel304Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel304Layout.setVerticalGroup(
-            jPanel304Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel304Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel6.add(jPanel304);
 
@@ -5476,13 +4953,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel305Layout = new javax.swing.GroupLayout(jPanel305);
         jPanel305.setLayout(jPanel305Layout);
         jPanel305Layout.setHorizontalGroup(
-            jPanel305Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel305Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel305Layout.setVerticalGroup(
-            jPanel305Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel305Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel6.add(jPanel305);
 
@@ -5495,13 +4970,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel306Layout = new javax.swing.GroupLayout(jPanel306);
         jPanel306.setLayout(jPanel306Layout);
         jPanel306Layout.setHorizontalGroup(
-            jPanel306Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel306Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel306Layout.setVerticalGroup(
-            jPanel306Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel306Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel6.add(jPanel306);
 
@@ -5514,13 +4987,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel307Layout = new javax.swing.GroupLayout(jPanel307);
         jPanel307.setLayout(jPanel307Layout);
         jPanel307Layout.setHorizontalGroup(
-            jPanel307Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel307Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel307Layout.setVerticalGroup(
-            jPanel307Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel307Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel6.add(jPanel307);
 
@@ -5538,13 +5009,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel309Layout = new javax.swing.GroupLayout(jPanel309);
         jPanel309.setLayout(jPanel309Layout);
         jPanel309Layout.setHorizontalGroup(
-            jPanel309Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel309Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel309Layout.setVerticalGroup(
-            jPanel309Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel309Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel7.add(jPanel309);
 
@@ -5553,13 +5022,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel310Layout = new javax.swing.GroupLayout(jPanel310);
         jPanel310.setLayout(jPanel310Layout);
         jPanel310Layout.setHorizontalGroup(
-            jPanel310Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel310Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel310Layout.setVerticalGroup(
-            jPanel310Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel310Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel7.add(jPanel310);
 
@@ -5568,13 +5035,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel311Layout = new javax.swing.GroupLayout(jPanel311);
         jPanel311.setLayout(jPanel311Layout);
         jPanel311Layout.setHorizontalGroup(
-            jPanel311Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel311Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel311Layout.setVerticalGroup(
-            jPanel311Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel311Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel7.add(jPanel311);
 
@@ -5583,13 +5048,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel312Layout = new javax.swing.GroupLayout(jPanel312);
         jPanel312.setLayout(jPanel312Layout);
         jPanel312Layout.setHorizontalGroup(
-            jPanel312Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel312Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel312Layout.setVerticalGroup(
-            jPanel312Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel312Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel7.add(jPanel312);
 
@@ -5598,13 +5061,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel313Layout = new javax.swing.GroupLayout(jPanel313);
         jPanel313.setLayout(jPanel313Layout);
         jPanel313Layout.setHorizontalGroup(
-            jPanel313Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel313Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel313Layout.setVerticalGroup(
-            jPanel313Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel313Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel7.add(jPanel313);
 
@@ -5613,13 +5074,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel314Layout = new javax.swing.GroupLayout(jPanel314);
         jPanel314.setLayout(jPanel314Layout);
         jPanel314Layout.setHorizontalGroup(
-            jPanel314Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel314Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel314Layout.setVerticalGroup(
-            jPanel314Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel314Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel7.add(jPanel314);
 
@@ -5628,13 +5087,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel315Layout = new javax.swing.GroupLayout(jPanel315);
         jPanel315.setLayout(jPanel315Layout);
         jPanel315Layout.setHorizontalGroup(
-            jPanel315Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel315Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel315Layout.setVerticalGroup(
-            jPanel315Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel315Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel7.add(jPanel315);
 
@@ -5643,13 +5100,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel316Layout = new javax.swing.GroupLayout(jPanel316);
         jPanel316.setLayout(jPanel316Layout);
         jPanel316Layout.setHorizontalGroup(
-            jPanel316Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel316Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel316Layout.setVerticalGroup(
-            jPanel316Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel316Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel7.add(jPanel316);
 
@@ -5662,13 +5117,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel317Layout = new javax.swing.GroupLayout(jPanel317);
         jPanel317.setLayout(jPanel317Layout);
         jPanel317Layout.setHorizontalGroup(
-            jPanel317Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel317Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel317Layout.setVerticalGroup(
-            jPanel317Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel317Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel7.add(jPanel317);
 
@@ -5681,13 +5134,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel318Layout = new javax.swing.GroupLayout(jPanel318);
         jPanel318.setLayout(jPanel318Layout);
         jPanel318Layout.setHorizontalGroup(
-            jPanel318Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel318Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel318Layout.setVerticalGroup(
-            jPanel318Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel318Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel7.add(jPanel318);
 
@@ -5700,13 +5151,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel319Layout = new javax.swing.GroupLayout(jPanel319);
         jPanel319.setLayout(jPanel319Layout);
         jPanel319Layout.setHorizontalGroup(
-            jPanel319Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel319Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel319Layout.setVerticalGroup(
-            jPanel319Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel319Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel7.add(jPanel319);
 
@@ -5719,13 +5168,11 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel320Layout = new javax.swing.GroupLayout(jPanel320);
         jPanel320.setLayout(jPanel320Layout);
         jPanel320Layout.setHorizontalGroup(
-            jPanel320Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel320Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel320Layout.setVerticalGroup(
-            jPanel320Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel320Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel7.add(jPanel320);
 
@@ -5738,23 +5185,20 @@ public class ManualRodControl extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel321Layout = new javax.swing.GroupLayout(jPanel321);
         jPanel321.setLayout(jPanel321Layout);
         jPanel321Layout.setHorizontalGroup(
-            jPanel321Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
-        );
+                jPanel321Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 119, Short.MAX_VALUE));
         jPanel321Layout.setVerticalGroup(
-            jPanel321Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+                jPanel321Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 24, Short.MAX_VALUE));
 
         jPanel7.add(jPanel321);
 
         add(jPanel7);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {                                               
-        
-    }                                              
+    private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {
 
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel100;

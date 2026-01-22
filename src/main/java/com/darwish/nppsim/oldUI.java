@@ -18,15 +18,16 @@ public class oldUI implements UIUpdateable {
     private JLabel mcpFlow;
     private JLabel mcpRPM;
     private JSpinner mcpSelector;
+
     public oldUI() {
         initComponents();
     }
-    
+
     private void initComponents() {
         frame = new JFrame("ReactorData");
         frame.setAlwaysOnTop(true);
         frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        frame.setSize(800,400);
+        frame.setSize(800, 400);
         frame.setLayout(null);
 
         drum1 = new JTextArea();
@@ -83,33 +84,33 @@ public class oldUI implements UIUpdateable {
         frame.getContentPane().add(sdv_cStatus);
         sdv_cPosN.addItemListener(new ItemListener() {
             @Override
-            public void itemStateChanged(ItemEvent e) {             
-               if (e.getStateChange() == 1) {
-                for (SteamValve i: sdv_c) {
-                    i.setState(1);
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == 1) {
+                    for (SteamValve i : sdv_c) {
+                        i.setState(1);
+                    }
                 }
-               }
-            }           
+            }
         });
         sdv_cPosOpen.addItemListener(new ItemListener() {
             @Override
-            public void itemStateChanged(ItemEvent e) {             
-               if (e.getStateChange() == 1) {
-                    for (SteamValve i: sdv_c) {
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == 1) {
+                    for (SteamValve i : sdv_c) {
                         i.setState(2);
                     }
-               }
-            }           
+                }
+            }
         });
         sdv_cPosClose.addItemListener(new ItemListener() {
             @Override
-            public void itemStateChanged(ItemEvent e) {             
-               if (e.getStateChange() == 1) {
-                    for (SteamValve i: sdv_c) {
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == 1) {
+                    for (SteamValve i : sdv_c) {
                         i.setState(0);
                     }
-               }
-            }           
+                }
+            }
         });
 
         JPanel mcpPanel = new JPanel();
@@ -145,9 +146,9 @@ public class oldUI implements UIUpdateable {
         mcpSelector = new JSpinner(new SpinnerNumberModel(1, 1, 8, 1));
         mcpSelector.setLocation(110, 20);
         mcpSelector.setSize(35, 25);
-        ((JSpinner.DefaultEditor)mcpSelector.getEditor()).getTextField().setEditable(false);
+        ((JSpinner.DefaultEditor) mcpSelector.getEditor()).getTextField().setEditable(false);
         mcpSelector.addChangeListener((ChangeEvent e) -> {
-            Pump currentSelection = mcc.mcp.get((int)mcpSelector.getValue() - 1);
+            Pump currentSelection = mcc.mcp.get((int) mcpSelector.getValue() - 1);
             mcpFlow.setText("Flow: " + NPPMath.round(currentSelection.getFlow()));
             mcpRPM.setText("RPM: " + NPPMath.round(currentSelection.getRPM()));
             if (currentSelection.isActive()) {
@@ -165,20 +166,20 @@ public class oldUI implements UIUpdateable {
         mcpPanel.add(mcpFlow);
         frame.getContentPane().add(mcpPanel);
 
-        //frame.getContentPane().add(mcpFlow);
+        // frame.getContentPane().add(mcpFlow);
         mcpStart.addItemListener(new ItemListener() {
-            public void itemStateChanged(ItemEvent e) {             
+            public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == 1) {
-                    mcc.mcp.get((int)mcpSelector.getValue() - 1).setActive(true);
+                    mcc.mcp.get((int) mcpSelector.getValue() - 1).setActive(true);
                 }
-            }           
+            }
         });
         mcpStop.addItemListener(new ItemListener() {
-            public void itemStateChanged(ItemEvent e) {             
+            public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == 1) {
-                    mcc.mcp.get((int)mcpSelector.getValue() - 1).setActive(false);
+                    mcc.mcp.get((int) mcpSelector.getValue() - 1).setActive(false);
                 }
-            }           
+            }
         });
         frame.setVisible(true);
     }
@@ -188,42 +189,69 @@ public class oldUI implements UIUpdateable {
 
         MCC.SeparatorDrum drum1 = mcc.drum1;
         MCC.SeparatorDrum drum2 = mcc.drum2;
-        FuelChannel loop1 = (FuelChannel)core.coreArray.get(25).get(25);
-        FuelChannel loop2 = (FuelChannel)core.coreArray.get(28).get(31);
+        FuelChannel loop1 = (FuelChannel) core.coreArray.get(25).get(25);
+        FuelChannel loop2 = (FuelChannel) core.coreArray.get(28).get(31);
         MCC.MCPPressureHeader pHeader1 = mcc.pHeader1;
         MCC.MCPPressureHeader pHeader2 = mcc.pHeader2;
-        
-        //System.out.println("specific heat cap " + specificHeat + " specVapEnthalpy " + specificVaporEnthalpy+ " bp " + boilingPoint + " steamMass " + steamMass + " water mass " + feedwaterMass + " volume " + feedwaterVolume + " specific density: " + specificDensity + " power " + thermalPower);
-        this.drum1.setText("Water Temp: " + NPPMath.round(drum1.getWaterTemperature()) + "\nBoiling Point:" + NPPMath.round(drum1.getBoilingPoint()) + "\nDrum Pressure: " + NPPMath.round(drum1.getPressure(), 3) + "\nSteam Production: " + NPPMath.round(drum1.getSteamProduction()) + "\nSteam Flow: " + NPPMath.round(drum1.getSteamOutflowRate()) + "\nSteam Mass: " + NPPMath.round(drum1.getSteamMass()) + "\nWater Mass " + NPPMath.round(drum1.getWaterMass()) + "\nDrum Water Level: " + NPPMath.round(drum1.getWaterLevel()));
-        //drum1.resetFlowRates();
-        this.drum2.setText("Water Temp: " + NPPMath.round(drum2.getWaterTemperature()) + "\nBoiling Point:" + NPPMath.round(drum2.getBoilingPoint()) + "\nDrum Pressure: " + NPPMath.round(drum2.getPressure(), 3) + "\nSteam Production: " + NPPMath.round(drum2.getSteamProduction()) + "\nSteam Flow: " + NPPMath.round(drum2.getSteamOutflowRate()) + "\nSteam Mass: " + NPPMath.round(drum2.getSteamMass()) + "\nWater Mass " + NPPMath.round(drum2.getWaterMass()) + "\nDrum Water Level: " + NPPMath.round(drum2.getWaterLevel()));
-        //drum2.resetFlowRates();
-        this.loop1.setText("Water Temp: " + NPPMath.round(loop1.getWaterTemperature()) + "\nBoiling Point:" + NPPMath.round(loop1.getBoilingPoint()) + "\nPressure: " + NPPMath.round(loop1.getPressure(), 3) + "\nSteam Mass: " + NPPMath.round(loop1.getSteamMass()) + "\nFeedwater Mass " + NPPMath.round(loop1.getWaterMass()) + "\nWater Level: " + NPPMath.round(loop1.getWaterLevel()) + "\n Water Inflow: " + NPPMath.round(loop1.getWaterInflowRate()) + "\nVoiding:" + NPPMath.round(loop1.getVoidFraction()) + "\nPressure Header Temp: " + NPPMath.round(pHeader1.getWaterTemperature()) + "\nPressure Header Flow: " + NPPMath.round(pHeader1.getWaterOutflowRate()));
-        //loop1.resetFlowRates();
-        //pHeader1.resetFlowRates();
-        this.loop2.setText("Water Temp: " + NPPMath.round(loop2.getWaterTemperature()) + "\nBoiling Point:" + NPPMath.round(loop2.getBoilingPoint()) + "\nPressure: " + NPPMath.round(loop2.getPressure(), 3) + "\nSteam Mass: " + NPPMath.round(loop2.getSteamMass()) + "\nFeedwater Mass " + NPPMath.round(loop2.getWaterMass()) + "\nWater Level: " + NPPMath.round(loop2.getWaterLevel()) + "\n Water Inflow: " + NPPMath.round(loop2.getWaterInflowRate()) + "\nVoiding:" + NPPMath.round(loop2.getVoidFraction()) + "\nPressure Header Temp: " + NPPMath.round(pHeader2.getWaterTemperature()) + "\nPressure Header Flow: " + NPPMath.round(pHeader2.getWaterOutflowRate()));
-        //loop2.resetFlowRates();
-        //pHeader2.resetFlowRates();
+
+        // System.out.println("specific heat cap " + specificHeat + " specVapEnthalpy "
+        // + specificVaporEnthalpy+ " bp " + boilingPoint + " steamMass " + steamMass +
+        // " water mass " + feedwaterMass + " volume " + feedwaterVolume + " specific
+        // density: " + specificDensity + " power " + thermalPower);
+        this.drum1.setText("Water Temp: " + NPPMath.round(drum1.getWaterTemperature()) + "\nBoiling Point:"
+                + NPPMath.round(drum1.getBoilingPoint()) + "\nDrum Pressure: " + NPPMath.round(drum1.getPressure(), 3)
+                + "\nSteam Production: " + NPPMath.round(drum1.getSteamProduction()) + "\nSteam Flow: "
+                + NPPMath.round(drum1.getSteamOutflowRate()) + "\nSteam Mass: " + NPPMath.round(drum1.getSteamMass())
+                + "\nWater Mass " + NPPMath.round(drum1.getWaterMass()) + "\nDrum Water Level: "
+                + NPPMath.round(drum1.getWaterLevel()));
+        // drum1.resetFlowRates();
+        this.drum2.setText("Water Temp: " + NPPMath.round(drum2.getWaterTemperature()) + "\nBoiling Point:"
+                + NPPMath.round(drum2.getBoilingPoint()) + "\nDrum Pressure: " + NPPMath.round(drum2.getPressure(), 3)
+                + "\nSteam Production: " + NPPMath.round(drum2.getSteamProduction()) + "\nSteam Flow: "
+                + NPPMath.round(drum2.getSteamOutflowRate()) + "\nSteam Mass: " + NPPMath.round(drum2.getSteamMass())
+                + "\nWater Mass " + NPPMath.round(drum2.getWaterMass()) + "\nDrum Water Level: "
+                + NPPMath.round(drum2.getWaterLevel()));
+        // drum2.resetFlowRates();
+        this.loop1.setText("Water Temp: " + NPPMath.round(loop1.getWaterTemperature()) + "\nBoiling Point:"
+                + NPPMath.round(loop1.getBoilingPoint()) + "\nPressure: " + NPPMath.round(loop1.getPressure(), 3)
+                + "\nSteam Mass: " + NPPMath.round(loop1.getSteamMass()) + "\nFeedwater Mass "
+                + NPPMath.round(loop1.getWaterMass()) + "\nWater Level: " + NPPMath.round(loop1.getWaterLevel())
+                + "\n Water Inflow: " + NPPMath.round(loop1.getWaterInflowRate()) + "\nVoiding:"
+                + NPPMath.round(loop1.getVoidFraction()) + "\nPressure Header Temp: "
+                + NPPMath.round(pHeader1.getWaterTemperature()) + "\nPressure Header Flow: "
+                + NPPMath.round(pHeader1.getWaterOutflowRate()));
+        // loop1.resetFlowRates();
+        // pHeader1.resetFlowRates();
+        this.loop2.setText("Water Temp: " + NPPMath.round(loop2.getWaterTemperature()) + "\nBoiling Point:"
+                + NPPMath.round(loop2.getBoilingPoint()) + "\nPressure: " + NPPMath.round(loop2.getPressure(), 3)
+                + "\nSteam Mass: " + NPPMath.round(loop2.getSteamMass()) + "\nFeedwater Mass "
+                + NPPMath.round(loop2.getWaterMass()) + "\nWater Level: " + NPPMath.round(loop2.getWaterLevel())
+                + "\n Water Inflow: " + NPPMath.round(loop2.getWaterInflowRate()) + "\nVoiding:"
+                + NPPMath.round(loop2.getVoidFraction()) + "\nPressure Header Temp: "
+                + NPPMath.round(pHeader2.getWaterTemperature()) + "\nPressure Header Flow: "
+                + NPPMath.round(pHeader2.getWaterOutflowRate()));
+        // loop2.resetFlowRates();
+        // pHeader2.resetFlowRates();
         sdv_cStatus.setText("Position: " + NPPMath.round(sdv_c.get(0).getPosition() * 100));
-        mcpFlow.setText("Flow: " + NPPMath.round(mcc.mcp.get((int)mcpSelector.getValue() - 1).getFlow()));
-        mcpRPM.setText("RPM: " + NPPMath.round(mcc.mcp.get((int)mcpSelector.getValue() - 1).getRPM()));
+        mcpFlow.setText("Flow: " + NPPMath.round(mcc.mcp.get((int) mcpSelector.getValue() - 1).getFlow()));
+        mcpRPM.setText("RPM: " + NPPMath.round(mcc.mcp.get((int) mcpSelector.getValue() - 1).getRPM()));
     }
-    
+
     @Override
     public void initializeDialUpdateThread() {
-        //void
+        // void
     }
 
     @Override
     public void setVisibility(boolean visible) {
         frame.setVisible(visible);
     }
-    
+
     @Override
     public void discard() {
         frame.setVisible(false);
     }
-    
+
     @Override
     public void acknowledge() {
 

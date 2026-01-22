@@ -5,6 +5,7 @@ import static com.darwish.nppsim.NPPSim.mcc;
 public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
     private final Annunciator annunciator;
     Pump[] mcpArray;
+
     /**
      * Creates new form MCPUI
      */
@@ -12,7 +13,8 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         initComponents();
         this.setTitle("MCP Controls");
         annunciator = new Annunciator(annunciatorPanel);
-        mcpArray = new Pump[] {mcc.mcp.get(0), mcc.mcp.get(1), mcc.mcp.get(2), mcc.mcp.get(3), mcc.mcp.get(4), mcc.mcp.get(5), mcc.mcp.get(6), mcc.mcp.get(7)};
+        mcpArray = new Pump[] { mcc.mcp.get(0), mcc.mcp.get(1), mcc.mcp.get(2), mcc.mcp.get(3), mcc.mcp.get(4),
+                mcc.mcp.get(5), mcc.mcp.get(6), mcc.mcp.get(7) };
         led1.setLedOn(mcpArray[0].isActive());
         led2.setLedOn(mcpArray[1].isActive());
         led3.setLedOn(mcpArray[2].isActive());
@@ -38,107 +40,105 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
     @Override
     public void initializeDialUpdateThread() {
         UI.uiThreads.add(
-            new Thread(() -> {
-                try {
-                    while (true) {
-                        annunciator.update();
-                        if (this.isVisible()) {
-                            java.awt.EventQueue.invokeLater(() -> {
-                                flow1.setValue(mcpArray[0].getFlow());
-                                flow2.setValue(mcpArray[1].getFlow());
-                                flow3.setValue(mcpArray[2].getFlow());
-                                flow4.setValue(mcpArray[3].getFlow());
-                                flow5.setValue(mcpArray[4].getFlow());
-                                flow6.setValue(mcpArray[5].getFlow());
-                                flow7.setValue(mcpArray[6].getFlow());
-                                flow8.setValue(mcpArray[7].getFlow());
-                                amps1.setValue(mcpArray[0].getPowerUsage());
-                                amps2.setValue(mcpArray[1].getPowerUsage());
-                                amps3.setValue(mcpArray[2].getPowerUsage());
-                                amps4.setValue(mcpArray[3].getPowerUsage());
-                                amps5.setValue(mcpArray[4].getPowerUsage());
-                                amps6.setValue(mcpArray[5].getPowerUsage());
-                                amps7.setValue(mcpArray[6].getPowerUsage());
-                                amps8.setValue(mcpArray[7].getPowerUsage());
-                                rpm1.setValue(mcpArray[0].getRPM());
-                                rpm2.setValue(mcpArray[1].getRPM());
-                                rpm3.setValue(mcpArray[2].getRPM());
-                                rpm4.setValue(mcpArray[3].getRPM());
-                                rpm5.setValue(mcpArray[4].getRPM());
-                                rpm6.setValue(mcpArray[5].getRPM());
-                                rpm7.setValue(mcpArray[6].getRPM());
-                                rpm8.setValue(mcpArray[7].getRPM());
-                                pos1.setValue(mcpArray[0].dischargeValve.getPosition() * 100);
-                                pos2.setValue(mcpArray[1].dischargeValve.getPosition() * 100);
-                                pos3.setValue(mcpArray[2].dischargeValve.getPosition() * 100);
-                                pos4.setValue(mcpArray[3].dischargeValve.getPosition() * 100);
-                                pos5.setValue(mcpArray[4].dischargeValve.getPosition() * 100);
-                                pos6.setValue(mcpArray[5].dischargeValve.getPosition() * 100);
-                                pos7.setValue(mcpArray[6].dischargeValve.getPosition() * 100);
-                                pos8.setValue(mcpArray[7].dischargeValve.getPosition() * 100);
-                            });
+                new Thread(() -> {
+                    try {
+                        while (true) {
+                            annunciator.update();
+                            if (this.isVisible()) {
+                                java.awt.EventQueue.invokeLater(() -> {
+                                    flow1.setValue(mcpArray[0].getFlow());
+                                    flow2.setValue(mcpArray[1].getFlow());
+                                    flow3.setValue(mcpArray[2].getFlow());
+                                    flow4.setValue(mcpArray[3].getFlow());
+                                    flow5.setValue(mcpArray[4].getFlow());
+                                    flow6.setValue(mcpArray[5].getFlow());
+                                    flow7.setValue(mcpArray[6].getFlow());
+                                    flow8.setValue(mcpArray[7].getFlow());
+                                    amps1.setValue(mcpArray[0].getPowerUsage());
+                                    amps2.setValue(mcpArray[1].getPowerUsage());
+                                    amps3.setValue(mcpArray[2].getPowerUsage());
+                                    amps4.setValue(mcpArray[3].getPowerUsage());
+                                    amps5.setValue(mcpArray[4].getPowerUsage());
+                                    amps6.setValue(mcpArray[5].getPowerUsage());
+                                    amps7.setValue(mcpArray[6].getPowerUsage());
+                                    amps8.setValue(mcpArray[7].getPowerUsage());
+                                    rpm1.setValue(mcpArray[0].getRPM());
+                                    rpm2.setValue(mcpArray[1].getRPM());
+                                    rpm3.setValue(mcpArray[2].getRPM());
+                                    rpm4.setValue(mcpArray[3].getRPM());
+                                    rpm5.setValue(mcpArray[4].getRPM());
+                                    rpm6.setValue(mcpArray[5].getRPM());
+                                    rpm7.setValue(mcpArray[6].getRPM());
+                                    rpm8.setValue(mcpArray[7].getRPM());
+                                    pos1.setValue(mcpArray[0].dischargeValve.getPosition() * 100);
+                                    pos2.setValue(mcpArray[1].dischargeValve.getPosition() * 100);
+                                    pos3.setValue(mcpArray[2].dischargeValve.getPosition() * 100);
+                                    pos4.setValue(mcpArray[3].dischargeValve.getPosition() * 100);
+                                    pos5.setValue(mcpArray[4].dischargeValve.getPosition() * 100);
+                                    pos6.setValue(mcpArray[5].dischargeValve.getPosition() * 100);
+                                    pos7.setValue(mcpArray[6].dischargeValve.getPosition() * 100);
+                                    pos8.setValue(mcpArray[7].dischargeValve.getPosition() * 100);
+                                });
+                            }
+                            if (this.isFocused()) {
+                                Thread.sleep(UI.getUpdateRate());
+                            } else {
+                                Thread.sleep(200);
+                            }
                         }
-                        if (this.isFocused()) {
-                            Thread.sleep(UI.getUpdateRate());
-                        } else {
-                            Thread.sleep(200);
-                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            })
-        );
+                }));
         UI.uiThreads.get(UI.uiThreads.size() - 1).start();
     }
 
     private void precisionController() {
         final float increment = mcpArray[0].accelerationSpeed / mcpArray[0].ratedRPM * 1.2f;
         UI.uiThreads.add(
-            new Thread(() -> {
-                while(true) {
-                    try {
-                        if (precisionIncrement1.getModel().isPressed()) {
-                            mcc.mcp.get(0).setSetPoint(mcpArray[0].getSetPoint() + increment);
-                        } else if (precisionIncrement2.getModel().isPressed()) {
-                            mcc.mcp.get(1).setSetPoint(mcpArray[1].getSetPoint() + increment);
-                        } else if (precisionIncrement3.getModel().isPressed()) {
-                            mcc.mcp.get(2).setSetPoint(mcpArray[2].getSetPoint() + increment);
-                        } else if (precisionIncrement4.getModel().isPressed()) {
-                            mcc.mcp.get(3).setSetPoint(mcpArray[3].getSetPoint() + increment);
-                        } else if (precisionIncrement5.getModel().isPressed()) {
-                            mcc.mcp.get(4).setSetPoint(mcpArray[4].getSetPoint() + increment);
-                        } else if (precisionIncrement6.getModel().isPressed()) {
-                            mcc.mcp.get(5).setSetPoint(mcpArray[5].getSetPoint() + increment);
-                        } else if (precisionIncrement7.getModel().isPressed()) {
-                            mcc.mcp.get(6).setSetPoint(mcpArray[6].getSetPoint() + increment);
-                        } else if (precisionIncrement8.getModel().isPressed()) {
-                            mcc.mcp.get(7).setSetPoint(mcpArray[7].getSetPoint() + increment);
-                        } else if (precisionDecrement1.getModel().isPressed()) {
-                            mcc.mcp.get(0).setSetPoint(mcpArray[0].getSetPoint() - increment);
-                        } else if (precisionDecrement2.getModel().isPressed()) {
-                            mcc.mcp.get(1).setSetPoint(mcpArray[1].getSetPoint() - increment);
-                        } else if (precisionDecrement3.getModel().isPressed()) {
-                            mcc.mcp.get(2).setSetPoint(mcpArray[2].getSetPoint() - increment);
-                        } else if (precisionDecrement4.getModel().isPressed()) {
-                            mcc.mcp.get(3).setSetPoint(mcpArray[3].getSetPoint() - increment);
-                        } else if (precisionDecrement5.getModel().isPressed()) {
-                            mcc.mcp.get(4).setSetPoint(mcpArray[4].getSetPoint() - increment);
-                        } else if (precisionDecrement6.getModel().isPressed()) {
-                            mcc.mcp.get(5).setSetPoint(mcpArray[5].getSetPoint() - increment);
-                        } else if (precisionDecrement7.getModel().isPressed()) {
-                            mcc.mcp.get(6).setSetPoint(mcpArray[6].getSetPoint() - increment);
-                        } else if (precisionDecrement8.getModel().isPressed()) {
-                            mcc.mcp.get(7).setSetPoint(mcpArray[7].getSetPoint() - increment);
+                new Thread(() -> {
+                    while (true) {
+                        try {
+                            if (precisionIncrement1.getModel().isPressed()) {
+                                mcc.mcp.get(0).setSetPoint(mcpArray[0].getSetPoint() + increment);
+                            } else if (precisionIncrement2.getModel().isPressed()) {
+                                mcc.mcp.get(1).setSetPoint(mcpArray[1].getSetPoint() + increment);
+                            } else if (precisionIncrement3.getModel().isPressed()) {
+                                mcc.mcp.get(2).setSetPoint(mcpArray[2].getSetPoint() + increment);
+                            } else if (precisionIncrement4.getModel().isPressed()) {
+                                mcc.mcp.get(3).setSetPoint(mcpArray[3].getSetPoint() + increment);
+                            } else if (precisionIncrement5.getModel().isPressed()) {
+                                mcc.mcp.get(4).setSetPoint(mcpArray[4].getSetPoint() + increment);
+                            } else if (precisionIncrement6.getModel().isPressed()) {
+                                mcc.mcp.get(5).setSetPoint(mcpArray[5].getSetPoint() + increment);
+                            } else if (precisionIncrement7.getModel().isPressed()) {
+                                mcc.mcp.get(6).setSetPoint(mcpArray[6].getSetPoint() + increment);
+                            } else if (precisionIncrement8.getModel().isPressed()) {
+                                mcc.mcp.get(7).setSetPoint(mcpArray[7].getSetPoint() + increment);
+                            } else if (precisionDecrement1.getModel().isPressed()) {
+                                mcc.mcp.get(0).setSetPoint(mcpArray[0].getSetPoint() - increment);
+                            } else if (precisionDecrement2.getModel().isPressed()) {
+                                mcc.mcp.get(1).setSetPoint(mcpArray[1].getSetPoint() - increment);
+                            } else if (precisionDecrement3.getModel().isPressed()) {
+                                mcc.mcp.get(2).setSetPoint(mcpArray[2].getSetPoint() - increment);
+                            } else if (precisionDecrement4.getModel().isPressed()) {
+                                mcc.mcp.get(3).setSetPoint(mcpArray[3].getSetPoint() - increment);
+                            } else if (precisionDecrement5.getModel().isPressed()) {
+                                mcc.mcp.get(4).setSetPoint(mcpArray[4].getSetPoint() - increment);
+                            } else if (precisionDecrement6.getModel().isPressed()) {
+                                mcc.mcp.get(5).setSetPoint(mcpArray[5].getSetPoint() - increment);
+                            } else if (precisionDecrement7.getModel().isPressed()) {
+                                mcc.mcp.get(6).setSetPoint(mcpArray[6].getSetPoint() - increment);
+                            } else if (precisionDecrement8.getModel().isPressed()) {
+                                mcc.mcp.get(7).setSetPoint(mcpArray[7].getSetPoint() - increment);
+                            }
+                            Thread.sleep(50);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                            return;
                         }
-                        Thread.sleep(50);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                        return;
                     }
-                }
-            })
-        );
+                }));
         UI.uiThreads.get(UI.uiThreads.size() - 1).start();
     }
 
@@ -168,14 +168,14 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         annunciator.setTrigger(mcpArray[7].isCavitating, cavit8);
     }
 
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
      * regenerated by the Form Editor.
      */
 
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
@@ -1006,7 +1006,8 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         jPanel35.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(222, 222, 222), 1, true));
 
         jLabel17.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel17, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.jLabel2.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel17,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.jLabel2.text")); // NOI18N
 
         jPanel34.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(222, 222, 222), 1, true));
 
@@ -1025,7 +1026,8 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         pos1.setUnitString(org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.radial2Top1.unitString")); // NOI18N
 
         buttonGroup1.add(tgValvesOpen11);
-        org.openide.awt.Mnemonics.setLocalizedText(tgValvesOpen11, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesOpen.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(tgValvesOpen11,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesOpen.text")); // NOI18N
         tgValvesOpen11.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 tgValvesOpenItemStateChanged(evt);
@@ -1039,7 +1041,8 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
 
         buttonGroup1.add(tgValvesStop11);
         tgValvesStop11.setSelected(true);
-        org.openide.awt.Mnemonics.setLocalizedText(tgValvesStop11, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesStop.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(tgValvesStop11,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesStop.text")); // NOI18N
         tgValvesStop11.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 tgValvesStopItemStateChanged(evt);
@@ -1052,7 +1055,8 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         });
 
         buttonGroup1.add(tgValvesClose11);
-        org.openide.awt.Mnemonics.setLocalizedText(tgValvesClose11, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesClose.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(tgValvesClose11,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesClose.text")); // NOI18N
         tgValvesClose11.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 tgValvesCloseItemStateChanged(evt);
@@ -1065,43 +1069,49 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         });
 
         jLabel18.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel18, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.jLabel1.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel18,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.jLabel1.text")); // NOI18N
 
         javax.swing.GroupLayout jPanel34Layout = new javax.swing.GroupLayout(jPanel34);
         jPanel34.setLayout(jPanel34Layout);
         jPanel34Layout.setHorizontalGroup(
-            jPanel34Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel34Layout.createSequentialGroup()
-                .addGap(0, 10, Short.MAX_VALUE)
-                .addGroup(jPanel34Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel34Layout.createSequentialGroup()
-                        .addComponent(jLabel18)
-                        .addGap(112, 112, 112))
-                    .addGroup(jPanel34Layout.createSequentialGroup()
-                        .addGroup(jPanel34Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tgValvesOpen11)
-                            .addComponent(tgValvesStop11)
-                            .addComponent(tgValvesClose11))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(pos1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
-        );
+                jPanel34Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel34Layout.createSequentialGroup()
+                                .addGap(0, 10, Short.MAX_VALUE)
+                                .addGroup(jPanel34Layout
+                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(jPanel34Layout.createSequentialGroup()
+                                                .addComponent(jLabel18)
+                                                .addGap(112, 112, 112))
+                                        .addGroup(jPanel34Layout.createSequentialGroup()
+                                                .addGroup(jPanel34Layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(tgValvesOpen11)
+                                                        .addComponent(tgValvesStop11)
+                                                        .addComponent(tgValvesClose11))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(pos1, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addContainerGap()))));
         jPanel34Layout.setVerticalGroup(
-            jPanel34Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel34Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel18)
-                .addGap(7, 7, 7)
-                .addGroup(jPanel34Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel34Layout.createSequentialGroup()
-                        .addComponent(tgValvesOpen11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tgValvesStop11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tgValvesClose11))
-                    .addComponent(pos1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                jPanel34Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel34Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel18)
+                                .addGap(7, 7, 7)
+                                .addGroup(jPanel34Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel34Layout.createSequentialGroup()
+                                                .addComponent(tgValvesOpen11)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(tgValvesStop11)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(tgValvesClose11))
+                                        .addComponent(pos1, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
         jPanel6.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(222, 222, 222), 1, true));
 
@@ -1120,7 +1130,8 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         pos2.setUnitString(org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.pos2.unitString")); // NOI18N
 
         buttonGroup2.add(tgValvesOpen12);
-        org.openide.awt.Mnemonics.setLocalizedText(tgValvesOpen12, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesOpen12.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(tgValvesOpen12,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesOpen12.text")); // NOI18N
         tgValvesOpen12.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 tgValvesOpen12ItemStateChanged(evt);
@@ -1134,7 +1145,8 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
 
         buttonGroup2.add(tgValvesStop12);
         tgValvesStop12.setSelected(true);
-        org.openide.awt.Mnemonics.setLocalizedText(tgValvesStop12, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesStop12.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(tgValvesStop12,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesStop12.text")); // NOI18N
         tgValvesStop12.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 tgValvesStop12ItemStateChanged(evt);
@@ -1147,7 +1159,8 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         });
 
         buttonGroup2.add(tgValvesClose12);
-        org.openide.awt.Mnemonics.setLocalizedText(tgValvesClose12, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesClose12.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(tgValvesClose12,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesClose12.text")); // NOI18N
         tgValvesClose12.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 tgValvesClose12ItemStateChanged(evt);
@@ -1165,38 +1178,43 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addGap(0, 10, Short.MAX_VALUE)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(112, 112, 112))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tgValvesOpen12)
-                            .addComponent(tgValvesStop12)
-                            .addComponent(tgValvesClose12))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(pos2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
-        );
+                jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                                .addGap(0, 10, Short.MAX_VALUE)
+                                .addGroup(jPanel6Layout
+                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(jPanel6Layout.createSequentialGroup()
+                                                .addComponent(jLabel4)
+                                                .addGap(112, 112, 112))
+                                        .addGroup(jPanel6Layout.createSequentialGroup()
+                                                .addGroup(jPanel6Layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(tgValvesOpen12)
+                                                        .addComponent(tgValvesStop12)
+                                                        .addComponent(tgValvesClose12))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(pos2, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addContainerGap()))));
         jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel4)
-                .addGap(7, 7, 7)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(tgValvesOpen12)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tgValvesStop12)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tgValvesClose12))
-                    .addComponent(pos2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel4)
+                                .addGap(7, 7, 7)
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel6Layout.createSequentialGroup()
+                                                .addComponent(tgValvesOpen12)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(tgValvesStop12)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(tgValvesClose12))
+                                        .addComponent(pos2, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
         jPanel7.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(222, 222, 222), 1, true));
 
@@ -1215,7 +1233,8 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         pos4.setUnitString(org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.pos4.unitString")); // NOI18N
 
         buttonGroup4.add(tgValvesOpen14);
-        org.openide.awt.Mnemonics.setLocalizedText(tgValvesOpen14, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesOpen14.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(tgValvesOpen14,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesOpen14.text")); // NOI18N
         tgValvesOpen14.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 tgValvesOpen14ItemStateChanged(evt);
@@ -1229,7 +1248,8 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
 
         buttonGroup4.add(tgValvesStop14);
         tgValvesStop14.setSelected(true);
-        org.openide.awt.Mnemonics.setLocalizedText(tgValvesStop14, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesStop14.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(tgValvesStop14,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesStop14.text")); // NOI18N
         tgValvesStop14.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 tgValvesStop14ItemStateChanged(evt);
@@ -1242,7 +1262,8 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         });
 
         buttonGroup4.add(tgValvesClose14);
-        org.openide.awt.Mnemonics.setLocalizedText(tgValvesClose14, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesClose14.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(tgValvesClose14,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesClose14.text")); // NOI18N
         tgValvesClose14.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 tgValvesClose14ItemStateChanged(evt);
@@ -1260,38 +1281,43 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addGap(0, 10, Short.MAX_VALUE)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(112, 112, 112))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tgValvesOpen14)
-                            .addComponent(tgValvesStop14)
-                            .addComponent(tgValvesClose14))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(pos4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
-        );
+                jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                                .addGap(0, 10, Short.MAX_VALUE)
+                                .addGroup(jPanel7Layout
+                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(jPanel7Layout.createSequentialGroup()
+                                                .addComponent(jLabel5)
+                                                .addGap(112, 112, 112))
+                                        .addGroup(jPanel7Layout.createSequentialGroup()
+                                                .addGroup(jPanel7Layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(tgValvesOpen14)
+                                                        .addComponent(tgValvesStop14)
+                                                        .addComponent(tgValvesClose14))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(pos4, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addContainerGap()))));
         jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel5)
-                .addGap(7, 7, 7)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(tgValvesOpen14)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tgValvesStop14)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tgValvesClose14))
-                    .addComponent(pos4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel5)
+                                .addGap(7, 7, 7)
+                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel7Layout.createSequentialGroup()
+                                                .addComponent(tgValvesOpen14)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(tgValvesStop14)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(tgValvesClose14))
+                                        .addComponent(pos4, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
         jPanel8.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(222, 222, 222), 1, true));
 
@@ -1310,7 +1336,8 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         pos3.setUnitString(org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.pos3.unitString")); // NOI18N
 
         buttonGroup3.add(tgValvesOpen3);
-        org.openide.awt.Mnemonics.setLocalizedText(tgValvesOpen3, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesOpen3.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(tgValvesOpen3,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesOpen3.text")); // NOI18N
         tgValvesOpen3.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 tgValvesOpen3ItemStateChanged(evt);
@@ -1324,7 +1351,8 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
 
         buttonGroup3.add(tgValvesStop3);
         tgValvesStop3.setSelected(true);
-        org.openide.awt.Mnemonics.setLocalizedText(tgValvesStop3, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesStop3.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(tgValvesStop3,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesStop3.text")); // NOI18N
         tgValvesStop3.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 tgValvesStop3ItemStateChanged(evt);
@@ -1337,7 +1365,8 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         });
 
         buttonGroup3.add(tgValvesClose3);
-        org.openide.awt.Mnemonics.setLocalizedText(tgValvesClose3, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesClose3.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(tgValvesClose3,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesClose3.text")); // NOI18N
         tgValvesClose3.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 tgValvesClose3ItemStateChanged(evt);
@@ -1355,38 +1384,43 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                .addGap(0, 10, Short.MAX_VALUE)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGap(112, 112, 112))
-                    .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tgValvesOpen3)
-                            .addComponent(tgValvesStop3)
-                            .addComponent(tgValvesClose3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(pos3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
-        );
+                jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                                .addGap(0, 10, Short.MAX_VALUE)
+                                .addGroup(jPanel8Layout
+                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(jPanel8Layout.createSequentialGroup()
+                                                .addComponent(jLabel6)
+                                                .addGap(112, 112, 112))
+                                        .addGroup(jPanel8Layout.createSequentialGroup()
+                                                .addGroup(jPanel8Layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(tgValvesOpen3)
+                                                        .addComponent(tgValvesStop3)
+                                                        .addComponent(tgValvesClose3))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(pos3, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addContainerGap()))));
         jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel6)
-                .addGap(7, 7, 7)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addComponent(tgValvesOpen3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tgValvesStop3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tgValvesClose3))
-                    .addComponent(pos3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel6)
+                                .addGap(7, 7, 7)
+                                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel8Layout.createSequentialGroup()
+                                                .addComponent(tgValvesOpen3)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(tgValvesStop3)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(tgValvesClose3))
+                                        .addComponent(pos3, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
         jPanel9.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(222, 222, 222), 1, true));
 
@@ -1405,7 +1439,8 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         pos6.setUnitString(org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.pos6.unitString")); // NOI18N
 
         buttonGroup6.add(tgValvesOpen6);
-        org.openide.awt.Mnemonics.setLocalizedText(tgValvesOpen6, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesOpen6.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(tgValvesOpen6,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesOpen6.text")); // NOI18N
         tgValvesOpen6.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 tgValvesOpen6ItemStateChanged(evt);
@@ -1419,7 +1454,8 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
 
         buttonGroup6.add(tgValvesStop6);
         tgValvesStop6.setSelected(true);
-        org.openide.awt.Mnemonics.setLocalizedText(tgValvesStop6, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesStop6.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(tgValvesStop6,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesStop6.text")); // NOI18N
         tgValvesStop6.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 tgValvesStop6ItemStateChanged(evt);
@@ -1432,7 +1468,8 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         });
 
         buttonGroup6.add(tgValvesClose6);
-        org.openide.awt.Mnemonics.setLocalizedText(tgValvesClose6, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesClose6.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(tgValvesClose6,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesClose6.text")); // NOI18N
         tgValvesClose6.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 tgValvesClose6ItemStateChanged(evt);
@@ -1445,43 +1482,49 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         });
 
         jLabel7.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel7, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.jLabel7.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel7,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.jLabel7.text")); // NOI18N
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                .addGap(0, 10, Short.MAX_VALUE)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addGap(112, 112, 112))
-                    .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tgValvesOpen6)
-                            .addComponent(tgValvesStop6)
-                            .addComponent(tgValvesClose6))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(pos6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
-        );
+                jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                                .addGap(0, 10, Short.MAX_VALUE)
+                                .addGroup(jPanel9Layout
+                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(jPanel9Layout.createSequentialGroup()
+                                                .addComponent(jLabel7)
+                                                .addGap(112, 112, 112))
+                                        .addGroup(jPanel9Layout.createSequentialGroup()
+                                                .addGroup(jPanel9Layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(tgValvesOpen6)
+                                                        .addComponent(tgValvesStop6)
+                                                        .addComponent(tgValvesClose6))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(pos6, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addContainerGap()))));
         jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel7)
-                .addGap(7, 7, 7)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(tgValvesOpen6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tgValvesStop6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tgValvesClose6))
-                    .addComponent(pos6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel9Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel7)
+                                .addGap(7, 7, 7)
+                                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel9Layout.createSequentialGroup()
+                                                .addComponent(tgValvesOpen6)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(tgValvesStop6)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(tgValvesClose6))
+                                        .addComponent(pos6, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
         jPanel5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(222, 222, 222), 1, true));
 
@@ -1500,7 +1543,8 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         pos5.setUnitString(org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.pos5.unitString")); // NOI18N
 
         buttonGroup5.add(tgValvesOpen5);
-        org.openide.awt.Mnemonics.setLocalizedText(tgValvesOpen5, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesOpen5.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(tgValvesOpen5,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesOpen5.text")); // NOI18N
         tgValvesOpen5.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 tgValvesOpen5ItemStateChanged(evt);
@@ -1514,7 +1558,8 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
 
         buttonGroup5.add(tgValvesStop5);
         tgValvesStop5.setSelected(true);
-        org.openide.awt.Mnemonics.setLocalizedText(tgValvesStop5, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesStop5.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(tgValvesStop5,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesStop5.text")); // NOI18N
         tgValvesStop5.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 tgValvesStop5ItemStateChanged(evt);
@@ -1527,7 +1572,8 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         });
 
         buttonGroup5.add(tgValvesClose5);
-        org.openide.awt.Mnemonics.setLocalizedText(tgValvesClose5, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesClose5.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(tgValvesClose5,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesClose5.text")); // NOI18N
         tgValvesClose5.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 tgValvesClose5ItemStateChanged(evt);
@@ -1540,43 +1586,49 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         });
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel3, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.jLabel3.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel3,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.jLabel3.text")); // NOI18N
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addGap(0, 10, Short.MAX_VALUE)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(112, 112, 112))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tgValvesOpen5)
-                            .addComponent(tgValvesStop5)
-                            .addComponent(tgValvesClose5))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(pos5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
-        );
+                jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                                .addGap(0, 10, Short.MAX_VALUE)
+                                .addGroup(jPanel5Layout
+                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(jPanel5Layout.createSequentialGroup()
+                                                .addComponent(jLabel3)
+                                                .addGap(112, 112, 112))
+                                        .addGroup(jPanel5Layout.createSequentialGroup()
+                                                .addGroup(jPanel5Layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(tgValvesOpen5)
+                                                        .addComponent(tgValvesStop5)
+                                                        .addComponent(tgValvesClose5))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(pos5, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addContainerGap()))));
         jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel3)
-                .addGap(7, 7, 7)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(tgValvesOpen5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tgValvesStop5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tgValvesClose5))
-                    .addComponent(pos5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel3)
+                                .addGap(7, 7, 7)
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel5Layout.createSequentialGroup()
+                                                .addComponent(tgValvesOpen5)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(tgValvesStop5)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(tgValvesClose5))
+                                        .addComponent(pos5, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
         jPanel10.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(222, 222, 222), 1, true));
 
@@ -1595,7 +1647,8 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         pos7.setUnitString(org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.pos7.unitString")); // NOI18N
 
         buttonGroup7.add(tgValvesOpen17);
-        org.openide.awt.Mnemonics.setLocalizedText(tgValvesOpen17, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesOpen17.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(tgValvesOpen17,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesOpen17.text")); // NOI18N
         tgValvesOpen17.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 tgValvesOpen17ItemStateChanged(evt);
@@ -1609,7 +1662,8 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
 
         buttonGroup7.add(tgValvesStop17);
         tgValvesStop17.setSelected(true);
-        org.openide.awt.Mnemonics.setLocalizedText(tgValvesStop17, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesStop17.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(tgValvesStop17,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesStop17.text")); // NOI18N
         tgValvesStop17.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 tgValvesStop17ItemStateChanged(evt);
@@ -1622,7 +1676,8 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         });
 
         buttonGroup7.add(tgValvesClose17);
-        org.openide.awt.Mnemonics.setLocalizedText(tgValvesClose17, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesClose17.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(tgValvesClose17,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesClose17.text")); // NOI18N
         tgValvesClose17.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 tgValvesClose17ItemStateChanged(evt);
@@ -1635,43 +1690,49 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         });
 
         jLabel8.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel8, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.jLabel8.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel8,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.jLabel8.text")); // NOI18N
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
-                .addGap(0, 10, Short.MAX_VALUE)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addGap(112, 112, 112))
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tgValvesOpen17)
-                            .addComponent(tgValvesStop17)
-                            .addComponent(tgValvesClose17))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(pos7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
-        );
+                jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+                                .addGap(0, 10, Short.MAX_VALUE)
+                                .addGroup(jPanel10Layout
+                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(jPanel10Layout.createSequentialGroup()
+                                                .addComponent(jLabel8)
+                                                .addGap(112, 112, 112))
+                                        .addGroup(jPanel10Layout.createSequentialGroup()
+                                                .addGroup(jPanel10Layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(tgValvesOpen17)
+                                                        .addComponent(tgValvesStop17)
+                                                        .addComponent(tgValvesClose17))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(pos7, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addContainerGap()))));
         jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel8)
-                .addGap(7, 7, 7)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addComponent(tgValvesOpen17)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tgValvesStop17)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tgValvesClose17))
-                    .addComponent(pos7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel10Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel8)
+                                .addGap(7, 7, 7)
+                                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel10Layout.createSequentialGroup()
+                                                .addComponent(tgValvesOpen17)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(tgValvesStop17)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(tgValvesClose17))
+                                        .addComponent(pos7, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
         jPanel11.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(222, 222, 222), 1, true));
 
@@ -1690,7 +1751,8 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         pos8.setUnitString(org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.pos8.unitString")); // NOI18N
 
         buttonGroup8.add(tgValvesOpen18);
-        org.openide.awt.Mnemonics.setLocalizedText(tgValvesOpen18, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesOpen18.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(tgValvesOpen18,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesOpen18.text")); // NOI18N
         tgValvesOpen18.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 tgValvesOpen18ItemStateChanged(evt);
@@ -1704,7 +1766,8 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
 
         buttonGroup8.add(tgValvesStop18);
         tgValvesStop18.setSelected(true);
-        org.openide.awt.Mnemonics.setLocalizedText(tgValvesStop18, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesStop18.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(tgValvesStop18,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesStop18.text")); // NOI18N
         tgValvesStop18.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 tgValvesStop18ItemStateChanged(evt);
@@ -1717,7 +1780,8 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         });
 
         buttonGroup8.add(tgValvesClose18);
-        org.openide.awt.Mnemonics.setLocalizedText(tgValvesClose18, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesClose18.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(tgValvesClose18,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.tgValvesClose18.text")); // NOI18N
         tgValvesClose18.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 tgValvesClose18ItemStateChanged(evt);
@@ -1730,101 +1794,147 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         });
 
         jLabel9.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel9, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.jLabel9.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel9,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.jLabel9.text")); // NOI18N
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
         jPanel11Layout.setHorizontalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
-                .addGap(0, 10, Short.MAX_VALUE)
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel11Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addGap(112, 112, 112))
-                    .addGroup(jPanel11Layout.createSequentialGroup()
-                        .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tgValvesOpen18)
-                            .addComponent(tgValvesStop18)
-                            .addComponent(tgValvesClose18))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(pos8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
-        );
+                jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+                                .addGap(0, 10, Short.MAX_VALUE)
+                                .addGroup(jPanel11Layout
+                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(jPanel11Layout.createSequentialGroup()
+                                                .addComponent(jLabel9)
+                                                .addGap(112, 112, 112))
+                                        .addGroup(jPanel11Layout.createSequentialGroup()
+                                                .addGroup(jPanel11Layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(tgValvesOpen18)
+                                                        .addComponent(tgValvesStop18)
+                                                        .addComponent(tgValvesClose18))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(pos8, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addContainerGap()))));
         jPanel11Layout.setVerticalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel11Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel9)
-                .addGap(7, 7, 7)
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel11Layout.createSequentialGroup()
-                        .addComponent(tgValvesOpen18)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tgValvesStop18)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tgValvesClose18))
-                    .addComponent(pos8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel11Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel9)
+                                .addGap(7, 7, 7)
+                                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel11Layout.createSequentialGroup()
+                                                .addComponent(tgValvesOpen18)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(tgValvesStop18)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(tgValvesClose18))
+                                        .addComponent(pos8, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
         javax.swing.GroupLayout jPanel35Layout = new javax.swing.GroupLayout(jPanel35);
         jPanel35.setLayout(jPanel35Layout);
         jPanel35Layout.setHorizontalGroup(
-            jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel35Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel35Layout.createSequentialGroup()
-                        .addComponent(jLabel17)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel35Layout.createSequentialGroup()
-                        .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel35Layout.createSequentialGroup()
-                                .addComponent(jPanel34, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel35Layout.createSequentialGroup()
-                                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel35Layout.createSequentialGroup()
-                                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel35Layout.createSequentialGroup()
-                                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap())))
-        );
+                jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel35Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel35Layout.createSequentialGroup()
+                                                .addComponent(jLabel17)
+                                                .addGap(0, 0, Short.MAX_VALUE))
+                                        .addGroup(jPanel35Layout.createSequentialGroup()
+                                                .addGroup(jPanel35Layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(jPanel35Layout.createSequentialGroup()
+                                                                .addComponent(jPanel34,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addPreferredGap(
+                                                                        javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                .addComponent(jPanel6,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addGroup(jPanel35Layout.createSequentialGroup()
+                                                                .addComponent(jPanel8,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addPreferredGap(
+                                                                        javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                .addComponent(jPanel7,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addGap(18, 18, 18)
+                                                .addGroup(jPanel35Layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(jPanel35Layout.createSequentialGroup()
+                                                                .addComponent(jPanel5,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addPreferredGap(
+                                                                        javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                .addComponent(jPanel9,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addGroup(jPanel35Layout.createSequentialGroup()
+                                                                .addComponent(jPanel10,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addPreferredGap(
+                                                                        javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                .addComponent(jPanel11,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addContainerGap()))));
         jPanel35Layout.setVerticalGroup(
-            jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel35Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(jLabel17)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel35Layout.createSequentialGroup()
-                        .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel34, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel35Layout.createSequentialGroup()
-                        .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap())
-        );
+                jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel35Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel17)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel35Layout.createSequentialGroup()
+                                                .addGroup(jPanel35Layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jPanel34, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(jPanel35Layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                114, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGroup(jPanel35Layout.createSequentialGroup()
+                                                .addGroup(jPanel35Layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(jPanel35Layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                114, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addContainerGap()));
 
         jPanel12.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(222, 222, 222), 1, true));
         jPanel12.setPreferredSize(new java.awt.Dimension(200, 43));
@@ -1852,17 +1962,17 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(rpm1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+                jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(0, 0, 0)
+                                .addComponent(rpm1, javax.swing.GroupLayout.PREFERRED_SIZE, 140,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)));
         jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(rpm1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+                jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(0, 0, 0)
+                                .addComponent(rpm1, javax.swing.GroupLayout.PREFERRED_SIZE, 140,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)));
 
         rpm2.setBackgroundColor(eu.hansolo.steelseries.tools.BackgroundColor.LIGHT_GRAY);
         rpm2.setFrameType(eu.hansolo.steelseries.tools.FrameType.SQUARE);
@@ -1887,18 +1997,18 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);
         jPanel13Layout.setHorizontalGroup(
-            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel13Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(rpm2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
+                jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel13Layout.createSequentialGroup()
+                                .addGap(0, 0, 0)
+                                .addComponent(rpm2, javax.swing.GroupLayout.PREFERRED_SIZE, 140,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)));
         jPanel13Layout.setVerticalGroup(
-            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel13Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(rpm2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+                jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel13Layout.createSequentialGroup()
+                                .addGap(0, 0, 0)
+                                .addComponent(rpm2, javax.swing.GroupLayout.PREFERRED_SIZE, 140,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)));
 
         rpm5.setBackgroundColor(eu.hansolo.steelseries.tools.BackgroundColor.LIGHT_GRAY);
         rpm5.setFrameType(eu.hansolo.steelseries.tools.FrameType.SQUARE);
@@ -1923,17 +2033,17 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
         jPanel14.setLayout(jPanel14Layout);
         jPanel14Layout.setHorizontalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel14Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(rpm5, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+                jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel14Layout.createSequentialGroup()
+                                .addGap(0, 0, 0)
+                                .addComponent(rpm5, javax.swing.GroupLayout.PREFERRED_SIZE, 140,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)));
         jPanel14Layout.setVerticalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel14Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(rpm5, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+                jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel14Layout.createSequentialGroup()
+                                .addGap(0, 0, 0)
+                                .addComponent(rpm5, javax.swing.GroupLayout.PREFERRED_SIZE, 140,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)));
 
         rpm6.setBackgroundColor(eu.hansolo.steelseries.tools.BackgroundColor.LIGHT_GRAY);
         rpm6.setFrameType(eu.hansolo.steelseries.tools.FrameType.SQUARE);
@@ -1958,22 +2068,23 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
         jPanel15.setLayout(jPanel15Layout);
         jPanel15Layout.setHorizontalGroup(
-            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel15Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(rpm6, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
+                jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel15Layout.createSequentialGroup()
+                                .addGap(0, 0, 0)
+                                .addComponent(rpm6, javax.swing.GroupLayout.PREFERRED_SIZE, 140,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)));
         jPanel15Layout.setVerticalGroup(
-            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel15Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(rpm6, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+                jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel15Layout.createSequentialGroup()
+                                .addGap(0, 0, 0)
+                                .addComponent(rpm6, javax.swing.GroupLayout.PREFERRED_SIZE, 140,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)));
 
         jPanel16.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(222, 222, 222)));
 
-        org.openide.awt.Mnemonics.setLocalizedText(precisionIncrement1, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.precisionIncrement1.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(precisionIncrement1,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.precisionIncrement1.text")); // NOI18N
         precisionIncrement1.setMargin(new java.awt.Insets(2, 2, 2, 2));
         precisionIncrement1.setMaximumSize(new java.awt.Dimension(30, 30));
         precisionIncrement1.setMinimumSize(new java.awt.Dimension(25, 25));
@@ -1984,7 +2095,8 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
             }
         });
 
-        org.openide.awt.Mnemonics.setLocalizedText(precisionDecrement1, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.precisionDecrement1.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(precisionDecrement1,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.precisionDecrement1.text")); // NOI18N
         precisionDecrement1.setMargin(new java.awt.Insets(2, 2, 2, 2));
         precisionDecrement1.setMaximumSize(new java.awt.Dimension(30, 30));
         precisionDecrement1.setMinimumSize(new java.awt.Dimension(25, 25));
@@ -1998,27 +2110,32 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
         jPanel16.setLayout(jPanel16Layout);
         jPanel16Layout.setHorizontalGroup(
-            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel16Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(precisionIncrement1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(precisionDecrement1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
-        );
+                jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel16Layout.createSequentialGroup()
+                                .addGap(30, 30, 30)
+                                .addComponent(precisionIncrement1, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(precisionDecrement1, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(30, Short.MAX_VALUE)));
         jPanel16Layout.setVerticalGroup(
-            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel16Layout.createSequentialGroup()
-                .addContainerGap(12, Short.MAX_VALUE)
-                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(precisionIncrement1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(precisionDecrement1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel16Layout.createSequentialGroup()
+                                .addContainerGap(12, Short.MAX_VALUE)
+                                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(precisionIncrement1, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(precisionDecrement1, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
         jPanel17.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(222, 222, 222)));
 
-        org.openide.awt.Mnemonics.setLocalizedText(precisionIncrement2, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.precisionIncrement2.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(precisionIncrement2,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.precisionIncrement2.text")); // NOI18N
         precisionIncrement2.setMargin(new java.awt.Insets(2, 2, 2, 2));
         precisionIncrement2.setMaximumSize(new java.awt.Dimension(30, 30));
         precisionIncrement2.setMinimumSize(new java.awt.Dimension(25, 25));
@@ -2029,7 +2146,8 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
             }
         });
 
-        org.openide.awt.Mnemonics.setLocalizedText(precisionDecrement2, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.precisionDecrement2.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(precisionDecrement2,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.precisionDecrement2.text")); // NOI18N
         precisionDecrement2.setMargin(new java.awt.Insets(2, 2, 2, 2));
         precisionDecrement2.setMaximumSize(new java.awt.Dimension(30, 30));
         precisionDecrement2.setMinimumSize(new java.awt.Dimension(25, 25));
@@ -2043,27 +2161,32 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
         jPanel17.setLayout(jPanel17Layout);
         jPanel17Layout.setHorizontalGroup(
-            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel17Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(precisionIncrement2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(precisionDecrement2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
-        );
+                jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel17Layout.createSequentialGroup()
+                                .addGap(30, 30, 30)
+                                .addComponent(precisionIncrement2, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(precisionDecrement2, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(30, Short.MAX_VALUE)));
         jPanel17Layout.setVerticalGroup(
-            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel17Layout.createSequentialGroup()
-                .addContainerGap(12, Short.MAX_VALUE)
-                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(precisionIncrement2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(precisionDecrement2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel17Layout.createSequentialGroup()
+                                .addContainerGap(12, Short.MAX_VALUE)
+                                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(precisionIncrement2, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(precisionDecrement2, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
         jPanel18.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(222, 222, 222)));
 
-        org.openide.awt.Mnemonics.setLocalizedText(precisionIncrement5, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.precisionIncrement5.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(precisionIncrement5,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.precisionIncrement5.text")); // NOI18N
         precisionIncrement5.setMargin(new java.awt.Insets(2, 2, 2, 2));
         precisionIncrement5.setMaximumSize(new java.awt.Dimension(30, 30));
         precisionIncrement5.setMinimumSize(new java.awt.Dimension(25, 25));
@@ -2074,7 +2197,8 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
             }
         });
 
-        org.openide.awt.Mnemonics.setLocalizedText(precisionDecrement5, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.precisionDecrement5.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(precisionDecrement5,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.precisionDecrement5.text")); // NOI18N
         precisionDecrement5.setMargin(new java.awt.Insets(2, 2, 2, 2));
         precisionDecrement5.setMaximumSize(new java.awt.Dimension(30, 30));
         precisionDecrement5.setMinimumSize(new java.awt.Dimension(25, 25));
@@ -2088,27 +2212,32 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         javax.swing.GroupLayout jPanel18Layout = new javax.swing.GroupLayout(jPanel18);
         jPanel18.setLayout(jPanel18Layout);
         jPanel18Layout.setHorizontalGroup(
-            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel18Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(precisionIncrement5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(precisionDecrement5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
-        );
+                jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel18Layout.createSequentialGroup()
+                                .addGap(30, 30, 30)
+                                .addComponent(precisionIncrement5, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(precisionDecrement5, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(30, Short.MAX_VALUE)));
         jPanel18Layout.setVerticalGroup(
-            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel18Layout.createSequentialGroup()
-                .addContainerGap(12, Short.MAX_VALUE)
-                .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(precisionIncrement5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(precisionDecrement5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel18Layout.createSequentialGroup()
+                                .addContainerGap(12, Short.MAX_VALUE)
+                                .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(precisionIncrement5, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(precisionDecrement5, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
         jPanel19.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(222, 222, 222)));
 
-        org.openide.awt.Mnemonics.setLocalizedText(precisionIncrement6, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.precisionIncrement6.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(precisionIncrement6,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.precisionIncrement6.text")); // NOI18N
         precisionIncrement6.setMargin(new java.awt.Insets(2, 2, 2, 2));
         precisionIncrement6.setMaximumSize(new java.awt.Dimension(30, 30));
         precisionIncrement6.setMinimumSize(new java.awt.Dimension(25, 25));
@@ -2119,7 +2248,8 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
             }
         });
 
-        org.openide.awt.Mnemonics.setLocalizedText(precisionDecrement6, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.precisionDecrement6.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(precisionDecrement6,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.precisionDecrement6.text")); // NOI18N
         precisionDecrement6.setMargin(new java.awt.Insets(2, 2, 2, 2));
         precisionDecrement6.setMaximumSize(new java.awt.Dimension(30, 30));
         precisionDecrement6.setMinimumSize(new java.awt.Dimension(25, 25));
@@ -2133,23 +2263,27 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
         jPanel19.setLayout(jPanel19Layout);
         jPanel19Layout.setHorizontalGroup(
-            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel19Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(precisionIncrement6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(precisionDecrement6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
-        );
+                jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel19Layout.createSequentialGroup()
+                                .addGap(30, 30, 30)
+                                .addComponent(precisionIncrement6, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(precisionDecrement6, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(30, Short.MAX_VALUE)));
         jPanel19Layout.setVerticalGroup(
-            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel19Layout.createSequentialGroup()
-                .addContainerGap(12, Short.MAX_VALUE)
-                .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(precisionIncrement6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(precisionDecrement6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel19Layout.createSequentialGroup()
+                                .addContainerGap(12, Short.MAX_VALUE)
+                                .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(precisionIncrement6, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(precisionDecrement6, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
         rpm3.setBackgroundColor(eu.hansolo.steelseries.tools.BackgroundColor.LIGHT_GRAY);
         rpm3.setFrameType(eu.hansolo.steelseries.tools.FrameType.SQUARE);
@@ -2174,17 +2308,17 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);
         jPanel20.setLayout(jPanel20Layout);
         jPanel20Layout.setHorizontalGroup(
-            jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel20Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(rpm3, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+                jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel20Layout.createSequentialGroup()
+                                .addGap(0, 0, 0)
+                                .addComponent(rpm3, javax.swing.GroupLayout.PREFERRED_SIZE, 140,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)));
         jPanel20Layout.setVerticalGroup(
-            jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel20Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(rpm3, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+                jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel20Layout.createSequentialGroup()
+                                .addGap(0, 0, 0)
+                                .addComponent(rpm3, javax.swing.GroupLayout.PREFERRED_SIZE, 140,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)));
 
         rpm4.setBackgroundColor(eu.hansolo.steelseries.tools.BackgroundColor.LIGHT_GRAY);
         rpm4.setFrameType(eu.hansolo.steelseries.tools.FrameType.SQUARE);
@@ -2209,18 +2343,18 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         javax.swing.GroupLayout jPanel21Layout = new javax.swing.GroupLayout(jPanel21);
         jPanel21.setLayout(jPanel21Layout);
         jPanel21Layout.setHorizontalGroup(
-            jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel21Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(rpm4, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
+                jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel21Layout.createSequentialGroup()
+                                .addGap(0, 0, 0)
+                                .addComponent(rpm4, javax.swing.GroupLayout.PREFERRED_SIZE, 140,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)));
         jPanel21Layout.setVerticalGroup(
-            jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel21Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(rpm4, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+                jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel21Layout.createSequentialGroup()
+                                .addGap(0, 0, 0)
+                                .addComponent(rpm4, javax.swing.GroupLayout.PREFERRED_SIZE, 140,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)));
 
         rpm7.setBackgroundColor(eu.hansolo.steelseries.tools.BackgroundColor.LIGHT_GRAY);
         rpm7.setFrameType(eu.hansolo.steelseries.tools.FrameType.SQUARE);
@@ -2245,17 +2379,17 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         javax.swing.GroupLayout jPanel22Layout = new javax.swing.GroupLayout(jPanel22);
         jPanel22.setLayout(jPanel22Layout);
         jPanel22Layout.setHorizontalGroup(
-            jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel22Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(rpm7, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+                jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel22Layout.createSequentialGroup()
+                                .addGap(0, 0, 0)
+                                .addComponent(rpm7, javax.swing.GroupLayout.PREFERRED_SIZE, 140,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)));
         jPanel22Layout.setVerticalGroup(
-            jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel22Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(rpm7, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+                jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel22Layout.createSequentialGroup()
+                                .addGap(0, 0, 0)
+                                .addComponent(rpm7, javax.swing.GroupLayout.PREFERRED_SIZE, 140,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)));
 
         rpm8.setBackgroundColor(eu.hansolo.steelseries.tools.BackgroundColor.LIGHT_GRAY);
         rpm8.setFrameType(eu.hansolo.steelseries.tools.FrameType.SQUARE);
@@ -2280,22 +2414,23 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         javax.swing.GroupLayout jPanel23Layout = new javax.swing.GroupLayout(jPanel23);
         jPanel23.setLayout(jPanel23Layout);
         jPanel23Layout.setHorizontalGroup(
-            jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel23Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(rpm8, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
+                jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel23Layout.createSequentialGroup()
+                                .addGap(0, 0, 0)
+                                .addComponent(rpm8, javax.swing.GroupLayout.PREFERRED_SIZE, 140,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)));
         jPanel23Layout.setVerticalGroup(
-            jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel23Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(rpm8, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+                jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel23Layout.createSequentialGroup()
+                                .addGap(0, 0, 0)
+                                .addComponent(rpm8, javax.swing.GroupLayout.PREFERRED_SIZE, 140,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)));
 
         jPanel24.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(222, 222, 222)));
 
-        org.openide.awt.Mnemonics.setLocalizedText(precisionIncrement3, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.precisionIncrement3.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(precisionIncrement3,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.precisionIncrement3.text")); // NOI18N
         precisionIncrement3.setMargin(new java.awt.Insets(2, 2, 2, 2));
         precisionIncrement3.setMaximumSize(new java.awt.Dimension(30, 30));
         precisionIncrement3.setMinimumSize(new java.awt.Dimension(25, 25));
@@ -2306,7 +2441,8 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
             }
         });
 
-        org.openide.awt.Mnemonics.setLocalizedText(precisionDecrement3, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.precisionDecrement3.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(precisionDecrement3,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.precisionDecrement3.text")); // NOI18N
         precisionDecrement3.setMargin(new java.awt.Insets(2, 2, 2, 2));
         precisionDecrement3.setMaximumSize(new java.awt.Dimension(30, 30));
         precisionDecrement3.setMinimumSize(new java.awt.Dimension(25, 25));
@@ -2320,27 +2456,32 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         javax.swing.GroupLayout jPanel24Layout = new javax.swing.GroupLayout(jPanel24);
         jPanel24.setLayout(jPanel24Layout);
         jPanel24Layout.setHorizontalGroup(
-            jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel24Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(precisionIncrement3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(precisionDecrement3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
-        );
+                jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel24Layout.createSequentialGroup()
+                                .addGap(30, 30, 30)
+                                .addComponent(precisionIncrement3, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(precisionDecrement3, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(30, Short.MAX_VALUE)));
         jPanel24Layout.setVerticalGroup(
-            jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel24Layout.createSequentialGroup()
-                .addContainerGap(12, Short.MAX_VALUE)
-                .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(precisionIncrement3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(precisionDecrement3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel24Layout.createSequentialGroup()
+                                .addContainerGap(12, Short.MAX_VALUE)
+                                .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(precisionIncrement3, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(precisionDecrement3, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
         jPanel25.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(222, 222, 222)));
 
-        org.openide.awt.Mnemonics.setLocalizedText(precisionIncrement4, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.precisionIncrement4.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(precisionIncrement4,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.precisionIncrement4.text")); // NOI18N
         precisionIncrement4.setMargin(new java.awt.Insets(2, 2, 2, 2));
         precisionIncrement4.setMaximumSize(new java.awt.Dimension(30, 30));
         precisionIncrement4.setMinimumSize(new java.awt.Dimension(25, 25));
@@ -2351,7 +2492,8 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
             }
         });
 
-        org.openide.awt.Mnemonics.setLocalizedText(precisionDecrement4, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.precisionDecrement4.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(precisionDecrement4,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.precisionDecrement4.text")); // NOI18N
         precisionDecrement4.setMargin(new java.awt.Insets(2, 2, 2, 2));
         precisionDecrement4.setMaximumSize(new java.awt.Dimension(30, 30));
         precisionDecrement4.setMinimumSize(new java.awt.Dimension(25, 25));
@@ -2365,27 +2507,32 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         javax.swing.GroupLayout jPanel25Layout = new javax.swing.GroupLayout(jPanel25);
         jPanel25.setLayout(jPanel25Layout);
         jPanel25Layout.setHorizontalGroup(
-            jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel25Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(precisionIncrement4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(precisionDecrement4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
-        );
+                jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel25Layout.createSequentialGroup()
+                                .addGap(30, 30, 30)
+                                .addComponent(precisionIncrement4, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(precisionDecrement4, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(30, Short.MAX_VALUE)));
         jPanel25Layout.setVerticalGroup(
-            jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel25Layout.createSequentialGroup()
-                .addContainerGap(12, Short.MAX_VALUE)
-                .addGroup(jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(precisionIncrement4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(precisionDecrement4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel25Layout.createSequentialGroup()
+                                .addContainerGap(12, Short.MAX_VALUE)
+                                .addGroup(jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(precisionIncrement4, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(precisionDecrement4, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
         jPanel26.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(222, 222, 222)));
 
-        org.openide.awt.Mnemonics.setLocalizedText(precisionIncrement7, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.precisionIncrement7.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(precisionIncrement7,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.precisionIncrement7.text")); // NOI18N
         precisionIncrement7.setMargin(new java.awt.Insets(2, 2, 2, 2));
         precisionIncrement7.setMaximumSize(new java.awt.Dimension(30, 30));
         precisionIncrement7.setMinimumSize(new java.awt.Dimension(25, 25));
@@ -2396,7 +2543,8 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
             }
         });
 
-        org.openide.awt.Mnemonics.setLocalizedText(precisionDecrement7, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.precisionDecrement7.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(precisionDecrement7,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.precisionDecrement7.text")); // NOI18N
         precisionDecrement7.setMargin(new java.awt.Insets(2, 2, 2, 2));
         precisionDecrement7.setMaximumSize(new java.awt.Dimension(30, 30));
         precisionDecrement7.setMinimumSize(new java.awt.Dimension(25, 25));
@@ -2410,27 +2558,32 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         javax.swing.GroupLayout jPanel26Layout = new javax.swing.GroupLayout(jPanel26);
         jPanel26.setLayout(jPanel26Layout);
         jPanel26Layout.setHorizontalGroup(
-            jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel26Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(precisionIncrement7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(precisionDecrement7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
-        );
+                jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel26Layout.createSequentialGroup()
+                                .addGap(30, 30, 30)
+                                .addComponent(precisionIncrement7, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(precisionDecrement7, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(30, Short.MAX_VALUE)));
         jPanel26Layout.setVerticalGroup(
-            jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel26Layout.createSequentialGroup()
-                .addContainerGap(12, Short.MAX_VALUE)
-                .addGroup(jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(precisionIncrement7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(precisionDecrement7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel26Layout.createSequentialGroup()
+                                .addContainerGap(12, Short.MAX_VALUE)
+                                .addGroup(jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(precisionIncrement7, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(precisionDecrement7, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
         jPanel27.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(222, 222, 222)));
 
-        org.openide.awt.Mnemonics.setLocalizedText(precisionIncrement8, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.precisionIncrement8.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(precisionIncrement8,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.precisionIncrement8.text")); // NOI18N
         precisionIncrement8.setMargin(new java.awt.Insets(2, 2, 2, 2));
         precisionIncrement8.setMaximumSize(new java.awt.Dimension(30, 30));
         precisionIncrement8.setMinimumSize(new java.awt.Dimension(25, 25));
@@ -2441,7 +2594,8 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
             }
         });
 
-        org.openide.awt.Mnemonics.setLocalizedText(precisionDecrement8, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.precisionDecrement8.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(precisionDecrement8,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.precisionDecrement8.text")); // NOI18N
         precisionDecrement8.setMargin(new java.awt.Insets(2, 2, 2, 2));
         precisionDecrement8.setMaximumSize(new java.awt.Dimension(30, 30));
         precisionDecrement8.setMinimumSize(new java.awt.Dimension(25, 25));
@@ -2455,100 +2609,189 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         javax.swing.GroupLayout jPanel27Layout = new javax.swing.GroupLayout(jPanel27);
         jPanel27.setLayout(jPanel27Layout);
         jPanel27Layout.setHorizontalGroup(
-            jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel27Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(precisionIncrement8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(precisionDecrement8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
-        );
+                jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel27Layout.createSequentialGroup()
+                                .addGap(30, 30, 30)
+                                .addComponent(precisionIncrement8, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(precisionDecrement8, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(30, Short.MAX_VALUE)));
         jPanel27Layout.setVerticalGroup(
-            jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel27Layout.createSequentialGroup()
-                .addContainerGap(12, Short.MAX_VALUE)
-                .addGroup(jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(precisionIncrement8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(precisionDecrement8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel27Layout.createSequentialGroup()
+                                .addContainerGap(12, Short.MAX_VALUE)
+                                .addGroup(jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(precisionIncrement8, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(precisionDecrement8, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
         jLabel10.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel10, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.jLabel10.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel10,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.jLabel10.text")); // NOI18N
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
         jPanel12Layout.setHorizontalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel12Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel12Layout.createSequentialGroup()
-                        .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel24, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel12Layout.createSequentialGroup()
-                                .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel12Layout.createSequentialGroup()
-                                .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jPanel18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPanel19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel12Layout.createSequentialGroup()
-                                .addComponent(jPanel21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jPanel22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPanel23, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel12Layout.createSequentialGroup()
-                                .addComponent(jPanel25, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jPanel26, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPanel27, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(jLabel10))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel12Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel12Layout.createSequentialGroup()
+                                                .addGroup(jPanel12Layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(jPanel20, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(jPanel24, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(jPanel12Layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(jPanel12Layout.createSequentialGroup()
+                                                                .addComponent(jPanel13,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addPreferredGap(
+                                                                        javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                                .addComponent(jPanel14,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addPreferredGap(
+                                                                        javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                .addComponent(jPanel15,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addGroup(jPanel12Layout.createSequentialGroup()
+                                                                .addComponent(jPanel17,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addPreferredGap(
+                                                                        javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                                .addComponent(jPanel18,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addPreferredGap(
+                                                                        javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                .addComponent(jPanel19,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addGroup(jPanel12Layout.createSequentialGroup()
+                                                                .addComponent(jPanel21,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addPreferredGap(
+                                                                        javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                                .addComponent(jPanel22,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addPreferredGap(
+                                                                        javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                .addComponent(jPanel23,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addGroup(jPanel12Layout.createSequentialGroup()
+                                                                .addComponent(jPanel25,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addPreferredGap(
+                                                                        javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                                .addComponent(jPanel26,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addPreferredGap(
+                                                                        javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                .addComponent(jPanel27,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(jLabel10))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
         jPanel12Layout.setVerticalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel12Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel10)
-                .addGap(7, 7, 7)
-                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel23, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel24, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel25, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel26, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel27, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel12Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel10)
+                                .addGap(7, 7, 7)
+                                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jPanel18, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jPanel19, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jPanel23, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jPanel22, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jPanel21, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jPanel20, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jPanel24, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jPanel25, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jPanel26, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jPanel27, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
         jPanel36.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(222, 222, 222), 1, true));
 
@@ -2745,7 +2988,8 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         });
 
         jLabel19.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel19, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.jLabel19.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel19,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.jLabel19.text")); // NOI18N
 
         led1.setPreferredSize(new java.awt.Dimension(30, 30));
 
@@ -2763,266 +3007,469 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
 
         led8.setPreferredSize(new java.awt.Dimension(30, 30));
 
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel20, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.jLabel20.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel20,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.jLabel20.text")); // NOI18N
 
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel21, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.jLabel21.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel21,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.jLabel21.text")); // NOI18N
 
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel22, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.jLabel22.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel22,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.jLabel22.text")); // NOI18N
 
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel23, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.jLabel23.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel23,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.jLabel23.text")); // NOI18N
 
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel24, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.jLabel24.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel24,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.jLabel24.text")); // NOI18N
 
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel25, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.jLabel25.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel25,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.jLabel25.text")); // NOI18N
 
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel26, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.jLabel26.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel26,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.jLabel26.text")); // NOI18N
 
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel27, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.jLabel27.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel27,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.jLabel27.text")); // NOI18N
 
         javax.swing.GroupLayout jPanel36Layout = new javax.swing.GroupLayout(jPanel36);
         jPanel36.setLayout(jPanel36Layout);
         jPanel36Layout.setHorizontalGroup(
-            jPanel36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel36Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel36Layout.createSequentialGroup()
-                        .addComponent(jLabel19)
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel20))
-                    .addComponent(jLabel21)
-                    .addComponent(jLabel22)
-                    .addComponent(jLabel23))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel36Layout.createSequentialGroup()
-                        .addComponent(on2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(off2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(led2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel25))
-                    .addGroup(jPanel36Layout.createSequentialGroup()
-                        .addComponent(on3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(off3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(led3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel26))
-                    .addGroup(jPanel36Layout.createSequentialGroup()
-                        .addComponent(on4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(off4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(led4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel27))
-                    .addGroup(jPanel36Layout.createSequentialGroup()
-                        .addComponent(on1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(off1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(led1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel24)))
-                .addGap(9, 9, 9)
-                .addGroup(jPanel36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel36Layout.createSequentialGroup()
-                        .addComponent(on5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(off5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(led5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel36Layout.createSequentialGroup()
-                        .addComponent(on6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(off6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(led6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel36Layout.createSequentialGroup()
-                        .addComponent(on7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(off7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(led7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel36Layout.createSequentialGroup()
-                        .addComponent(on8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(off8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(led8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 21, Short.MAX_VALUE))
-        );
+                jPanel36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel36Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(jPanel36Layout.createSequentialGroup()
+                                                .addComponent(jLabel19)
+                                                .addGap(20, 20, 20)
+                                                .addComponent(jLabel20))
+                                        .addComponent(jLabel21)
+                                        .addComponent(jLabel22)
+                                        .addComponent(jLabel23))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel36Layout.createSequentialGroup()
+                                                .addComponent(on2, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(off2, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(led2, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(jLabel25))
+                                        .addGroup(jPanel36Layout.createSequentialGroup()
+                                                .addComponent(on3, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(off3, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(led3, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(jLabel26))
+                                        .addGroup(jPanel36Layout.createSequentialGroup()
+                                                .addComponent(on4, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(off4, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(led4, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(jLabel27))
+                                        .addGroup(jPanel36Layout.createSequentialGroup()
+                                                .addComponent(on1, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(off1, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(led1, javax.swing.GroupLayout.PREFERRED_SIZE, 30,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(jLabel24)))
+                                .addGap(9, 9, 9)
+                                .addGroup(jPanel36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel36Layout.createSequentialGroup()
+                                                .addComponent(on5, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(off5, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(led5, javax.swing.GroupLayout.PREFERRED_SIZE, 30,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(jPanel36Layout.createSequentialGroup()
+                                                .addComponent(on6, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(off6, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(led6, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(jPanel36Layout.createSequentialGroup()
+                                                .addComponent(on7, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(off7, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(led7, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(jPanel36Layout.createSequentialGroup()
+                                                .addComponent(on8, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(off8, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(led8, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 21, Short.MAX_VALUE)));
         jPanel36Layout.setVerticalGroup(
-            jPanel36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel36Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel36Layout.createSequentialGroup()
-                        .addGroup(jPanel36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel36Layout.createSequentialGroup()
-                                .addGroup(jPanel36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanel36Layout.createSequentialGroup()
-                                        .addGroup(jPanel36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanel36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                .addComponent(on5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(off5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(jLabel24))
-                                            .addComponent(led5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(jPanel36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(on6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(off6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel25)))
-                                    .addComponent(led6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(on7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(off7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel26)))
-                            .addComponent(led7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(on8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(off8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel27))
-                            .addComponent(led8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel36Layout.createSequentialGroup()
-                        .addGroup(jPanel36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel36Layout.createSequentialGroup()
-                                .addGroup(jPanel36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanel36Layout.createSequentialGroup()
-                                        .addGroup(jPanel36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(led1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(jPanel36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                .addComponent(on1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(off1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(jLabel20)))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(jPanel36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(on2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(off2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel21)))
-                                    .addComponent(led2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(on3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(off3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel22)))
-                            .addComponent(led3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(led4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(on4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(off4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel23))))
-                    .addComponent(jLabel19))
-                .addContainerGap(20, Short.MAX_VALUE))
-        );
+                jPanel36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel36Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel36Layout.createSequentialGroup()
+                                                .addGroup(jPanel36Layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addGroup(jPanel36Layout.createSequentialGroup()
+                                                                .addGroup(jPanel36Layout.createParallelGroup(
+                                                                        javax.swing.GroupLayout.Alignment.TRAILING)
+                                                                        .addGroup(jPanel36Layout.createSequentialGroup()
+                                                                                .addGroup(jPanel36Layout
+                                                                                        .createParallelGroup(
+                                                                                                javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                        .addGroup(jPanel36Layout
+                                                                                                .createParallelGroup(
+                                                                                                        javax.swing.GroupLayout.Alignment.BASELINE)
+                                                                                                .addComponent(on5,
+                                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                                .addComponent(off5,
+                                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                                .addComponent(jLabel24))
+                                                                                        .addComponent(led5,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                30,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                                .addPreferredGap(
+                                                                                        javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                                .addGroup(jPanel36Layout
+                                                                                        .createParallelGroup(
+                                                                                                javax.swing.GroupLayout.Alignment.BASELINE)
+                                                                                        .addComponent(on6,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                        .addComponent(off6,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                        .addComponent(jLabel25)))
+                                                                        .addComponent(led6,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                .addPreferredGap(
+                                                                        javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                .addGroup(jPanel36Layout.createParallelGroup(
+                                                                        javax.swing.GroupLayout.Alignment.BASELINE)
+                                                                        .addComponent(on7,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                        .addComponent(off7,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                        .addComponent(jLabel26)))
+                                                        .addComponent(led7, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(jPanel36Layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addGroup(jPanel36Layout
+                                                                .createParallelGroup(
+                                                                        javax.swing.GroupLayout.Alignment.BASELINE)
+                                                                .addComponent(on8,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addComponent(off8,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addComponent(jLabel27))
+                                                        .addComponent(led8, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGroup(jPanel36Layout.createSequentialGroup()
+                                                .addGroup(jPanel36Layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addGroup(jPanel36Layout.createSequentialGroup()
+                                                                .addGroup(jPanel36Layout.createParallelGroup(
+                                                                        javax.swing.GroupLayout.Alignment.TRAILING)
+                                                                        .addGroup(jPanel36Layout.createSequentialGroup()
+                                                                                .addGroup(jPanel36Layout
+                                                                                        .createParallelGroup(
+                                                                                                javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                        .addComponent(led1,
+                                                                                                javax.swing.GroupLayout.Alignment.TRAILING,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                30,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                        .addGroup(jPanel36Layout
+                                                                                                .createParallelGroup(
+                                                                                                        javax.swing.GroupLayout.Alignment.BASELINE)
+                                                                                                .addComponent(on1,
+                                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                                .addComponent(off1,
+                                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                                .addComponent(
+                                                                                                        jLabel20)))
+                                                                                .addPreferredGap(
+                                                                                        javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                                .addGroup(jPanel36Layout
+                                                                                        .createParallelGroup(
+                                                                                                javax.swing.GroupLayout.Alignment.BASELINE)
+                                                                                        .addComponent(on2,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                        .addComponent(off2,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                        .addComponent(jLabel21)))
+                                                                        .addComponent(led2,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                .addPreferredGap(
+                                                                        javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                .addGroup(jPanel36Layout.createParallelGroup(
+                                                                        javax.swing.GroupLayout.Alignment.BASELINE)
+                                                                        .addComponent(on3,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                        .addComponent(off3,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                        .addComponent(jLabel22)))
+                                                        .addComponent(led3, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(jPanel36Layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(led4, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addGroup(jPanel36Layout
+                                                                .createParallelGroup(
+                                                                        javax.swing.GroupLayout.Alignment.BASELINE)
+                                                                .addComponent(on4,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addComponent(off4,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addComponent(jLabel23))))
+                                        .addComponent(jLabel19))
+                                .addContainerGap(20, Short.MAX_VALUE)));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(annunciatorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 764, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(flow1, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(flow2, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(flow3, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(flow4, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(amps1, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(amps2, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(amps3, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(amps4, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(flow8, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(flow7, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(flow6, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(flow5, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(amps8, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(amps7, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(amps5, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(amps6, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, 610, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel35, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel36, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(208, Short.MAX_VALUE))
-        );
+                jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel3Layout.createSequentialGroup()
+                                                .addComponent(annunciatorPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        764, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(jPanel3Layout.createSequentialGroup()
+                                                .addGroup(jPanel3Layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(flow1, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                315, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(flow2, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                315, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(flow3, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                315, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(flow4, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                315, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(jPanel3Layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(amps1, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                315, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(amps2, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                315, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(amps3, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                315, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(amps4, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                315, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGap(18, 18, 18)
+                                                .addGroup(jPanel3Layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(flow8, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                315, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(flow7, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                315, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(flow6, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                315, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(flow5, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                315, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(jPanel3Layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(amps8, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                315, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(amps7, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                315, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(amps5, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                315, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(amps6, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                315, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGroup(jPanel3Layout.createSequentialGroup()
+                                                .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, 610,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addGroup(jPanel3Layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jPanel35, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(jPanel36, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addContainerGap(208, Short.MAX_VALUE)));
         jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(annunciatorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(flow1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(flow2, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(flow3, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(flow4, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(amps1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(amps2, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(amps3, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(amps4, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(flow5, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(flow6, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(flow7, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(flow8, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(amps5, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(amps6, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(amps7, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(amps8, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jPanel35, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel36, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, 467, Short.MAX_VALUE))
-                .addContainerGap(922, Short.MAX_VALUE))
-        );
+                jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(annunciatorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 113,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel3Layout.createSequentialGroup()
+                                                .addComponent(flow1, javax.swing.GroupLayout.PREFERRED_SIZE, 65,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(flow2, javax.swing.GroupLayout.PREFERRED_SIZE, 65,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(flow3, javax.swing.GroupLayout.PREFERRED_SIZE, 65,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(flow4, javax.swing.GroupLayout.PREFERRED_SIZE, 65,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(jPanel3Layout.createSequentialGroup()
+                                                .addComponent(amps1, javax.swing.GroupLayout.PREFERRED_SIZE, 65,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(amps2, javax.swing.GroupLayout.PREFERRED_SIZE, 65,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(amps3, javax.swing.GroupLayout.PREFERRED_SIZE, 65,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(amps4, javax.swing.GroupLayout.PREFERRED_SIZE, 65,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(jPanel3Layout.createSequentialGroup()
+                                                .addComponent(flow5, javax.swing.GroupLayout.PREFERRED_SIZE, 65,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(flow6, javax.swing.GroupLayout.PREFERRED_SIZE, 65,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(flow7, javax.swing.GroupLayout.PREFERRED_SIZE, 65,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(flow8, javax.swing.GroupLayout.PREFERRED_SIZE, 65,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(jPanel3Layout.createSequentialGroup()
+                                                .addComponent(amps5, javax.swing.GroupLayout.PREFERRED_SIZE, 65,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(amps6, javax.swing.GroupLayout.PREFERRED_SIZE, 65,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(amps7, javax.swing.GroupLayout.PREFERRED_SIZE, 65,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(amps8, javax.swing.GroupLayout.PREFERRED_SIZE, 65,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel3Layout
+                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(jPanel3Layout.createSequentialGroup()
+                                                .addComponent(jPanel35, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jPanel36, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, 467,
+                                                Short.MAX_VALUE))
+                                .addContainerGap(922, Short.MAX_VALUE)));
 
         jScrollPane1.setViewportView(jPanel3);
 
         org.openide.awt.Mnemonics.setLocalizedText(jMenu1, "Window");
 
-        org.openide.awt.Mnemonics.setLocalizedText(jMenuItem5, org.openide.util.NbBundle.getMessage(MCPUI.class, "PCSUI.jMenuItem5.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jMenuItem5,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "PCSUI.jMenuItem5.text")); // NOI18N
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem5ActionPerformed(evt);
@@ -3038,7 +3485,8 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         });
         jMenu1.add(jMenuItem3);
 
-        org.openide.awt.Mnemonics.setLocalizedText(jMenuItem10, org.openide.util.NbBundle.getMessage(MCPUI.class, "PCSUI.jMenuItem10.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jMenuItem10,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "PCSUI.jMenuItem10.text")); // NOI18N
         jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem10ActionPerformed(evt);
@@ -3046,7 +3494,8 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         });
         jMenu1.add(jMenuItem10);
 
-        org.openide.awt.Mnemonics.setLocalizedText(jMenuItem4, org.openide.util.NbBundle.getMessage(MCPUI.class, "PCSUI.jMenuItem4.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jMenuItem4,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "PCSUI.jMenuItem4.text")); // NOI18N
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem4ActionPerformed(evt);
@@ -3070,7 +3519,8 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         });
         jMenu1.add(jMenuItem1);
 
-        org.openide.awt.Mnemonics.setLocalizedText(jMenuItem8, org.openide.util.NbBundle.getMessage(MCPUI.class, "TGUI.jMenuItem8.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jMenuItem8,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "TGUI.jMenuItem8.text")); // NOI18N
         jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem8ActionPerformed(evt);
@@ -3078,7 +3528,8 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         });
         jMenu1.add(jMenuItem8);
 
-        org.openide.awt.Mnemonics.setLocalizedText(jMenuItem6, org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.jMenuItem6.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jMenuItem6,
+                org.openide.util.NbBundle.getMessage(MCPUI.class, "MCPUI.jMenuItem6.text")); // NOI18N
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem6ActionPerformed(evt);
@@ -3093,484 +3544,482 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1497, Short.MAX_VALUE)
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1497, Short.MAX_VALUE));
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1461, Short.MAX_VALUE)
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1461, Short.MAX_VALUE));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItem3ActionPerformed
         UI.createOrContinue(CoreMap.class, false, false);
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    }// GEN-LAST:event_jMenuItem3ActionPerformed
 
-    private void trip1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_trip1ActionPerformed
+    private void trip1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_trip1ActionPerformed
 
-    }//GEN-LAST:event_trip1ActionPerformed
+    }// GEN-LAST:event_trip1ActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItem2ActionPerformed
         UI.createOrContinue(CondensateUI.class, true, false);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }// GEN-LAST:event_jMenuItem2ActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItem1ActionPerformed
         UI.createOrContinue(DearatorUI.class, true, false);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }// GEN-LAST:event_jMenuItem1ActionPerformed
 
-    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItem8ActionPerformed
         UI.createOrContinue(FeedwaterUI.class, true, false);
-    }//GEN-LAST:event_jMenuItem8ActionPerformed
+    }// GEN-LAST:event_jMenuItem8ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed
         annunciator.acknowledge();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }// GEN-LAST:event_jButton1ActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItem4ActionPerformed
         UI.createOrContinue(TGUI.class, true, false);
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+    }// GEN-LAST:event_jMenuItem4ActionPerformed
 
-    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItem10ActionPerformed
         UI.createOrContinue(SelsynPanel.class, false, false);
-    }//GEN-LAST:event_jMenuItem10ActionPerformed
+    }// GEN-LAST:event_jMenuItem10ActionPerformed
 
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItem5ActionPerformed
         NPPSim.ui.toFront();
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
+    }// GEN-LAST:event_jMenuItem5ActionPerformed
 
-    private void cavit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cavit1ActionPerformed
+    private void cavit1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_cavit1ActionPerformed
 
-    }//GEN-LAST:event_cavit1ActionPerformed
+    }// GEN-LAST:event_cavit1ActionPerformed
 
-    private void waterTemp2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_waterTemp2ActionPerformed
+    private void waterTemp2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_waterTemp2ActionPerformed
 
-    }//GEN-LAST:event_waterTemp2ActionPerformed
+    }// GEN-LAST:event_waterTemp2ActionPerformed
 
-    private void trip2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_trip2ActionPerformed
+    private void trip2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_trip2ActionPerformed
 
-    }//GEN-LAST:event_trip2ActionPerformed
+    }// GEN-LAST:event_trip2ActionPerformed
 
-    private void cavit2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cavit2ActionPerformed
+    private void cavit2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_cavit2ActionPerformed
 
-    }//GEN-LAST:event_cavit2ActionPerformed
+    }// GEN-LAST:event_cavit2ActionPerformed
 
-    private void trip5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_trip5ActionPerformed
+    private void trip5ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_trip5ActionPerformed
 
-    }//GEN-LAST:event_trip5ActionPerformed
+    }// GEN-LAST:event_trip5ActionPerformed
 
-    private void trip3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_trip3ActionPerformed
+    private void trip3ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_trip3ActionPerformed
 
-    }//GEN-LAST:event_trip3ActionPerformed
+    }// GEN-LAST:event_trip3ActionPerformed
 
-    private void cavit5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cavit5ActionPerformed
+    private void cavit5ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_cavit5ActionPerformed
 
-    }//GEN-LAST:event_cavit5ActionPerformed
+    }// GEN-LAST:event_cavit5ActionPerformed
 
-    private void waterTemp10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_waterTemp10ActionPerformed
+    private void waterTemp10ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_waterTemp10ActionPerformed
 
-    }//GEN-LAST:event_waterTemp10ActionPerformed
+    }// GEN-LAST:event_waterTemp10ActionPerformed
 
-    private void waterTemp12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_waterTemp12ActionPerformed
+    private void waterTemp12ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_waterTemp12ActionPerformed
 
-    }//GEN-LAST:event_waterTemp12ActionPerformed
+    }// GEN-LAST:event_waterTemp12ActionPerformed
 
-    private void trip6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_trip6ActionPerformed
+    private void trip6ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_trip6ActionPerformed
 
-    }//GEN-LAST:event_trip6ActionPerformed
+    }// GEN-LAST:event_trip6ActionPerformed
 
-    private void cavit6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cavit6ActionPerformed
+    private void cavit6ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_cavit6ActionPerformed
 
-    }//GEN-LAST:event_cavit6ActionPerformed
+    }// GEN-LAST:event_cavit6ActionPerformed
 
-    private void waterTemp3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_waterTemp3ActionPerformed
+    private void waterTemp3ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_waterTemp3ActionPerformed
 
-    }//GEN-LAST:event_waterTemp3ActionPerformed
+    }// GEN-LAST:event_waterTemp3ActionPerformed
 
-    private void cavit3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cavit3ActionPerformed
+    private void cavit3ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_cavit3ActionPerformed
 
-    }//GEN-LAST:event_cavit3ActionPerformed
+    }// GEN-LAST:event_cavit3ActionPerformed
 
-    private void waterTemp11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_waterTemp11ActionPerformed
+    private void waterTemp11ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_waterTemp11ActionPerformed
 
-    }//GEN-LAST:event_waterTemp11ActionPerformed
+    }// GEN-LAST:event_waterTemp11ActionPerformed
 
-    private void trip7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_trip7ActionPerformed
+    private void trip7ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_trip7ActionPerformed
 
-    }//GEN-LAST:event_trip7ActionPerformed
+    }// GEN-LAST:event_trip7ActionPerformed
 
-    private void cavit7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cavit7ActionPerformed
+    private void cavit7ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_cavit7ActionPerformed
 
-    }//GEN-LAST:event_cavit7ActionPerformed
+    }// GEN-LAST:event_cavit7ActionPerformed
 
-    private void waterTemp17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_waterTemp17ActionPerformed
+    private void waterTemp17ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_waterTemp17ActionPerformed
 
-    }//GEN-LAST:event_waterTemp17ActionPerformed
+    }// GEN-LAST:event_waterTemp17ActionPerformed
 
-    private void cavit4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cavit4ActionPerformed
+    private void cavit4ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_cavit4ActionPerformed
 
-    }//GEN-LAST:event_cavit4ActionPerformed
+    }// GEN-LAST:event_cavit4ActionPerformed
 
-    private void waterTemp19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_waterTemp19ActionPerformed
+    private void waterTemp19ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_waterTemp19ActionPerformed
 
-    }//GEN-LAST:event_waterTemp19ActionPerformed
+    }// GEN-LAST:event_waterTemp19ActionPerformed
 
-    private void trip8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_trip8ActionPerformed
+    private void trip8ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_trip8ActionPerformed
 
-    }//GEN-LAST:event_trip8ActionPerformed
+    }// GEN-LAST:event_trip8ActionPerformed
 
-    private void trip4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_trip4ActionPerformed
+    private void trip4ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_trip4ActionPerformed
 
-    }//GEN-LAST:event_trip4ActionPerformed
+    }// GEN-LAST:event_trip4ActionPerformed
 
-    private void cavit8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cavit8ActionPerformed
+    private void cavit8ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_cavit8ActionPerformed
 
-    }//GEN-LAST:event_cavit8ActionPerformed
+    }// GEN-LAST:event_cavit8ActionPerformed
 
-    private void waterTemp23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_waterTemp23ActionPerformed
+    private void waterTemp23ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_waterTemp23ActionPerformed
 
-    }//GEN-LAST:event_waterTemp23ActionPerformed
+    }// GEN-LAST:event_waterTemp23ActionPerformed
 
-    private void precisionIncrement1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precisionIncrement1ActionPerformed
+    private void precisionIncrement1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_precisionIncrement1ActionPerformed
 
-    }//GEN-LAST:event_precisionIncrement1ActionPerformed
+    }// GEN-LAST:event_precisionIncrement1ActionPerformed
 
-    private void precisionDecrement1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precisionDecrement1ActionPerformed
+    private void precisionDecrement1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_precisionDecrement1ActionPerformed
 
-    }//GEN-LAST:event_precisionDecrement1ActionPerformed
+    }// GEN-LAST:event_precisionDecrement1ActionPerformed
 
-    private void precisionIncrement2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precisionIncrement2ActionPerformed
+    private void precisionIncrement2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_precisionIncrement2ActionPerformed
 
-    }//GEN-LAST:event_precisionIncrement2ActionPerformed
+    }// GEN-LAST:event_precisionIncrement2ActionPerformed
 
-    private void precisionDecrement2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precisionDecrement2ActionPerformed
+    private void precisionDecrement2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_precisionDecrement2ActionPerformed
 
-    }//GEN-LAST:event_precisionDecrement2ActionPerformed
+    }// GEN-LAST:event_precisionDecrement2ActionPerformed
 
-    private void precisionIncrement5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precisionIncrement5ActionPerformed
+    private void precisionIncrement5ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_precisionIncrement5ActionPerformed
 
-    }//GEN-LAST:event_precisionIncrement5ActionPerformed
+    }// GEN-LAST:event_precisionIncrement5ActionPerformed
 
-    private void precisionDecrement5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precisionDecrement5ActionPerformed
+    private void precisionDecrement5ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_precisionDecrement5ActionPerformed
 
-    }//GEN-LAST:event_precisionDecrement5ActionPerformed
+    }// GEN-LAST:event_precisionDecrement5ActionPerformed
 
-    private void precisionIncrement6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precisionIncrement6ActionPerformed
+    private void precisionIncrement6ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_precisionIncrement6ActionPerformed
 
-    }//GEN-LAST:event_precisionIncrement6ActionPerformed
+    }// GEN-LAST:event_precisionIncrement6ActionPerformed
 
-    private void precisionDecrement6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precisionDecrement6ActionPerformed
+    private void precisionDecrement6ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_precisionDecrement6ActionPerformed
 
-    }//GEN-LAST:event_precisionDecrement6ActionPerformed
+    }// GEN-LAST:event_precisionDecrement6ActionPerformed
 
-    private void precisionIncrement3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precisionIncrement3ActionPerformed
+    private void precisionIncrement3ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_precisionIncrement3ActionPerformed
 
-    }//GEN-LAST:event_precisionIncrement3ActionPerformed
+    }// GEN-LAST:event_precisionIncrement3ActionPerformed
 
-    private void precisionDecrement3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precisionDecrement3ActionPerformed
+    private void precisionDecrement3ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_precisionDecrement3ActionPerformed
 
-    }//GEN-LAST:event_precisionDecrement3ActionPerformed
+    }// GEN-LAST:event_precisionDecrement3ActionPerformed
 
-    private void precisionIncrement4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precisionIncrement4ActionPerformed
+    private void precisionIncrement4ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_precisionIncrement4ActionPerformed
 
-    }//GEN-LAST:event_precisionIncrement4ActionPerformed
+    }// GEN-LAST:event_precisionIncrement4ActionPerformed
 
-    private void precisionDecrement4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precisionDecrement4ActionPerformed
+    private void precisionDecrement4ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_precisionDecrement4ActionPerformed
 
-    }//GEN-LAST:event_precisionDecrement4ActionPerformed
+    }// GEN-LAST:event_precisionDecrement4ActionPerformed
 
-    private void precisionIncrement7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precisionIncrement7ActionPerformed
+    private void precisionIncrement7ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_precisionIncrement7ActionPerformed
 
-    }//GEN-LAST:event_precisionIncrement7ActionPerformed
+    }// GEN-LAST:event_precisionIncrement7ActionPerformed
 
-    private void precisionDecrement7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precisionDecrement7ActionPerformed
+    private void precisionDecrement7ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_precisionDecrement7ActionPerformed
 
-    }//GEN-LAST:event_precisionDecrement7ActionPerformed
+    }// GEN-LAST:event_precisionDecrement7ActionPerformed
 
-    private void precisionIncrement8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precisionIncrement8ActionPerformed
+    private void precisionIncrement8ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_precisionIncrement8ActionPerformed
 
-    }//GEN-LAST:event_precisionIncrement8ActionPerformed
+    }// GEN-LAST:event_precisionIncrement8ActionPerformed
 
-    private void precisionDecrement8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precisionDecrement8ActionPerformed
+    private void precisionDecrement8ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_precisionDecrement8ActionPerformed
 
-    }//GEN-LAST:event_precisionDecrement8ActionPerformed
+    }// GEN-LAST:event_precisionDecrement8ActionPerformed
 
-    private void tgValvesClose18ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesClose18ItemStateChanged
+    private void tgValvesClose18ItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_tgValvesClose18ItemStateChanged
 
-    }//GEN-LAST:event_tgValvesClose18ItemStateChanged
+    }// GEN-LAST:event_tgValvesClose18ItemStateChanged
 
-    private void tgValvesStop18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgValvesStop18ActionPerformed
+    private void tgValvesStop18ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_tgValvesStop18ActionPerformed
         mcpArray[7].dischargeValve.setState(1);
-    }//GEN-LAST:event_tgValvesStop18ActionPerformed
+    }// GEN-LAST:event_tgValvesStop18ActionPerformed
 
-    private void tgValvesStop18ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesStop18ItemStateChanged
+    private void tgValvesStop18ItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_tgValvesStop18ItemStateChanged
 
-    }//GEN-LAST:event_tgValvesStop18ItemStateChanged
+    }// GEN-LAST:event_tgValvesStop18ItemStateChanged
 
-    private void tgValvesOpen18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgValvesOpen18ActionPerformed
+    private void tgValvesOpen18ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_tgValvesOpen18ActionPerformed
         mcpArray[7].dischargeValve.setState(2);
-    }//GEN-LAST:event_tgValvesOpen18ActionPerformed
+    }// GEN-LAST:event_tgValvesOpen18ActionPerformed
 
-    private void tgValvesOpen18ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesOpen18ItemStateChanged
+    private void tgValvesOpen18ItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_tgValvesOpen18ItemStateChanged
 
-    }//GEN-LAST:event_tgValvesOpen18ItemStateChanged
+    }// GEN-LAST:event_tgValvesOpen18ItemStateChanged
 
-    private void tgValvesClose17ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesClose17ItemStateChanged
+    private void tgValvesClose17ItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_tgValvesClose17ItemStateChanged
 
-    }//GEN-LAST:event_tgValvesClose17ItemStateChanged
+    }// GEN-LAST:event_tgValvesClose17ItemStateChanged
 
-    private void tgValvesStop17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgValvesStop17ActionPerformed
+    private void tgValvesStop17ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_tgValvesStop17ActionPerformed
         mcpArray[6].dischargeValve.setState(1);
-    }//GEN-LAST:event_tgValvesStop17ActionPerformed
+    }// GEN-LAST:event_tgValvesStop17ActionPerformed
 
-    private void tgValvesStop17ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesStop17ItemStateChanged
+    private void tgValvesStop17ItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_tgValvesStop17ItemStateChanged
 
-    }//GEN-LAST:event_tgValvesStop17ItemStateChanged
+    }// GEN-LAST:event_tgValvesStop17ItemStateChanged
 
-    private void tgValvesOpen17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgValvesOpen17ActionPerformed
+    private void tgValvesOpen17ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_tgValvesOpen17ActionPerformed
         mcpArray[6].dischargeValve.setState(2);
-    }//GEN-LAST:event_tgValvesOpen17ActionPerformed
+    }// GEN-LAST:event_tgValvesOpen17ActionPerformed
 
-    private void tgValvesOpen17ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesOpen17ItemStateChanged
+    private void tgValvesOpen17ItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_tgValvesOpen17ItemStateChanged
 
-    }//GEN-LAST:event_tgValvesOpen17ItemStateChanged
+    }// GEN-LAST:event_tgValvesOpen17ItemStateChanged
 
-    private void tgValvesClose5ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesClose5ItemStateChanged
+    private void tgValvesClose5ItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_tgValvesClose5ItemStateChanged
 
-    }//GEN-LAST:event_tgValvesClose5ItemStateChanged
+    }// GEN-LAST:event_tgValvesClose5ItemStateChanged
 
-    private void tgValvesStop5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgValvesStop5ActionPerformed
+    private void tgValvesStop5ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_tgValvesStop5ActionPerformed
         mcpArray[4].dischargeValve.setState(1);
-    }//GEN-LAST:event_tgValvesStop5ActionPerformed
+    }// GEN-LAST:event_tgValvesStop5ActionPerformed
 
-    private void tgValvesStop5ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesStop5ItemStateChanged
+    private void tgValvesStop5ItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_tgValvesStop5ItemStateChanged
 
-    }//GEN-LAST:event_tgValvesStop5ItemStateChanged
+    }// GEN-LAST:event_tgValvesStop5ItemStateChanged
 
-    private void tgValvesOpen5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgValvesOpen5ActionPerformed
+    private void tgValvesOpen5ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_tgValvesOpen5ActionPerformed
         mcpArray[4].dischargeValve.setState(2);
-    }//GEN-LAST:event_tgValvesOpen5ActionPerformed
+    }// GEN-LAST:event_tgValvesOpen5ActionPerformed
 
-    private void tgValvesOpen5ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesOpen5ItemStateChanged
+    private void tgValvesOpen5ItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_tgValvesOpen5ItemStateChanged
 
-    }//GEN-LAST:event_tgValvesOpen5ItemStateChanged
+    }// GEN-LAST:event_tgValvesOpen5ItemStateChanged
 
-    private void tgValvesClose6ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesClose6ItemStateChanged
+    private void tgValvesClose6ItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_tgValvesClose6ItemStateChanged
 
-    }//GEN-LAST:event_tgValvesClose6ItemStateChanged
+    }// GEN-LAST:event_tgValvesClose6ItemStateChanged
 
-    private void tgValvesStop6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgValvesStop6ActionPerformed
+    private void tgValvesStop6ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_tgValvesStop6ActionPerformed
         mcpArray[5].dischargeValve.setState(1);
-    }//GEN-LAST:event_tgValvesStop6ActionPerformed
+    }// GEN-LAST:event_tgValvesStop6ActionPerformed
 
-    private void tgValvesStop6ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesStop6ItemStateChanged
+    private void tgValvesStop6ItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_tgValvesStop6ItemStateChanged
 
-    }//GEN-LAST:event_tgValvesStop6ItemStateChanged
+    }// GEN-LAST:event_tgValvesStop6ItemStateChanged
 
-    private void tgValvesOpen6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgValvesOpen6ActionPerformed
+    private void tgValvesOpen6ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_tgValvesOpen6ActionPerformed
         mcpArray[5].dischargeValve.setState(2);
-    }//GEN-LAST:event_tgValvesOpen6ActionPerformed
+    }// GEN-LAST:event_tgValvesOpen6ActionPerformed
 
-    private void tgValvesOpen6ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesOpen6ItemStateChanged
+    private void tgValvesOpen6ItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_tgValvesOpen6ItemStateChanged
 
-    }//GEN-LAST:event_tgValvesOpen6ItemStateChanged
+    }// GEN-LAST:event_tgValvesOpen6ItemStateChanged
 
-    private void tgValvesClose3ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesClose3ItemStateChanged
+    private void tgValvesClose3ItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_tgValvesClose3ItemStateChanged
 
-    }//GEN-LAST:event_tgValvesClose3ItemStateChanged
+    }// GEN-LAST:event_tgValvesClose3ItemStateChanged
 
-    private void tgValvesStop3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgValvesStop3ActionPerformed
+    private void tgValvesStop3ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_tgValvesStop3ActionPerformed
         mcpArray[2].dischargeValve.setState(1);
-    }//GEN-LAST:event_tgValvesStop3ActionPerformed
+    }// GEN-LAST:event_tgValvesStop3ActionPerformed
 
-    private void tgValvesStop3ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesStop3ItemStateChanged
+    private void tgValvesStop3ItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_tgValvesStop3ItemStateChanged
 
-    }//GEN-LAST:event_tgValvesStop3ItemStateChanged
+    }// GEN-LAST:event_tgValvesStop3ItemStateChanged
 
-    private void tgValvesOpen3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgValvesOpen3ActionPerformed
+    private void tgValvesOpen3ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_tgValvesOpen3ActionPerformed
         mcpArray[2].dischargeValve.setState(2);
-    }//GEN-LAST:event_tgValvesOpen3ActionPerformed
+    }// GEN-LAST:event_tgValvesOpen3ActionPerformed
 
-    private void tgValvesOpen3ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesOpen3ItemStateChanged
+    private void tgValvesOpen3ItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_tgValvesOpen3ItemStateChanged
 
-    }//GEN-LAST:event_tgValvesOpen3ItemStateChanged
+    }// GEN-LAST:event_tgValvesOpen3ItemStateChanged
 
-    private void tgValvesClose14ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesClose14ItemStateChanged
+    private void tgValvesClose14ItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_tgValvesClose14ItemStateChanged
 
-    }//GEN-LAST:event_tgValvesClose14ItemStateChanged
+    }// GEN-LAST:event_tgValvesClose14ItemStateChanged
 
-    private void tgValvesStop14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgValvesStop14ActionPerformed
+    private void tgValvesStop14ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_tgValvesStop14ActionPerformed
         mcpArray[3].dischargeValve.setState(1);
-    }//GEN-LAST:event_tgValvesStop14ActionPerformed
+    }// GEN-LAST:event_tgValvesStop14ActionPerformed
 
-    private void tgValvesStop14ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesStop14ItemStateChanged
+    private void tgValvesStop14ItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_tgValvesStop14ItemStateChanged
 
-    }//GEN-LAST:event_tgValvesStop14ItemStateChanged
+    }// GEN-LAST:event_tgValvesStop14ItemStateChanged
 
-    private void tgValvesOpen14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgValvesOpen14ActionPerformed
+    private void tgValvesOpen14ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_tgValvesOpen14ActionPerformed
         mcpArray[3].dischargeValve.setState(2);
-    }//GEN-LAST:event_tgValvesOpen14ActionPerformed
+    }// GEN-LAST:event_tgValvesOpen14ActionPerformed
 
-    private void tgValvesOpen14ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesOpen14ItemStateChanged
+    private void tgValvesOpen14ItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_tgValvesOpen14ItemStateChanged
 
-    }//GEN-LAST:event_tgValvesOpen14ItemStateChanged
+    }// GEN-LAST:event_tgValvesOpen14ItemStateChanged
 
-    private void tgValvesClose12ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesClose12ItemStateChanged
+    private void tgValvesClose12ItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_tgValvesClose12ItemStateChanged
 
-    }//GEN-LAST:event_tgValvesClose12ItemStateChanged
+    }// GEN-LAST:event_tgValvesClose12ItemStateChanged
 
-    private void tgValvesStop12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgValvesStop12ActionPerformed
+    private void tgValvesStop12ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_tgValvesStop12ActionPerformed
         mcpArray[1].dischargeValve.setState(1);
-    }//GEN-LAST:event_tgValvesStop12ActionPerformed
+    }// GEN-LAST:event_tgValvesStop12ActionPerformed
 
-    private void tgValvesStop12ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesStop12ItemStateChanged
+    private void tgValvesStop12ItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_tgValvesStop12ItemStateChanged
 
-    }//GEN-LAST:event_tgValvesStop12ItemStateChanged
+    }// GEN-LAST:event_tgValvesStop12ItemStateChanged
 
-    private void tgValvesOpen12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgValvesOpen12ActionPerformed
+    private void tgValvesOpen12ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_tgValvesOpen12ActionPerformed
         mcpArray[1].dischargeValve.setState(2);
-    }//GEN-LAST:event_tgValvesOpen12ActionPerformed
+    }// GEN-LAST:event_tgValvesOpen12ActionPerformed
 
-    private void tgValvesOpen12ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesOpen12ItemStateChanged
+    private void tgValvesOpen12ItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_tgValvesOpen12ItemStateChanged
 
-    }//GEN-LAST:event_tgValvesOpen12ItemStateChanged
+    }// GEN-LAST:event_tgValvesOpen12ItemStateChanged
 
-    private void tgValvesCloseItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesCloseItemStateChanged
+    private void tgValvesCloseItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_tgValvesCloseItemStateChanged
 
-    }//GEN-LAST:event_tgValvesCloseItemStateChanged
+    }// GEN-LAST:event_tgValvesCloseItemStateChanged
 
-    private void tgValvesStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgValvesStopActionPerformed
+    private void tgValvesStopActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_tgValvesStopActionPerformed
         mcpArray[0].dischargeValve.setState(1);
-    }//GEN-LAST:event_tgValvesStopActionPerformed
+    }// GEN-LAST:event_tgValvesStopActionPerformed
 
-    private void tgValvesStopItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesStopItemStateChanged
+    private void tgValvesStopItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_tgValvesStopItemStateChanged
 
-    }//GEN-LAST:event_tgValvesStopItemStateChanged
+    }// GEN-LAST:event_tgValvesStopItemStateChanged
 
-    private void tgValvesOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgValvesOpenActionPerformed
+    private void tgValvesOpenActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_tgValvesOpenActionPerformed
         mcpArray[0].dischargeValve.setState(2);
-    }//GEN-LAST:event_tgValvesOpenActionPerformed
+    }// GEN-LAST:event_tgValvesOpenActionPerformed
 
-    private void tgValvesOpenItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgValvesOpenItemStateChanged
+    private void tgValvesOpenItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_tgValvesOpenItemStateChanged
 
-    }//GEN-LAST:event_tgValvesOpenItemStateChanged
+    }// GEN-LAST:event_tgValvesOpenItemStateChanged
 
-    private void off1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_off1ActionPerformed
+    private void off1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_off1ActionPerformed
         mcpArray[0].setActive(false);
         led1.setLedOn(false);
-    }//GEN-LAST:event_off1ActionPerformed
+    }// GEN-LAST:event_off1ActionPerformed
 
-    private void on1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_on1ActionPerformed
+    private void on1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_on1ActionPerformed
         mcpArray[0].setActive(true);
         led1.setLedOn(true);
-    }//GEN-LAST:event_on1ActionPerformed
+    }// GEN-LAST:event_on1ActionPerformed
 
-    private void off2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_off2ActionPerformed
+    private void off2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_off2ActionPerformed
         mcpArray[1].setActive(false);
         led2.setLedOn(false);
-    }//GEN-LAST:event_off2ActionPerformed
+    }// GEN-LAST:event_off2ActionPerformed
 
-    private void on2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_on2ActionPerformed
+    private void on2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_on2ActionPerformed
         mcpArray[1].setActive(true);
         led2.setLedOn(true);
-    }//GEN-LAST:event_on2ActionPerformed
+    }// GEN-LAST:event_on2ActionPerformed
 
-    private void on3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_on3ActionPerformed
+    private void on3ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_on3ActionPerformed
         mcpArray[2].setActive(true);
         led3.setLedOn(true);
-    }//GEN-LAST:event_on3ActionPerformed
+    }// GEN-LAST:event_on3ActionPerformed
 
-    private void off3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_off3ActionPerformed
+    private void off3ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_off3ActionPerformed
         mcpArray[2].setActive(false);
         led3.setLedOn(false);
-    }//GEN-LAST:event_off3ActionPerformed
+    }// GEN-LAST:event_off3ActionPerformed
 
-    private void off4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_off4ActionPerformed
+    private void off4ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_off4ActionPerformed
         mcpArray[3].setActive(false);
         led4.setLedOn(false);
-    }//GEN-LAST:event_off4ActionPerformed
+    }// GEN-LAST:event_off4ActionPerformed
 
-    private void on4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_on4ActionPerformed
+    private void on4ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_on4ActionPerformed
         mcpArray[3].setActive(true);
         led4.setLedOn(true);
-    }//GEN-LAST:event_on4ActionPerformed
+    }// GEN-LAST:event_on4ActionPerformed
 
-    private void off5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_off5ActionPerformed
+    private void off5ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_off5ActionPerformed
         mcpArray[4].setActive(false);
         led5.setLedOn(false);
-    }//GEN-LAST:event_off5ActionPerformed
+    }// GEN-LAST:event_off5ActionPerformed
 
-    private void off6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_off6ActionPerformed
+    private void off6ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_off6ActionPerformed
         mcpArray[5].setActive(false);
         led6.setLedOn(false);
-    }//GEN-LAST:event_off6ActionPerformed
+    }// GEN-LAST:event_off6ActionPerformed
 
-    private void off7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_off7ActionPerformed
+    private void off7ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_off7ActionPerformed
         mcpArray[6].setActive(false);
         led7.setLedOn(false);
-    }//GEN-LAST:event_off7ActionPerformed
+    }// GEN-LAST:event_off7ActionPerformed
 
-    private void off8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_off8ActionPerformed
+    private void off8ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_off8ActionPerformed
         mcpArray[7].setActive(false);
         led8.setLedOn(false);
-    }//GEN-LAST:event_off8ActionPerformed
+    }// GEN-LAST:event_off8ActionPerformed
 
-    private void on8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_on8ActionPerformed
+    private void on8ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_on8ActionPerformed
         mcpArray[7].setActive(true);
         led8.setLedOn(true);
-    }//GEN-LAST:event_on8ActionPerformed
+    }// GEN-LAST:event_on8ActionPerformed
 
-    private void on7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_on7ActionPerformed
+    private void on7ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_on7ActionPerformed
         mcpArray[6].setActive(true);
         led7.setLedOn(true);
-    }//GEN-LAST:event_on7ActionPerformed
+    }// GEN-LAST:event_on7ActionPerformed
 
-    private void on6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_on6ActionPerformed
+    private void on6ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_on6ActionPerformed
         mcpArray[5].setActive(true);
         led6.setLedOn(true);
-    }//GEN-LAST:event_on6ActionPerformed
+    }// GEN-LAST:event_on6ActionPerformed
 
-    private void on5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_on5ActionPerformed
+    private void on5ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_on5ActionPerformed
         mcpArray[4].setActive(true);
         led5.setLedOn(true);
-    }//GEN-LAST:event_on5ActionPerformed
+    }// GEN-LAST:event_on5ActionPerformed
 
-    private void tgValvesClose11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgValvesClose11ActionPerformed
+    private void tgValvesClose11ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_tgValvesClose11ActionPerformed
         mcpArray[0].dischargeValve.setState(0);
-    }//GEN-LAST:event_tgValvesClose11ActionPerformed
+    }// GEN-LAST:event_tgValvesClose11ActionPerformed
 
-    private void tgValvesClose12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgValvesClose12ActionPerformed
+    private void tgValvesClose12ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_tgValvesClose12ActionPerformed
         mcpArray[1].dischargeValve.setState(0);
-    }//GEN-LAST:event_tgValvesClose12ActionPerformed
+    }// GEN-LAST:event_tgValvesClose12ActionPerformed
 
-    private void tgValvesClose3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgValvesClose3ActionPerformed
+    private void tgValvesClose3ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_tgValvesClose3ActionPerformed
         mcpArray[2].dischargeValve.setState(0);
-    }//GEN-LAST:event_tgValvesClose3ActionPerformed
+    }// GEN-LAST:event_tgValvesClose3ActionPerformed
 
-    private void tgValvesClose14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgValvesClose14ActionPerformed
+    private void tgValvesClose14ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_tgValvesClose14ActionPerformed
         mcpArray[3].dischargeValve.setState(0);
-    }//GEN-LAST:event_tgValvesClose14ActionPerformed
+    }// GEN-LAST:event_tgValvesClose14ActionPerformed
 
-    private void tgValvesClose5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgValvesClose5ActionPerformed
+    private void tgValvesClose5ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_tgValvesClose5ActionPerformed
         mcpArray[4].dischargeValve.setState(0);
-    }//GEN-LAST:event_tgValvesClose5ActionPerformed
+    }// GEN-LAST:event_tgValvesClose5ActionPerformed
 
-    private void tgValvesClose6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgValvesClose6ActionPerformed
+    private void tgValvesClose6ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_tgValvesClose6ActionPerformed
         mcpArray[5].dischargeValve.setState(0);
-    }//GEN-LAST:event_tgValvesClose6ActionPerformed
+    }// GEN-LAST:event_tgValvesClose6ActionPerformed
 
-    private void tgValvesClose17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgValvesClose17ActionPerformed
+    private void tgValvesClose17ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_tgValvesClose17ActionPerformed
         mcpArray[6].dischargeValve.setState(0);
-    }//GEN-LAST:event_tgValvesClose17ActionPerformed
+    }// GEN-LAST:event_tgValvesClose17ActionPerformed
 
-    private void tgValvesClose18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgValvesClose18ActionPerformed
+    private void tgValvesClose18ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_tgValvesClose18ActionPerformed
         mcpArray[7].dischargeValve.setState(0);
-    }//GEN-LAST:event_tgValvesClose18ActionPerformed
+    }// GEN-LAST:event_tgValvesClose18ActionPerformed
 
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItem6ActionPerformed
         UI.createOrContinue(PCSUI.class, true, false);
-    }//GEN-LAST:event_jMenuItem6ActionPerformed
+    }// GEN-LAST:event_jMenuItem6ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private eu.hansolo.steelseries.gauges.Linear amps1;

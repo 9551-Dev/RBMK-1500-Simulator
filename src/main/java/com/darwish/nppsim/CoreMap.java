@@ -23,7 +23,7 @@ public class CoreMap extends javax.swing.JFrame implements UIUpdateable {
         while (rowNumber != 50) {
             createRow();
         }
-        
+
         this.addWindowListener(new WindowListener() {
             @Override
             public void windowOpened(WindowEvent we) {
@@ -87,27 +87,27 @@ public class CoreMap extends javax.swing.JFrame implements UIUpdateable {
             });
         }
     }
-    
+
     @Override
     public void initializeDialUpdateThread() {
-        //void
+        // void
     }
 
     @Override
     public void setVisibility(boolean visible) {
         this.setVisible(visible);
     }
-    
+
     @Override
     public void discard() {
         this.setVisible(false);
     }
-    
+
     @Override
     public void acknowledge() {
-        
+
     }
-    
+
     private javax.swing.JPanel createRow() {
         javax.swing.JPanel row = new javax.swing.JPanel();
         row.setBackground(UI.BACKGROUND);
@@ -120,7 +120,9 @@ public class CoreMap extends javax.swing.JFrame implements UIUpdateable {
             Channel currentChannel = core.coreArray.get(50 - rowNumber + 2).get(i + 2);
             if (currentChannel instanceof FuelChannel || currentChannel instanceof CPSChannel) {
                 javax.swing.JToggleButton button = new javax.swing.JToggleButton();
-                button.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.darkGray, currentChannel.uiData.UIBackgroundColor, java.awt.Color.darkGray, currentChannel.uiData.UIBackgroundColor));
+                button.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED,
+                        java.awt.Color.darkGray, currentChannel.uiData.UIBackgroundColor, java.awt.Color.darkGray,
+                        currentChannel.uiData.UIBackgroundColor));
                 button.setFont(new java.awt.Font("Ubuntu", 1, 6)); // NOI18N
                 button.setText(currentChannel.uiData.positionString);
                 button.setForeground(Color.BLACK);
@@ -142,7 +144,8 @@ public class CoreMap extends javax.swing.JFrame implements UIUpdateable {
                         if (button.isSelected()) {
                             JFrame panel = new JFrame();
                             JXTable data = new JXTable();
-                            data.setModel(new DefaultTableModel(currentChannel.uiData.tableData, new String[] {"Variable", "Value", "Unit"}) {
+                            data.setModel(new DefaultTableModel(currentChannel.uiData.tableData,
+                                    new String[] { "Variable", "Value", "Unit" }) {
 
                             });
                             if (data.getRowCount() != 0 && data.getColumnCount() != 0) {
@@ -160,7 +163,8 @@ public class CoreMap extends javax.swing.JFrame implements UIUpdateable {
                             panel.setAlwaysOnTop(true);
                             panel.pack();
                             openWindowArray.add(new windowChannelBinding(panel, data, currentChannel));
-                            panel.setLocation((int)getMousePosition().getX() + 15, (int)getMousePosition().getY() + 30);
+                            panel.setLocation((int) getMousePosition().getX() + 15,
+                                    (int) getMousePosition().getY() + 30);
                             panel.setVisible(true);
                             panel.setLayout(null);
                             panel.setResizable(false);
@@ -168,7 +172,7 @@ public class CoreMap extends javax.swing.JFrame implements UIUpdateable {
                                 @Override
                                 public void windowClosing(WindowEvent e) {
                                     button.setSelected(false);
-                                    for(int i = 0; i < openWindowArray.size(); i++) {
+                                    for (int i = 0; i < openWindowArray.size(); i++) {
                                         if (openWindowArray.get(i).window == panel) {
                                             openWindowArray.remove(openWindowArray.get(i));
                                         }
@@ -200,7 +204,7 @@ public class CoreMap extends javax.swing.JFrame implements UIUpdateable {
                                 public void windowOpened(WindowEvent e) {
                                     button.addChangeListener((ChangeEvent e1) -> {
                                         if (!button.isSelected()) {
-                                            for(int i = 0; i < openWindowArray.size(); i++) {
+                                            for (int i = 0; i < openWindowArray.size(); i++) {
                                                 if (openWindowArray.get(i).window == panel) {
                                                     openWindowArray.remove(openWindowArray.get(i));
                                                 }
@@ -251,9 +255,10 @@ public class CoreMap extends javax.swing.JFrame implements UIUpdateable {
      * WARNING: Do NOT modify this code. The content of this method is always
      * regenerated by the Form Editor.
      */
-    
+
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -281,13 +286,11 @@ public class CoreMap extends javax.swing.JFrame implements UIUpdateable {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE));
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -303,11 +306,12 @@ public class CoreMap extends javax.swing.JFrame implements UIUpdateable {
         JFrame window;
         JXTable table;
         Channel channel;
+
         public windowChannelBinding(JFrame window, JXTable table, Channel channel) {
             this.channel = channel;
             this.table = table;
             this.window = window;
         }
-        
+
     }
 }
