@@ -2,6 +2,8 @@ package com.darwish.nppsim;
 
 import static com.darwish.nppsim.NPPSim.mcc;
 
+import CondensateUI;
+
 
 public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
     private final Annunciator annunciator;
@@ -25,7 +27,7 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         initializeDialUpdateThread();
         precisionController();
     }
-    
+
     @Override
     public void update() {
         checkAlarms();
@@ -92,7 +94,7 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         );
         UI.uiThreads.get(UI.uiThreads.size() - 1).start();
     }
-    
+
     private void precisionController() {
         final float increment = mcpArray[0].accelerationSpeed / mcpArray[0].ratedRPM * 1.2f;
         UI.uiThreads.add(
@@ -142,23 +144,23 @@ public class MCPUI extends javax.swing.JFrame implements UIUpdateable {
         );
         UI.uiThreads.get(UI.uiThreads.size() - 1).start();
     }
-    
+
     @Override
     public void setVisibility(boolean visible) {
         this.setVisible(visible);
     }
-    
+
     @Override
     public void discard() {
         this.setVisible(false);
     }
-    
+
     @Override
     public void acknowledge() {
         annunciator.acknowledge();
     }
-    
-    private void checkAlarms() { 
+
+    private void checkAlarms() {
         annunciator.setTrigger(mcpArray[0].isCavitating, cavit1);
         annunciator.setTrigger(mcpArray[1].isCavitating, cavit2);
         annunciator.setTrigger(mcpArray[2].isCavitating, cavit3);

@@ -7,6 +7,9 @@ import static com.darwish.nppsim.NPPSim.feedwaterMixer2;
 import static com.darwish.nppsim.NPPSim.mainFeederValves;
 import javax.swing.JSpinner;
 import javax.swing.event.ChangeEvent;
+
+import CondensateUI;
+
 import static com.darwish.nppsim.NPPSim.mcc;
 import static com.darwish.nppsim.NPPSim.mainFeedwaterPumps;
 import static com.darwish.nppsim.NPPSim.auxFeedwaterPumps;
@@ -21,7 +24,7 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
         initComponents();
         this.setTitle("Feedwater Control");
         annunciator = new Annunciator(annunciatorPanel);
-        
+
         ((JSpinner.DefaultEditor)mFWPSpinner.getEditor()).getTextField().setEditable(false);
         ((JSpinner.DefaultEditor)auxFWPSpinner.getEditor()).getTextField().setEditable(false);
         ((JSpinner.DefaultEditor)mFW1Spinner.getEditor()).getTextField().setEditable(false);
@@ -57,7 +60,7 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
                     break;
                 case 2:
                     mFW1Open.setSelected(true);
-                    break;  
+                    break;
             }
         });
         mFW2Spinner.addChangeListener((ChangeEvent e) -> {
@@ -71,11 +74,11 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
                     break;
                 case 2:
                     mFW2Open.setSelected(true);
-                    break;  
+                    break;
             }
         });
         initializeDialUpdateThread();
-        
+
         //set variables
         Pump currentSelection = mainFeedwaterPumps.get((int)mFWPSpinner.getValue() - 1);
         if (currentSelection.isActive()) {
@@ -113,8 +116,8 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
             autoControlAux2.setSelected(autoControl.auxFeederControl.get(1).isEnabled());
         }
     }
-    
-    
+
+
     @Override
     public void update() {
         checkAlarms();
@@ -148,7 +151,7 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
                 try {
                     while (true) {
                         annunciator.update();
-                        if (this.isVisible()) { 
+                        if (this.isVisible()) {
                             java.awt.EventQueue.invokeLater(() -> {
                                 double[] mfwFlows = new double[] {0.0, 0.0};
                                 for (int i = 0; i < 3; i++) {
@@ -194,17 +197,17 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
     public void setVisibility(boolean visible) {
         this.setVisible(visible);
     }
-    
+
     @Override
     public void discard() {
         this.setVisible(false);
     }
-    
+
     @Override
     public void acknowledge() {
         annunciator.acknowledge();
     }
-    
+
     private void checkAlarms() {
         if (mcc.drum1.getWaterLevel() < -25) {
             annunciator.trigger(drum1Low);
@@ -227,7 +230,7 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
             annunciator.reset(drum2High);
         }
         if (feedwaterMixer1.getWaterTemperature() < 150 || feedwaterMixer2.getWaterTemperature() < 150) {
-            annunciator.trigger(FWTemp); 
+            annunciator.trigger(FWTemp);
         } else {
             annunciator.reset(FWTemp);
         }
@@ -248,7 +251,7 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
         }
         annunciator.setTrigger(auxCavitation, auxCavit);
     }
-    
+
      /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

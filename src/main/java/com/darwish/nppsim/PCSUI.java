@@ -5,6 +5,8 @@ import static com.darwish.nppsim.NPPSim.pcs;
 import javax.swing.JSpinner;
 import javax.swing.event.ChangeEvent;
 
+import CondensateUI;
+
 public class PCSUI extends javax.swing.JFrame implements UIUpdateable {
     private final Annunciator annunciator;
     /**
@@ -14,7 +16,7 @@ public class PCSUI extends javax.swing.JFrame implements UIUpdateable {
         initComponents();
         this.setTitle("Purification and Cooling System");
         annunciator = new Annunciator(annunciatorPanel);
-        
+
         ((JSpinner.DefaultEditor)spinner1A.getEditor()).getTextField().setEditable(false);
         ((JSpinner.DefaultEditor)spinner1A1.getEditor()).getTextField().setEditable(false);
         ((JSpinner.DefaultEditor)spinner1A2.getEditor()).getTextField().setEditable(false);
@@ -32,7 +34,7 @@ public class PCSUI extends javax.swing.JFrame implements UIUpdateable {
             } else {
                 stop1A.setSelected(true);
             }
-            
+
         });
         spinner1A1.addChangeListener((ChangeEvent e) -> {
             Pump currentSelection = pcs.admsPumps.get((int)spinner1A1.getValue() - 1);
@@ -44,7 +46,7 @@ public class PCSUI extends javax.swing.JFrame implements UIUpdateable {
                 stop1A1.setSelected(true);
             }
         });
-        
+
         spinner1A2.addChangeListener((ChangeEvent e) -> {
             WaterValve currentSelection = pcs.dearatorMakeupValves.get((int)spinner1A2.getValue() - 1);
             admsAC.setSelected(autoControl.dearatorMakeupControl.get((int)spinner1A2.getValue() - 1).isEnabled() || autoControl.dearatorWaterAndMakeupControl.get((int)spinner1A2.getValue() - 1).isEnabled());
@@ -57,12 +59,12 @@ public class PCSUI extends javax.swing.JFrame implements UIUpdateable {
                     break;
                 case 2:
                     sdvcOpen5.setSelected(true);
-                    break;  
+                    break;
             }
         });
-        
+
         initializeDialUpdateThread();
-        
+
         //set initial values
         Pump currentSelection = pcs.pcsPump1;
         if (currentSelection.isActive()) {
@@ -94,9 +96,9 @@ public class PCSUI extends javax.swing.JFrame implements UIUpdateable {
         if (pcs.dwMakeupPump.isActive()) {
             start1A3.setSelected(true);
         }
-       
+
     }
-    
+
     @Override
     public void update() {
         checkAlarms();
@@ -185,23 +187,23 @@ public class PCSUI extends javax.swing.JFrame implements UIUpdateable {
         );
         UI.uiThreads.get(UI.uiThreads.size() - 1).start();
     }
-    
+
     @Override
     public void setVisibility(boolean visible) {
         this.setVisible(visible);
     }
-    
+
     @Override
     public void discard() {
         this.setVisible(false);
     }
-    
+
     @Override
     public void acknowledge() {
         annunciator.acknowledge();
     }
-    
-    private void checkAlarms() { 
+
+    private void checkAlarms() {
         annunciator.setTrigger(pcs.pcsFilterPressureHeader.waterTemperature > 60, waterTemp);
         annunciator.setTrigger(pcs.demineralizedWaterTank.getWaterLevel() < 0, dwLow);
         annunciator.setTrigger(pcs.demineralizedWaterTank.getWaterLevel() > 95, dwHigh);

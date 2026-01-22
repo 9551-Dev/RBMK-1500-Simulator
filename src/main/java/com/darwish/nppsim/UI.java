@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.metal.MetalLookAndFeel; //TODO
 import org.netbeans.swing.laf.dark.*;
+
+import CondensateUI;
+
 import static com.darwish.nppsim.NPPSim.mcc;
 import javax.swing.JFrame;
 import javax.swing.JSpinner;
@@ -1540,7 +1543,7 @@ public class UI extends javax.swing.JFrame implements Serializable {
         jMenuItem3.setText("Core Map");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                bar_coremap_button_clicked(evt);
             }
         });
         jMenu2.add(jMenuItem3);
@@ -1548,7 +1551,7 @@ public class UI extends javax.swing.JFrame implements Serializable {
         jMenuItem10.setText("Selsyns");
         jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem10ActionPerformed(evt);
+                bar_selsyns_button_clicked(evt);
             }
         });
         jMenu2.add(jMenuItem10);
@@ -1556,7 +1559,7 @@ public class UI extends javax.swing.JFrame implements Serializable {
         jMenuItem12.setText("MCP");
         jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem12ActionPerformed(evt);
+                bar_mcp_button_clicked(evt);
             }
         });
         jMenu2.add(jMenuItem12);
@@ -1564,7 +1567,7 @@ public class UI extends javax.swing.JFrame implements Serializable {
         jMenuItem5.setText("Turbine-Generators");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
+                bar_turbine_generators_button_clicked(evt);
             }
         });
         jMenu2.add(jMenuItem5);
@@ -1572,7 +1575,7 @@ public class UI extends javax.swing.JFrame implements Serializable {
         jMenuItem6.setText("Condensate");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem6ActionPerformed(evt);
+                bar_condensate_button_clicked(evt);
             }
         });
         jMenu2.add(jMenuItem6);
@@ -1580,7 +1583,7 @@ public class UI extends javax.swing.JFrame implements Serializable {
         jMenuItem7.setText("Dearators");
         jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem7ActionPerformed(evt);
+                bar_dearrators_button_clicked(evt);
             }
         });
         jMenu2.add(jMenuItem7);
@@ -1588,7 +1591,7 @@ public class UI extends javax.swing.JFrame implements Serializable {
         jMenuItem8.setText("Feedwater");
         jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem8ActionPerformed(evt);
+                bar_feedwater_button_clicked(evt);
             }
         });
         jMenu2.add(jMenuItem8);
@@ -1818,19 +1821,19 @@ public class UI extends javax.swing.JFrame implements Serializable {
         createOrContinue(SaveDialog.class, false, false);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+    private void bar_turbine_generators_button_clicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         createOrContinue(TGUI.class, true, false);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+    private void bar_condensate_button_clicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         createOrContinue(CondensateUI.class, true, false);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
-    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+    private void bar_dearrators_button_clicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
         createOrContinue(DearatorUI.class, true, false);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
-    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+    private void bar_feedwater_button_clicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
         createOrContinue(FeedwaterUI.class, true, false);
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
@@ -1861,7 +1864,7 @@ public class UI extends javax.swing.JFrame implements Serializable {
         // TODO add your handling code here:
     }//GEN-LAST:event_highDrumPressActionPerformed
 
-    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+    private void bar_selsyns_button_clicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
         createOrContinue(SelsynPanel.class, false, false);
     }//GEN-LAST:event_jMenuItem10ActionPerformed
 
@@ -2040,14 +2043,14 @@ public class UI extends javax.swing.JFrame implements Serializable {
     }//GEN-LAST:event_jRadioButtonMenuItem6ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-         autoControl.fasrControl.trip("BSM Button Pressed");
+        autoControl.fasrControl.trip("BSM Button Pressed");
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
+    private void bar_mcp_button_clicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
         createOrContinue(MCPUI.class, true, false);
     }//GEN-LAST:event_jMenuItem12ActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {
+    private void bar_coremap_button_clicked(java.awt.event.ActionEvent evt) {
         createOrContinue(CoreMap.class, false, false);
     }
 

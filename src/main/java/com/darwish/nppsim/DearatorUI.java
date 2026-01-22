@@ -6,6 +6,8 @@ import static com.darwish.nppsim.NPPSim.dearators;
 import static com.darwish.nppsim.NPPSim.fwSuctionHeader;
 import static com.darwish.nppsim.NPPSim.pcs;
 
+import CondensateUI;
+
 public class DearatorUI extends javax.swing.JFrame implements UIUpdateable {
     private final Dearator da1 = dearators.get(0);
     private final Dearator da2 = dearators.get(1);
@@ -48,7 +50,7 @@ public class DearatorUI extends javax.swing.JFrame implements UIUpdateable {
         level4.setTrackStartColor(new java.awt.Color(255, 0, 0));
         level4.setTrackStopColor(new java.awt.Color(255, 0, 0));
         initializeDialUpdateThread();
-        
+
         //set variables
         isolate1.setSelected(fwSuctionHeader.isolationValveArray.get(0).getPosition() == 0);
         isolate2.setSelected(fwSuctionHeader.isolationValveArray.get(1).getPosition() == 0);
@@ -67,7 +69,7 @@ public class DearatorUI extends javax.swing.JFrame implements UIUpdateable {
         setpoint3.setLcdValue(autoControl.dearatorPressureControl.get(2).getSetpoint());
         setpoint4.setLcdValue(autoControl.dearatorPressureControl.get(3).getSetpoint());
     }
-    
+
     @Override
     public void update() {
         checkAlarms();
@@ -160,17 +162,17 @@ public class DearatorUI extends javax.swing.JFrame implements UIUpdateable {
     public void setVisibility(boolean visible) {
         this.setVisible(visible);
     }
-    
+
     @Override
     public void discard() {
         this.setVisible(false);
     }
-    
+
     @Override
     public void acknowledge() {
         annunciator.acknowledge();
     }
-    
+
     private void checkAlarms() {
         annunciator.setTrigger(da1.getPressure() > 1.42, hPress1);
         annunciator.setTrigger(da2.getPressure() > 1.42, hPress2);

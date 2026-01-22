@@ -11,6 +11,8 @@ import static com.darwish.nppsim.NPPSim.tg2;
 import javax.swing.JSpinner;
 import javax.swing.event.ChangeEvent;
 
+import CondensateUI;
+
 public class TGUI extends javax.swing.JFrame implements UIUpdateable {
     private final Annunciator annunciator;
     private boolean debounce = false;
@@ -21,7 +23,7 @@ public class TGUI extends javax.swing.JFrame implements UIUpdateable {
         initComponents();
         this.setTitle("Turbine-Generators");
         annunciator = new Annunciator(annunciatorPanel);
-        
+
         ((JSpinner.DefaultEditor)sdvcSpinner1.getEditor()).getTextField().setEditable(false);
         ((JSpinner.DefaultEditor)sdvcSpinner2.getEditor()).getTextField().setEditable(false);
         sdvcSpinner1.addChangeListener((ChangeEvent e) -> {
@@ -35,7 +37,7 @@ public class TGUI extends javax.swing.JFrame implements UIUpdateable {
                     break;
                 case 2:
                     sdvcOpen1.setSelected(true);
-                    break;  
+                    break;
             }
         });
         sdvcSpinner2.addChangeListener((ChangeEvent e) -> {
@@ -49,10 +51,10 @@ public class TGUI extends javax.swing.JFrame implements UIUpdateable {
                     break;
                 case 2:
                     sdvcOpen2.setSelected(true);
-                    break;  
+                    break;
             }
         });
-        
+
         linear1.setBackgroundColor(eu.hansolo.steelseries.tools.BackgroundColor.SATIN_GRAY);
         linear1.setFrameVisible(false);
         linear1.setLcdVisible(false);
@@ -105,7 +107,7 @@ public class TGUI extends javax.swing.JFrame implements UIUpdateable {
         radial1.setValue(20);
         initializeDialUpdateThread();
         precisionController();
-        
+
         //set initial values
         double setpoint = autoControl.tgValveControl.get(0).getSetpoint();
         rpm1B.setLcdValue(setpoint);
@@ -114,7 +116,7 @@ public class TGUI extends javax.swing.JFrame implements UIUpdateable {
         autoSteamPressure1On.setSelected(autoControl.tgValveControl.get(0).isEnabled());
         autoSteamPressure1On1.setSelected(autoControl.tgValveControl.get(2).isEnabled());
     }
-    
+
     @Override
     public void update() {
         checkAlarms();
@@ -196,23 +198,23 @@ public class TGUI extends javax.swing.JFrame implements UIUpdateable {
         );
         UI.uiThreads.get(UI.uiThreads.size() - 1).start();
     }
-    
+
     @Override
     public void setVisibility(boolean visible) {
         this.setVisible(visible);
     }
-    
+
     @Override
     public void discard() {
         this.setVisible(false);
     }
-    
+
     @Override
     public void acknowledge() {
         annunciator.acknowledge();
     }
-    
-    private void checkAlarms() { 
+
+    private void checkAlarms() {
         if (tg1.getRpm() > 3100) {
             annunciator.trigger(tg1Speed);
         } else {

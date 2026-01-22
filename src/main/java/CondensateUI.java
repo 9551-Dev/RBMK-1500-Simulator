@@ -1,4 +1,4 @@
-package com.darwish.nppsim;
+
 
 import static com.darwish.nppsim.NPPSim.autoControl;
 import static com.darwish.nppsim.NPPSim.condensate1A;
@@ -11,6 +11,20 @@ import static com.darwish.nppsim.NPPSim.tg2;
 import java.io.Serializable;
 import javax.swing.JSpinner;
 import javax.swing.event.ChangeEvent;
+
+import com.darwish.nppsim.Annunciator;
+import com.darwish.nppsim.CoreMap;
+import com.darwish.nppsim.DearatorUI;
+import com.darwish.nppsim.Ejector;
+import com.darwish.nppsim.FeedwaterUI;
+import com.darwish.nppsim.MCPUI;
+import com.darwish.nppsim.NPPSim;
+import com.darwish.nppsim.PCSUI;
+import com.darwish.nppsim.Pump;
+import com.darwish.nppsim.SelsynPanel;
+import com.darwish.nppsim.TGUI;
+import com.darwish.nppsim.UI;
+import com.darwish.nppsim.UIUpdateable;
 
 /**
  *
@@ -26,7 +40,7 @@ public class CondensateUI extends javax.swing.JFrame implements UIUpdateable, Se
         initComponents();
         this.setTitle("Condensate Control");
         annunciator = new Annunciator(annunciatorPanel);
-        
+
         ((JSpinner.DefaultEditor)spinner1A.getEditor()).getTextField().setEditable(false);
         ((JSpinner.DefaultEditor)spinner2A.getEditor()).getTextField().setEditable(false);
         ((JSpinner.DefaultEditor)spinner1B.getEditor()).getTextField().setEditable(false);
@@ -89,7 +103,7 @@ public class CondensateUI extends javax.swing.JFrame implements UIUpdateable, Se
                 ejector2Stop.setSelected(true);
             }
         });
-        
+
         totalFlow1.setBackgroundColor(eu.hansolo.steelseries.tools.BackgroundColor.SATIN_GRAY);
         totalFlow1.setFrameVisible(false);
         totalFlow1.setLcdVisible(false);
@@ -98,7 +112,7 @@ public class CondensateUI extends javax.swing.JFrame implements UIUpdateable, Se
         totalFlow1.setOrientation(eu.hansolo.steelseries.tools.Orientation.HORIZONTAL);
         totalFlow1.setUnitString("kg/s");
         totalFlow1.setValueColor(eu.hansolo.steelseries.tools.ColorDef.YELLOW);
-        
+
         totalFlow2.setBackgroundColor(eu.hansolo.steelseries.tools.BackgroundColor.SATIN_GRAY);
         totalFlow2.setFrameVisible(false);
         totalFlow2.setLcdVisible(false);
@@ -107,12 +121,12 @@ public class CondensateUI extends javax.swing.JFrame implements UIUpdateable, Se
         totalFlow2.setOrientation(eu.hansolo.steelseries.tools.Orientation.HORIZONTAL);
         totalFlow2.setUnitString("kg/s");
         totalFlow2.setValueColor(eu.hansolo.steelseries.tools.ColorDef.YELLOW);
-        
+
         //condTemp1.setTrackStart(100.0);
         //condTemp2.setTrackStart(100.0);
         initializeDialUpdateThread();
-        
-        //set variables to current state 
+
+        //set variables to current state
         Pump currentSelection = condensate1A.get((int)spinner1A.getValue() - 1);
         if (currentSelection.isActive()) {
             start1A.setSelected(true);
@@ -167,8 +181,8 @@ public class CondensateUI extends javax.swing.JFrame implements UIUpdateable, Se
         con2Power.setLedOn(tg2.condenser.condenserPump.isActive());
         flowControl.setSelected(autoControl.condenserWaterLevelControl.get(0).isEnabled());
     }
-    
-    
+
+
     @Override
     public void update() {
         checkAlarms();
@@ -225,7 +239,7 @@ public class CondensateUI extends javax.swing.JFrame implements UIUpdateable, Se
                         if (this.isVisible()) {
                             java.awt.EventQueue.invokeLater(() -> {
                                 final double[] hotwellFlows = {0.0, 0.0};
-                                final float[] totalValvePosition = {0.0f, 0.0f}; 
+                                final float[] totalValvePosition = {0.0f, 0.0f};
                                 condensate1A.forEach(pump -> {
                                     hotwellFlows[0] += pump.getFlowRate();
                                 });
@@ -272,17 +286,17 @@ public class CondensateUI extends javax.swing.JFrame implements UIUpdateable, Se
     public void setVisibility(boolean visible) {
         this.setVisible(visible);
     }
-    
+
     @Override
     public void discard() {
         this.setVisible(false);
     }
-    
+
     @Override
     public void acknowledge() {
         annunciator.acknowledge();
     }
-    
+
     private void checkAlarms() {
         if (tg1.condenser.getWaterLevel() < -25) {
             annunciator.trigger(hw1Low);
@@ -357,7 +371,7 @@ public class CondensateUI extends javax.swing.JFrame implements UIUpdateable, Se
         }
         annunciator.setTrigger(cavitation2B, cavit2B);
     }
-    
+
      /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -2690,7 +2704,7 @@ public class CondensateUI extends javax.swing.JFrame implements UIUpdateable, Se
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void steamOutVOpen4ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_steamOutVOpen4ItemStateChanged
-        
+
     }//GEN-LAST:event_steamOutVOpen4ItemStateChanged
 
     private void steamOutVOpen4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_steamOutVOpen4ActionPerformed
@@ -2701,7 +2715,7 @@ public class CondensateUI extends javax.swing.JFrame implements UIUpdateable, Se
     }//GEN-LAST:event_steamOutVOpen4ActionPerformed
 
     private void steamOutVStop4ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_steamOutVStop4ItemStateChanged
-        
+
     }//GEN-LAST:event_steamOutVStop4ItemStateChanged
 
     private void steamOutVStop4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_steamOutVStop4ActionPerformed
@@ -2712,7 +2726,7 @@ public class CondensateUI extends javax.swing.JFrame implements UIUpdateable, Se
     }//GEN-LAST:event_steamOutVStop4ActionPerformed
 
     private void steamOutVClose4ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_steamOutVClose4ItemStateChanged
-        
+
     }//GEN-LAST:event_steamOutVClose4ItemStateChanged
 
     private void steamOutVOpen5ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_steamOutVOpen5ItemStateChanged
