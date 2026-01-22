@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  * This is a pressure header where one or multiple pumps supply one or multiple components
  **/
-class PressureHeader extends WaterSteamComponent implements Connectable, UIReadable { 
+class PressureHeader extends WaterSteamComponent implements Connectable, UIReadable {
     private double zeroHeadFlow = 0, zeroFlowHead = 0;
     protected double waterMass = 0.0;
     private double waterDensity = Loader.tables.getWaterDensityByTemp(waterTemperature);
@@ -370,8 +370,8 @@ class SimpleSuctionHeader extends WaterSteamComponent implements Connectable, UI
 class WaterMixer extends WaterSteamComponent implements Connectable, UIReadable {
     Connectable drain;
     private final double  initialWaterMass;
-    private double waterMass , waterInflowTemperature = 20.0;
-    private double waterDensity = waterDensity = Loader.tables.getWaterDensityByTemp(waterTemperature);
+    private double waterMass, waterInflowTemperature = 20.0;
+    private double waterDensity = Loader.tables.getWaterDensityByTemp(waterTemperature);
 
     public WaterMixer(Connectable drain, double volume) {
         this.drain = drain;
