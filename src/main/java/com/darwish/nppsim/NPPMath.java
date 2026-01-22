@@ -71,7 +71,7 @@ public class NPPMath {
             result[1] = destinationTemp;
             return result;
         } 
-        //TODO simplified for now
+        
         /* final double totalMass = destinationMass + addedMass;
         final double totalEnthalpy = tables.getSteamEnthalpyByTemperature(addedTemp) * addedMass + tables.getSteamEnthalpyByTemperature(destinationTemp) * destinationMass;
         result[0] = totalMass;

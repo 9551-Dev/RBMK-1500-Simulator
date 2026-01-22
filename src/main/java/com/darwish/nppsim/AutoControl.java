@@ -90,35 +90,35 @@ public class AutoControl extends Component {
         });
         sdv_cControl.forEach(controller -> {
             controller.setEnabled(true);
-            controller.setpoint = 6.98; 
+            controller.setpoint = 6.98;
             controller.activationTreshold = 6.98;
         });
         sdv_aControl.forEach(controller -> {
         controller.setEnabled(true);
-        controller.setpoint = 7.06; 
+        controller.setpoint = 7.06;
         controller.activationTreshold = 7.06;
         });
         //activate msv controllers and set setpoints for group 1(0), 2(1-2), 3(3-5)
         msv1Control.forEach(controller -> {
         controller.setEnabled(true);
         });
-        msv1Control.get(0).setpoint = 7.36; 
-        msv1Control.get(0).activationTreshold = 7.36; 
-        msv1Control.get(1).setpoint = 7.45; 
-        msv1Control.get(1).activationTreshold = 7.45; 
-        msv1Control.get(2).setpoint = 7.55; 
-        msv1Control.get(2).activationTreshold = 7.55; 
-        
+        msv1Control.get(0).setpoint = 7.36;
+        msv1Control.get(0).activationTreshold = 7.36;
+        msv1Control.get(1).setpoint = 7.45;
+        msv1Control.get(1).activationTreshold = 7.45;
+        msv1Control.get(2).setpoint = 7.55;
+        msv1Control.get(2).activationTreshold = 7.55;
+
         msv2Control.forEach(controller -> {
         controller.setEnabled(true);
         });
         msv2Control.get(0).setpoint = 7.36;
-        msv2Control.get(0).activationTreshold = 7.36; 
+        msv2Control.get(0).activationTreshold = 7.36;
         msv2Control.get(1).setpoint = 7.45;
-        msv2Control.get(1).activationTreshold = 7.45; 
+        msv2Control.get(1).activationTreshold = 7.45;
         msv2Control.get(2).setpoint = 7.55;
-        msv2Control.get(2).activationTreshold = 7.55; 
-        
+        msv2Control.get(2).activationTreshold = 7.55;
+
         az1Control = new AZ1Control();
         fasrControl = new FASRControl();
 
@@ -208,20 +208,20 @@ public class AutoControl extends Component {
         Connectable target;
         private boolean enabled = false;
         protected double previousLevel, currentLevel, deltaLevel, deltaLevelSetpoint, setpoint = 0.0;
-    
+
         public InflowWaterLevelControl(Connectable target, WaterValve[] valveArray) {
             this.valveArray = valveArray;
             this.target = target;
         }
-        
+
         public void setWaterValveStateByLevel(double level, double setPoint) {
-            
+
         }
-        
+
         public void setWaterValveStateByLevel(double level) {
             setWaterValveStateByLevel(level, 0.0);
         }
-    
+
         public void update() {
             currentLevel = target.getWaterLevel();
             deltaLevel = currentLevel - previousLevel;
@@ -241,7 +241,7 @@ public class AutoControl extends Component {
             }
             previousLevel = currentLevel;
         }
-    
+
         public void setSetpoint(double setpoint) {
             this.setpoint = setpoint;
         }
@@ -259,13 +259,13 @@ public class AutoControl extends Component {
             }
         }
     }
-    
-    class OutflowWaterLevelControl extends InflowWaterLevelControl implements Serializable {
-        
+
+    class OutflowWaterLevelControl extends InflowWaterLevelControl {
+
         public OutflowWaterLevelControl(Connectable target, WaterValve[] valveArray) {
             super(target, valveArray);
         }
-        
+
         @Override
         public void update() {
             currentLevel = target.getWaterLevel();
@@ -286,9 +286,9 @@ public class AutoControl extends Component {
             }
             previousLevel = currentLevel;
         }
-        
+
     }
-     
+
     class InletSteamPressureControl implements Serializable {
         SteamValve[] valveArray;
         Connectable target;
@@ -323,7 +323,7 @@ public class AutoControl extends Component {
         public void setSetpoint(double setpoint) {
             this.setpoint = setpoint;
         }
-        
+
         public double getSetpoint() {
             return setpoint;
         }
@@ -368,18 +368,18 @@ public class AutoControl extends Component {
                 }
             }
             previousPressure = currentPressure;
-        } 
+        }
 
         public void setActivationTreshold(double treshold) {
             this.activationTreshold = treshold;
         }
     }
-    
+
     class AZ1Control implements Serializable {
         private boolean tripped = false;
         boolean persistentReactivity = false;
         private boolean enabled = true;
-        
+
         public void update() {
             if (mcc.drum1.getPressure() > 7.26 || mcc.drum2.getPressure() > 7.26) {
                 trip("High Drum Pressure");
@@ -408,7 +408,7 @@ public class AutoControl extends Component {
                 trip("High Thermal Power");
             }
         }
-        
+
         public void trip(String reason) {
             if (tripped) {
                 return;
@@ -425,8 +425,8 @@ public class AutoControl extends Component {
                     }
                 });
             });
-        }   
-        
+        }
+
         public void reset() {
             recordEvent("AZ-1 Reset");
             tripped = false;
@@ -441,24 +441,24 @@ public class AutoControl extends Component {
                 });
             });
         }
-        
+
         public boolean isTripped() {
             return tripped;
         }
-        
+
         public void setEnabled(boolean enabled) {
             this.enabled = enabled;
         }
-        
+
         public boolean isEnabled() {
             return enabled;
         }
     }
-    
+
      class FASRControl implements Serializable {
         private boolean tripped = false, sequenceLock = false;
         private ArrayList<FASRChannel> channels = new ArrayList<>();
-        
+
         public FASRControl() {
             core.coreArray.forEach(row -> {
                 row.forEach(channel -> {
@@ -468,7 +468,7 @@ public class AutoControl extends Component {
                 });
             });
         }
-        
+
         public void update() {
             for (FASRChannel channel: channels) {
                 if (channel.getPosition() > 0) {
@@ -478,7 +478,7 @@ public class AutoControl extends Component {
             }
             sequenceLock = false;
         }
-        
+
         public void trip(String reason) {
             if (tripped) {
                 return;
@@ -498,8 +498,8 @@ public class AutoControl extends Component {
             channels.forEach(channel -> {
                 channel.setFastScram(true);
             });
-        }   
-        
+        }
+
         public void reset() {
             recordEvent("BAZ Reset");
             soundProvider.stop(soundProvider.ALARM_2);
@@ -517,16 +517,16 @@ public class AutoControl extends Component {
                 channel.setFastScram(false);
             });
         }
-        
+
         public boolean isTripped() {
             return tripped;
         }
-        
+
         public boolean getSequenceBlock() {
             return sequenceLock;
         }
     }
-    
+
     class AutomaticRodController implements Serializable {
         private double setpoint = 0.0;
         double ro, roSetpoint, thermalPower, averagePower;
@@ -536,7 +536,7 @@ public class AutoControl extends Component {
         public AutomaticRodController(ControlRodChannel[] linkedChannels) {
             this.linkedChannels = linkedChannels;
         }
-        
+
         public void update() {
             thermalPower = core.getThermalPower();
             toControl.clear();
@@ -556,7 +556,7 @@ public class AutoControl extends Component {
             }
             averagePower /= linkedChannels.length;
             ro = core.getReactivity();
-            roSetpoint = 0 + ((setpoint - thermalPower) / 20000); 
+            roSetpoint = 0 + ((setpoint - thermalPower) / 20000);
             if (ro  > roSetpoint + 0.00005) {
                 limit = lowerLimit;
                 if (limit) {
@@ -610,7 +610,7 @@ public class AutoControl extends Component {
             error = checkError;
             busy = checkBusy;
         }
-        
+
         public boolean isEnabled() {
             return enabled;
         }
@@ -623,49 +623,49 @@ public class AutoControl extends Component {
                 }
             }
         }
-        
+
         public void setSetpoint(double setpoint) {
             this.setpoint = setpoint;
         }
-        
+
         public double getSetpoint() {
             return setpoint;
         }
-        
+
         public boolean hasError() {
             return error;
         }
-        
+
         public boolean onLimit() {
             return limit;
         }
-        
+
         public boolean isBusy() {
             return busy;
         }
     }
-    
+
     public long getSimulationTime() {
         return simulationTime;
     }
-    
+
     public void updateSimulationTime() {
         simulationTime++;
         timeUpdated = true;
     }
-    
+
     public void resetTimeUpdatedFlag() {
         timeUpdated = false;
     }
-    
+
     public boolean getTimeUpdatedFlag() {
         return timeUpdated;
     }
-    
+
     public void recordEvent(String event) {
         eventLog.add(NPPMath.formatSecondsToDaysAndTime(simulationTime, false) + "  " + event);
     }
-    
+
     class FluidAutomaticRodController implements Serializable {
     private double setpoint = 0.0;
     double ro, roSetpoint, thermalPower, averagePower;
@@ -708,7 +708,7 @@ public class AutoControl extends Component {
             }
             averagePower /= linkedChannels.size();
             ro = core.getReactivity();
-            roSetpoint = 0 + ((setpoint - thermalPower) / 50000); 
+            roSetpoint = 0 + ((setpoint - thermalPower) / 50000);
             if (ro  > roSetpoint + 0.00001) {
                 if (ro  > roSetpoint + 0.0001) {
                     fineControl = false;
@@ -750,7 +750,7 @@ public class AutoControl extends Component {
                         }
                     }
                 }
-            } else if (ro < roSetpoint - 0.00001) { 
+            } else if (ro < roSetpoint - 0.00001) {
                 if (ro  < roSetpoint - 0.0001) {
                     fineControl = false;
                 }
@@ -812,31 +812,31 @@ public class AutoControl extends Component {
                     busy[i] = checkBusy[i];
                 }
         }
-        
+
         public void setSetpoint(double setpoint) {
             this.setpoint = setpoint;
         }
-        
+
         public double getSetpoint() {
             return setpoint;
         }
-        
+
         public boolean[] isEnabled() {
             return enabled;
         }
-        
+
         public boolean[] hasError() {
             return error;
         }
-        
+
         public boolean[] onLimit() {
             return limit;
         }
-        
+
         public boolean[] isBusy() {
             return busy;
         }
-        
+
         public void enableLAR() {
             if (enabled[0]) {
                 return;
@@ -844,7 +844,7 @@ public class AutoControl extends Component {
             linkedChannels.addAll(lar);
             enabled[0] = true;
         }
-        
+
         public void disableLar() {
             if(!enabled[0]) {
                 return;
@@ -855,7 +855,7 @@ public class AutoControl extends Component {
             linkedChannels.removeAll(lar);
             enabled[0] = false;
         }
-        
+
         public void enable1AR() {
             if (enabled[1]) {
                 return;
@@ -863,7 +863,7 @@ public class AutoControl extends Component {
             linkedChannels.addAll(ar1);
             enabled[1] = true;
         }
-        
+
         public void disable1AR() {
             if (!enabled[1]) {
                 return;
@@ -874,7 +874,7 @@ public class AutoControl extends Component {
             linkedChannels.removeAll(ar1);
             enabled[1] = false;
         }
-        
+
         public void enable2AR() {
             if (enabled[2]) {
                 return;
@@ -882,7 +882,7 @@ public class AutoControl extends Component {
             linkedChannels.addAll(ar2);
             enabled[2] = true;
         }
-        
+
         public void disable2AR() {
             if (!enabled[2]) {
                 return;

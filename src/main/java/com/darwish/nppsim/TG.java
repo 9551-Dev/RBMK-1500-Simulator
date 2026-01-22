@@ -318,7 +318,7 @@ class Condenser extends WaterSteamSubComponent implements Connectable, UIReadabl
         feedwaterMass -= feedwaterOutflow;
         
         double condensedSteamEnergy = Loader.tables.getSteamEnthalpyByTemperature(steamTemperature) * steamMass;
-        steamTemperature = waterTemperature * (1 + steamTemperature / waterTemperature / 30 * (1 - waterTemperature / steamTemperature) * 1.084337735) ; //TODO make this more realistic this uses constants to tweak cooling efficiency
+        steamTemperature = waterTemperature * (1 + steamTemperature / waterTemperature / 30 * (1 - waterTemperature / steamTemperature) * 1.084337735) ; 
         condensedSteamEnergy -= Loader.tables.getSteamEnthalpyByTemperature(steamTemperature) * steamMass;
 
         double steamEnergy = 0 - deltaSteamEnergy / 3;

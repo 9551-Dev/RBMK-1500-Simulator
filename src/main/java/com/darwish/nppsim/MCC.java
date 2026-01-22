@@ -25,7 +25,7 @@ public class MCC extends Component {
             for (int i = 0; i < x.size(); i++) {
                 if (x.get(i) instanceof FuelChannel) {
                     if (i < 28) {
-                        fuelChannels2.add((FuelChannel)x.get(i)); 
+                        fuelChannels2.add((FuelChannel)x.get(i));
                     } else {
                         fuelChannels1.add((FuelChannel)x.get(i));
                     }
@@ -118,7 +118,7 @@ public class MCC extends Component {
             if (pressure < 0.10142) {
                 initialSteamMass -= vacuumBreakerFlow;
             }
-            
+
             double energy = 0 - deltaEnergy / 3 - thermalLoss * 50;
             deltaEnergy -= deltaEnergy / 3;
 
@@ -232,7 +232,7 @@ public class MCC extends Component {
         public double getSteamTemperature() {
             return steamTemperature;
         }
-        
+
         public double getInitialSteamMass() {
             return initialSteamMass;
         }
@@ -241,7 +241,7 @@ public class MCC extends Component {
             pressure = press;
         }
     }
-    
+
     protected class SteamWaterPipe implements Serializable {
     private final FuelChannel source;
     private final Connectable drain;
@@ -285,7 +285,7 @@ public class MCC extends Component {
 
     protected class MCPPressureHeader extends WaterSteamSubComponent implements Connectable, UIReadable, Serializable {
         final List<FuelChannel> drains;
-        private final double volume = 121.5; 
+        private final double volume = 121.5;
         private double waterMass, waterVolume;
         private double waterInflowTemperature = 20.0; // C
         private double specificDensityWater = Loader.tables.getWaterDensityByTemp(waterTemperature);
@@ -332,49 +332,49 @@ public class MCC extends Component {
 
         @Override
         public double getPressure() {
-            
+
             return 0;
         }
 
         @Override
         public double getSteamDensity() {
-            
+
             return 0;
         }
 
         @Override
         public double getWaterDensity() {
-            
+
             return 0;
         }
 
         @Override
         public double getSteamMass() {
-            
+
             return 0;
         }
 
         @Override
         public double getSteamVolume() {
-            
+
             return 0;
         }
 
         @Override
         public double getSteamTemperature() {
-            
+
             return 0;
         }
 
         @Override
         public void updateSteamOutflow(double flow, double tempC) {
-            
+
 
         }
 
         @Override
         public void updateSteamInflow(double flow, double tempC) {
-            
+
 
         }
 

@@ -324,7 +324,7 @@ class FuelChannel extends Channel implements Connectable, UIReadable {
 
     @Override
     public void update() {
-        //waterTemperature -= (0.5 * waterTemperature - 10) * 0.0000001; //TODO thermal loss
+        //waterTemperature -= (0.5 * waterTemperature - 10) * 0.0000001; 
         double[] waterInflowData = NPPMath.mixWater(waterMass, waterTemperature, waterInflow, waterInflowTemperature);
         waterTemperature = waterInflowData[1];
         waterMass = waterInflowData[0];

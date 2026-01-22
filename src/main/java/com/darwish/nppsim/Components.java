@@ -8,8 +8,8 @@ import java.util.ArrayList;
 /**
  * This is a pressure header where one or multiple pumps supply one or multiple components
  **/
-class PressureHeader extends WaterSteamComponent implements Connectable, UIReadable { //TODO will need refactoring after water flow gets more realistic
-    private double zeroHeadFlow = 0, zeroFlowHead = 0; 
+class PressureHeader extends WaterSteamComponent implements Connectable, UIReadable { 
+    private double zeroHeadFlow = 0, zeroFlowHead = 0;
     protected double waterMass = 0.0;
     private double waterDensity = Loader.tables.getWaterDensityByTemp(waterTemperature);
     Pump[] sources;
@@ -19,7 +19,7 @@ class PressureHeader extends WaterSteamComponent implements Connectable, UIReada
     }
 
     public PressureHeader() {};
-    
+
     public void update() {
         double highestPressure = 0;
         double pressureSum = 0;
@@ -39,9 +39,9 @@ class PressureHeader extends WaterSteamComponent implements Connectable, UIReada
             }
             thisSource.updateFlow(sourceOutflow);
         }
-        if (waterTemperature < 0 || waterTemperature > 300) {
-            int e = 0;
-        }
+        //if (waterTemperature < 0 || waterTemperature > 300) {
+        //    int e = 0;
+        //}
         waterDensity = Loader.tables.getWaterDensityByTemp(waterTemperature);
         if (waterOutflow > zeroHeadFlow) {
             waterOutflow = zeroHeadFlow;
@@ -65,7 +65,7 @@ class PressureHeader extends WaterSteamComponent implements Connectable, UIReada
 
     @Override
     public double getSteamDensity() {
-        
+
         throw new UnsupportedOperationException("Unimplemented method 'getSteamDensity'");
     }
 
@@ -76,25 +76,25 @@ class PressureHeader extends WaterSteamComponent implements Connectable, UIReada
 
     @Override
     public double getSteamMass() {
-        
+
         throw new UnsupportedOperationException("Unimplemented method 'getSteamMass'");
     }
 
     @Override
     public double getSteamVolume() {
-        
+
         throw new UnsupportedOperationException("Unimplemented method 'getSteamVolume'");
     }
 
     @Override
     public void updateSteamOutflow(double flow, double tempC) {
-        
+
         throw new UnsupportedOperationException("Unimplemented method 'updateSteamOutFlow'");
     }
 
     @Override
     public void updateSteamInflow(double flow, double tempC) {
-        
+
         throw new UnsupportedOperationException("Unimplemented method 'updateSteamInFlow'");
     }
 
@@ -119,7 +119,7 @@ class PressureHeader extends WaterSteamComponent implements Connectable, UIReada
 class SimplifiedCondensateHeader extends PressureHeader { //greatly simplified feedwater heater for the sake of the early alpha release
     private double thermalPower = 0.0;
     private double heatedWaterTemp = 20.0;
-    
+
     @Override
     public void update() {
         double oldWaterTemp = waterTemperature;
@@ -138,7 +138,7 @@ class SimplifiedCondensateHeader extends PressureHeader { //greatly simplified f
         super.update();
     }
 
-    @Override 
+    @Override
     public double getWaterTemperature() {
         return heatedWaterTemp;
     }
@@ -168,7 +168,7 @@ class SimplePressureHeader extends WaterSteamComponent implements Connectable, U
         double[] inflowData = NPPMath.mixWater(waterMass, waterTemperature, waterInflow, waterInflowTemperature);
         waterMass = inflowData[0];
         waterTemperature = inflowData[1];
-        
+
         isolationValveArray.forEach(valve -> {
             valve.update();
             totalValvePositions += valve.getPosition();
@@ -200,13 +200,13 @@ class SimplePressureHeader extends WaterSteamComponent implements Connectable, U
 
     @Override
     public double getSteamMass() {
-        
+
         throw new UnsupportedOperationException("Unimplemented method 'getSteamMass'");
     }
 
     @Override
     public double getSteamVolume() {
-        
+
         throw new UnsupportedOperationException("Unimplemented method 'getSteamVolume'");
     }
 
@@ -322,13 +322,13 @@ class SimpleSuctionHeader extends WaterSteamComponent implements Connectable, UI
 
     @Override
     public double getSteamMass() {
-        
+
         throw new UnsupportedOperationException("Unimplemented method 'getSteamMass'");
     }
 
     @Override
     public double getSteamVolume() {
-        
+
         throw new UnsupportedOperationException("Unimplemented method 'getSteamVolume'");
     }
 
@@ -372,13 +372,13 @@ class WaterMixer extends WaterSteamComponent implements Connectable, UIReadable 
     private final double  initialWaterMass;
     private double waterMass , waterInflowTemperature = 20.0;
     private double waterDensity = waterDensity = Loader.tables.getWaterDensityByTemp(waterTemperature);
-        
+
     public WaterMixer(Connectable drain, double volume) {
         this.drain = drain;
         initialWaterMass = volume / Loader.tables.getWaterDensityByTemp(20);
         waterMass = initialWaterMass;
     }
-    
+
     public void update() {
         double[] inflowData = NPPMath.mixWater(waterMass, waterTemperature, waterInflow, waterInflowTemperature);
         waterMass = inflowData[0];
@@ -387,9 +387,9 @@ class WaterMixer extends WaterSteamComponent implements Connectable, UIReadable 
         waterMass = initialWaterMass;
         waterDensity = Loader.tables.getWaterDensityByTemp(waterTemperature);
         resetFlows();
-        
+
     }
-    
+
     @Override
     public void updateWaterInflow(double flow, double tempC) {
         double[] inflowData = NPPMath.mixWater(waterInflow, waterInflowTemperature, flow, tempC);
@@ -447,10 +447,10 @@ class Tank extends WaterSteamComponent implements Connectable, UIReadable {
     private final double nominalWaterVolume;
     private double waterInflowTemperature = 20.0; // c
     private double waterVolume, waterMass;
-    
+
     public Tank(double nominalWaterVolume) {
         this.nominalWaterVolume = nominalWaterVolume;
-        waterVolume = nominalWaterVolume; 
+        waterVolume = nominalWaterVolume;
         waterMass = waterVolume / Loader.tables.getWaterDensityByTemp(waterTemperature);
         waterLevel = (waterVolume / nominalWaterVolume - 1) * 100;
     }
@@ -467,7 +467,7 @@ class Tank extends WaterSteamComponent implements Connectable, UIReadable {
 
     @Override
     public double getSteamDensity() {
-        
+
         throw new UnsupportedOperationException("Unimplemented method 'getSteamDensity'");
     }
 
@@ -478,25 +478,25 @@ class Tank extends WaterSteamComponent implements Connectable, UIReadable {
 
     @Override
     public double getSteamMass() {
-        
+
         throw new UnsupportedOperationException("Unimplemented method 'getSteamMass'");
     }
 
     @Override
     public double getSteamVolume() {
-        
+
         throw new UnsupportedOperationException("Unimplemented method 'getSteamVolume'");
     }
 
     @Override
     public void updateSteamOutflow(double flow, double tempC) {
-        
+
         throw new UnsupportedOperationException("Unimplemented method 'updateSteamOutflow'");
     }
 
     @Override
     public void updateSteamInflow(double flow, double tempC) {
-        
+
         throw new UnsupportedOperationException("Unimplemented method 'updateSteamInflow'");
     }
 

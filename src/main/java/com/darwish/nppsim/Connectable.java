@@ -200,7 +200,7 @@ class SteamValve extends Component {
     }
 }
 
-class Pump extends Component { //TODO will need refactoring after water flow gets more realistic
+class Pump extends Component { 
     WaterValve dischargeValve = new WaterValve(200, 20, atmosphere, atmosphere); //dummy valve 
     protected final float ratedRPM; // max rated rpm
     protected final float ratedFlow; // flow at max rpm m3/s
@@ -349,7 +349,7 @@ class Pump extends Component { //TODO will need refactoring after water flow get
     }
 }
 
-class MCCPump extends Pump { //TODO will need refactoring after MCC water flow gets more realistic
+class MCCPump extends Pump { 
     MCC.MCPPressureHeader drain;
     double bypassFlow = 0.0;
 
