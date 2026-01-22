@@ -2506,7 +2506,7 @@ public class CondensateUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_start2AActionPerformed
 
     private void start2AItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_start2AItemStateChanged
-        //TODO
+        
     }//GEN-LAST:event_start2AItemStateChanged
 
     private void relief2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_relief2ActionPerformed
@@ -2610,7 +2610,7 @@ public class CondensateUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_start1AActionPerformed
 
     private void start1AItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_start1AItemStateChanged
-        //TODO
+        
     }//GEN-LAST:event_start1AItemStateChanged
 
     private void ejector2StartItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ejector2StartItemStateChanged

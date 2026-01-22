@@ -303,7 +303,7 @@ public class MCC extends Component {
             double[] waterInflowData = NPPMath.mixWater(waterMass, waterTemperature, waterInflow, waterInflowTemperature);
             waterTemperature = waterInflowData[1];
             waterMass = waterInflowData[0];
-            //waterTemperature -= (0.5 * waterTemperature - 10) * 0.0000004; //TODO
+            //waterTemperature -= (0.5 * waterTemperature - 10) * 0.0000004; 
             specificDensityWater = Loader.tables.getWaterDensityByTemp(waterTemperature);
             waterVolume = specificDensityWater * waterMass;
             waterOutflow = (waterVolume - volume) / specificDensityWater;

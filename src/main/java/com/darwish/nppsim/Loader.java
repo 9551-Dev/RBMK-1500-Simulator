@@ -106,7 +106,7 @@ public class Loader extends javax.swing.JFrame {
         jLabel3.setVisible(loading);
         j_button_start.setEnabled(!loading);
         j_button_load_saved.setEnabled(!loading);
-        //jButton5.setEnabled(!loading); //TODO
+        //jButton5.setEnabled(!loading); 
     }
 
     /**

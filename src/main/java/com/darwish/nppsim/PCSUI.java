@@ -2299,7 +2299,7 @@ public class PCSUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_sdvcStop1ActionPerformed
 
     private void start1AItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_start1AItemStateChanged
-        //TODO
+        
     }//GEN-LAST:event_start1AItemStateChanged
 
     private void start1AActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_start1AActionPerformed

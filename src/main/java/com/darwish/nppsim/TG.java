@@ -133,8 +133,8 @@ class TG extends WaterSteamComponent implements Connectable {
             reversePowerTrip();
         }
         lastStepSteamInflow = steamInflow;
-        steamOutflow = steamInflow; //TODO
-        steamOutflowTemperature = steamInflowTemperature * 0.92; //TODO
+        steamOutflow = steamInflow; 
+        steamOutflowTemperature = steamInflowTemperature * 0.92; 
         condenser.updateSteamInflow(steamOutflow, steamOutflowTemperature);
         resetFlows();
     }

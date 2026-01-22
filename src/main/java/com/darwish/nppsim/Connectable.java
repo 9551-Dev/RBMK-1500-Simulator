@@ -54,7 +54,7 @@ class WaterValve extends Component {
         final double p1 = source.getPressure() * 1000;
         final double p2 = drain.getPressure() * 1000;
         final double FF = 0.96 - 0.28 * Math.sqrt(pVapor / 22120000.0); //calculates cricital pressure ratio factor
-        
+
         if (p1 - p2 < Math.pow(FL, 2) * (p1 - FF * pVapor)) {
             flow = 0.0865 * cV * Math.sqrt((p1 - p2) / sG);
         } else {
@@ -85,11 +85,11 @@ class WaterValve extends Component {
     public void setPosition(float position) {
         this.position = position;
     }
-    
+
     public float getPosition() {
         return position;
     }
-    
+
     public int getState() {
         return state;
     }
@@ -104,7 +104,7 @@ class SteamValve extends Component {
     private int autoState = 1; //autoControl signal
     protected double flow = 0.0, flowRate = 0.0, steamTemp = 20.0; // current flow in kg/s. timeStepFlow = flow * 0.05
     private boolean locked = false;
-    
+
     /**
      * @param cV Cv number of valve
      * @param fullTravelSpeed opening/closure time in seconds
@@ -166,7 +166,7 @@ class SteamValve extends Component {
     public double getFlowRate() {
         return flowRate * 20;
     }
-    
+
     public int getState() {
         return state;
     }
@@ -190,18 +190,18 @@ class SteamValve extends Component {
             position = 0;
         }
     }
-    
+
     public void setLocked(boolean locked) {
         this.locked = locked;
     }
-    
+
     public boolean isLocked() {
         return locked;
     }
 }
 
-class Pump extends Component { 
-    WaterValve dischargeValve = new WaterValve(200, 20, atmosphere, atmosphere); //dummy valve 
+class Pump extends Component {
+    WaterValve dischargeValve = new WaterValve(200, 20, atmosphere, atmosphere); //dummy valve
     protected final float ratedRPM; // max rated rpm
     protected final float ratedFlow; // flow at max rpm m3/s
     protected final float maxPowerUsage; // at full rpm, A
@@ -209,7 +209,7 @@ class Pump extends Component {
     protected final float decelerationSpeed; // rpm decrease per tick
     protected final double head, npshr;
     protected float rpm = 0.0f, rpmSetting = 1.0f; // current rpm in percentage of max rmp, setting as fraction of max
-    private float oilPressure = 0.0f;
+    // private float oilPressure = 0.0f;
     protected float powerUsage = 0.0f; // A
     protected double currentHead = 0; //current head as determined by rpm
     protected double npsha = 0;
@@ -248,8 +248,8 @@ class Pump extends Component {
         dischargeValve.update();
         waterTemp = source.getWaterTemperature();
         if (active) {
-            float setPowerUsage = maxPowerUsage / 1.5f * rpmSetting; 
-            powerUsage = setPowerUsage + ((1 - (rpm / setRPM)) * setPowerUsage * 0.5f); 
+            float setPowerUsage = maxPowerUsage / 1.5f * rpmSetting;
+            powerUsage = setPowerUsage + ((1 - (rpm / setRPM)) * setPowerUsage * 0.5f);
         } else {
             powerUsage = 0;
         }
@@ -300,7 +300,7 @@ class Pump extends Component {
         }
         this.active = active;
     }
-    
+
     public void setRPM(float rpm) {
         this.rpm = rpm;
     };
@@ -312,7 +312,7 @@ class Pump extends Component {
     public double getFlow() {
         return flow;
     }
-    
+
     public double getFlowRate() {
         return timestepFlow * 20;
     }
@@ -332,7 +332,7 @@ class Pump extends Component {
     public void updateFlow(double flow) {
         timestepFlow = flow;
     }
-    
+
     public void setSetPoint(float setPoint) {
         if (setPoint > 1.0f) {
             rpmSetting = 1.0f;
@@ -343,13 +343,13 @@ class Pump extends Component {
         }
         rpmSetting = setPoint;
     }
-    
+
     public float getSetPoint() {
         return rpmSetting;
     }
 }
 
-class MCCPump extends Pump { 
+class MCCPump extends Pump {
     MCC.MCPPressureHeader drain;
     double bypassFlow = 0.0;
 
@@ -365,8 +365,8 @@ class MCCPump extends Pump {
         float setRPM = ratedRPM * rpmSetting;
         dischargeValve.update();
         if (active) {
-            float setPowerUsage = maxPowerUsage / 1.5f * rpmSetting; 
-            powerUsage = setPowerUsage + ((1 - (rpm / setRPM)) * setPowerUsage * 0.5f); 
+            float setPowerUsage = maxPowerUsage / 1.5f * rpmSetting;
+            powerUsage = setPowerUsage + ((1 - (rpm / setRPM)) * setPowerUsage * 0.5f);
         } else {
             powerUsage = 0;
         }
@@ -393,7 +393,7 @@ class MCCPump extends Pump {
 
         if (drain.getBypassState()) {   //if bypasses are open calculate thermal driving head and derive natural ciculation flow
             drain.drains.forEach(channel -> {
-                double tHead = NPPMath.calculateThermalDrivingHead(1 / source.getWaterDensity(), (1 / channel.getWaterDensity()), 14.1) / 1000; 
+                double tHead = NPPMath.calculateThermalDrivingHead(1 / source.getWaterDensity(), (1 / channel.getWaterDensity()), 14.1) / 1000;
                 double dVisc = NPPMath.calculateDynamicviscosity(source.getWaterTemperature());
                 bypassFlow += source.getWaterDensity() * NPPMath.calculateVolumeFlowRate(1 + tHead, 1, 0.025, 7, dVisc) * dischargeValve.position;
             });
@@ -406,7 +406,7 @@ class MCCPump extends Pump {
         drain.updateWaterInflow(timestepFlow, waterTemp);
         bypassFlow = 0;
     }
-    
+
     @Override
     public void setActive(boolean active) {
         this.active = active;
@@ -459,19 +459,19 @@ class OneWaySteamHeader extends WaterSteamComponent implements Connectable, UIRe
 
     @Override
     public double getWaterDensity() {
-        
+
         throw new UnsupportedOperationException("Unimplemented method 'getWaterDensity'");
     }
 
     @Override
     public double getSteamMass() {
-        
+
         throw new UnsupportedOperationException("Unimplemented method 'getSteamMass'");
     }
 
     @Override
     public double getSteamVolume() {
-        
+
         throw new UnsupportedOperationException("Unimplemented method 'getSteamVolume'");
     }
 
@@ -482,19 +482,19 @@ class OneWaySteamHeader extends WaterSteamComponent implements Connectable, UIRe
 
     @Override
     public void updateSteamInflow(double flow, double tempC) {
-        
+
         throw new UnsupportedOperationException("Unimplemented method 'updateSteamInFlow'");
     }
 
     @Override
     public void updateWaterOutflow(double flow, double tempC) {
-        
+
         throw new UnsupportedOperationException("Unimplemented method 'updateWaterOutFlow'");
     }
 
     @Override
     public void updateWaterInflow(double flow, double tempC) {
-        
+
         throw new UnsupportedOperationException("Unimplemented method 'updateWaterInFlow'");
     }
 
@@ -522,16 +522,16 @@ class Ejector extends SteamValve {
         this.ejectorDrain.updateSteamInflow(ejectorFlow, source.getSteamTemperature());
         ejectorFlowRate = ejectorFlow;
     }
-    
+
     public double getEjectorFlowRate() {
         return ejectorFlowRate * 20;
     }
-    
+
 }
 
 /**
  * a heat exchanger which is at the pressure side for both inlets
- * NOTE: there are 2 inflow sources using the same Connectable Interface. 
+ * NOTE: there are 2 inflow sources using the same Connectable Interface.
  * Make sure the method UpdateWaterInflow is called by the sources in the following order:
  * source1 for shell side
  * source2 for tube side
@@ -544,7 +544,7 @@ class WaterWaterHeatExchanger extends WaterSteamComponent implements Connectable
     private double waterInflowTemperature2 = 20.0, waterOutflowTemperature2 = 20.0, waterMass2 = 0.0;
     private boolean source1 = true;
     Connectable drain1, drain2;
-    
+
     /**
      * @param efficiency in %
      * @param ratedFlow1 rated flow in kg/s for shell side;
@@ -557,7 +557,7 @@ class WaterWaterHeatExchanger extends WaterSteamComponent implements Connectable
         this.ratedFlow1 = ratedFlow1 / 20; //to flow per timestep
         this.ratedFlow2 = ratedFlow2 / 20;
     }
-    
+
     public void update() {
         final float flowratio1 = (float)(waterMass1 / ratedFlow1);
         final float flowRatio2 = (float)(waterMass2 / ratedFlow2);
@@ -579,7 +579,7 @@ class WaterWaterHeatExchanger extends WaterSteamComponent implements Connectable
 
         drain1.updateWaterInflow(waterMass1, waterOutflowTemperature1);
         drain2.updateWaterInflow(waterMass2, waterOutflowTemperature2);
-        
+
     }
 
     public void updateWaterInFlow1(double flow, double tempC) {
@@ -591,31 +591,31 @@ class WaterWaterHeatExchanger extends WaterSteamComponent implements Connectable
         waterInflowTemperature2 = tempC;
         waterMass2 = flow;
     }
-    
+
     public double getWaterInflow1Temp() {
         return waterInflowTemperature1;
     }
-    
+
     public double getWaterInflow2Temp() {
         return waterInflowTemperature2;
     }
-    
+
     public double getWaterOutflow1Temp() {
         return waterOutflowTemperature1;
     }
-    
+
     public double getWaterOutflow2Temp() {
         return waterOutflowTemperature2;
     }
-    
+
     public double getWaterFlowRate1() {
         return waterMass1 * 20;
     }
-    
+
     public double getWaterFlowRate2() {
         return waterMass2 * 20;
     }
-   
+
     @Override
     public double getSteamDensity() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -672,7 +672,7 @@ class pcsMockupValve extends WaterValve { //will be obsolete when mcp is reworke
     public pcsMockupValve(Connectable source, Connectable drain) {
         super(200, 10, source, drain);
         this.setPosition(1.0f);
-    } 
+    }
 
     @Override
     public void update() {
@@ -724,7 +724,7 @@ class pcsMockupValve extends WaterValve { //will be obsolete when mcp is reworke
                 }
             }
         }
-        
+
         for (int i = 0; i < 4; i++) {
             double flow = mcc.mcp.get(i).getFlowRate();
             if (flow > flow1) {
@@ -741,7 +741,7 @@ class pcsMockupValve extends WaterValve { //will be obsolete when mcp is reworke
         source.updateWaterOutflow(timestepFlow, source.getWaterTemperature());
         drain.updateWaterInflow(timestepFlow, source.getWaterTemperature());
     }
-    
+
 }
 
 class SimplePump extends Pump { //will become obsolete soon
@@ -757,8 +757,8 @@ class SimplePump extends Pump { //will become obsolete soon
         waterTemp = source.getWaterTemperature();
         float setRPM = ratedRPM * rpmSetting;
         if (active) {
-            float setPowerUsage = maxPowerUsage / 1.5f * rpmSetting; 
-            powerUsage = setPowerUsage + ((1 - (rpm / setRPM)) * setPowerUsage * 0.5f); 
+            float setPowerUsage = maxPowerUsage / 1.5f * rpmSetting;
+            powerUsage = setPowerUsage + ((1 - (rpm / setRPM)) * setPowerUsage * 0.5f);
         } else {
             powerUsage = 0;
         }

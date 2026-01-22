@@ -1941,7 +1941,7 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_startAuxFWPActionPerformed
 
     private void startAuxFWPItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_startAuxFWPItemStateChanged
-        //TODO
+        
     }//GEN-LAST:event_startAuxFWPItemStateChanged
 
     private void jTextField11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField11ActionPerformed
@@ -2027,7 +2027,7 @@ public class FeedwaterUI extends javax.swing.JFrame implements UIUpdateable {
     }//GEN-LAST:event_startMFWPActionPerformed
 
     private void startMFWPItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_startMFWPItemStateChanged
-        //TODO
+        
     }//GEN-LAST:event_startMFWPItemStateChanged
 
     private void aFWOpen2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_aFWOpen2ItemStateChanged

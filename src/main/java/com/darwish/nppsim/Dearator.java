@@ -7,7 +7,7 @@ public class Dearator extends WaterSteamComponent implements Connectable, UIRead
     private double initialSteamMass; // this would be air in reality
     private double steamMass = 0.0; // kg
     private double waterMass = 124000.0; // at 200C
-    private double thermalLoss = 0.0; // TODO conductive energy loss Mwt
+    // private double thermalLoss = 0.0; // TODO conductive energy loss Mwt
 
     // calculated results from the update thread stored here for use in other
     // functions:
@@ -34,24 +34,24 @@ public class Dearator extends WaterSteamComponent implements Connectable, UIRead
     }
 
     public void update() {
-        //waterTemperature -= (0.5 * waterTemperature - 10) * 0.000005;       
+        //waterTemperature -= (0.5 * waterTemperature - 10) * 0.000005;
         double[] waterInflowData = NPPMath.mixWater(waterMass, waterTemperature, waterInflow, waterInflowTemperature);
         waterTemperature = waterInflowData[1];
         waterMass = waterInflowData[0];
         waterMass -= waterOutflow;
 
         double vacuumBreakerFlow = (pressure - 0.10142) * 20;
-        
+
         specificHeatWater = NPPMath.calculateSpecificHeatWater(waterTemperature);
         specificVaporEnthalpy = NPPSim.tables.getSpecificVaporEnthalpyByTemperature(waterTemperature);// NPPMath.calculateSpecificVaporEnthalpy(feedwaterTemperature);
         specificDensityWater = NPPSim.tables.getWaterDensityByTemp(waterTemperature);
 
-        
+
         double oldWaterTemp = waterTemperature;
         waterTemperature += ((NPPSim.tables.getSteamEnthalpyByTemperature(steamTemperature) - NPPSim.tables.getSteamEnthalpyByTemperature(waterTemperature)) * steamMass) / (specificHeatWater * waterMass);
         specificHeatWater = NPPMath.calculateSpecificHeatWater(waterTemperature);
         deltaEnergy += (NPPSim.tables.getSteamEnthalpyByTemperature(waterTemperature) - NPPSim.tables.getSteamEnthalpyByTemperature(oldWaterTemp)) * steamMass;  //correct for difference in new steamTemp and new waterTemp after energy transfer
-        
+
         steamTemperature = waterTemperature;
         if (initialSteamMass > 0) { //simulate the air being replaced by steam
             initialSteamMass -= steamOutflow;
@@ -65,14 +65,14 @@ public class Dearator extends WaterSteamComponent implements Connectable, UIRead
             steamMass -= (pressure - 1.45) * 50; //atmospheric valves opened;
         }
 
-        //equation for heating the condensate with incoming steam 
+        //equation for heating the condensate with incoming steam
 
         double energy = 0 - deltaHeatingEnergy / 3;
         deltaHeatingEnergy -= deltaHeatingEnergy / 3;
 
         waterTemperature += (energy / (specificHeatWater * waterMass));
         double potentialPressure = NPPSim.tables.getSteamPressureByTemp(waterTemperature);
-        
+
         specificDensityWater = NPPSim.tables.getWaterDensityByTemp(waterTemperature);
         waterVolume = waterMass * specificDensityWater;
         steamVolume = volume - waterVolume;
@@ -87,17 +87,17 @@ public class Dearator extends WaterSteamComponent implements Connectable, UIRead
         specificVaporEnthalpy = NPPSim.tables.getSpecificVaporEnthalpyByTemperature(waterTemperature);
         deltaHeatingEnergy += deltaSteamMass * specificVaporEnthalpy;
 
-        waterMass -= deltaSteamMass;  
+        waterMass -= deltaSteamMass;
         steamMass += deltaSteamMass;
 
         //equation for steam and water in the dearator moving toward saturation
-        
+
         energy = 0 - deltaEnergy / 3;
         deltaEnergy -= deltaEnergy / 3;
 
         waterTemperature += (energy / (specificHeatWater * waterMass));
         potentialPressure = NPPSim.tables.getSteamPressureByTemp(waterTemperature);
-        
+
         specificDensityWater = NPPSim.tables.getWaterDensityByTemp(waterTemperature);
         waterVolume = waterMass * specificDensityWater;
         steamVolume = volume - waterVolume;
@@ -112,7 +112,7 @@ public class Dearator extends WaterSteamComponent implements Connectable, UIRead
         specificVaporEnthalpy = NPPSim.tables.getSpecificVaporEnthalpyByTemperature(waterTemperature);
         deltaEnergy += deltaSteamMass * specificVaporEnthalpy;
 
-        waterMass -= deltaSteamMass;  
+        waterMass -= deltaSteamMass;
         steamMass += deltaSteamMass;
 
 
@@ -136,19 +136,19 @@ public class Dearator extends WaterSteamComponent implements Connectable, UIRead
 
     @Override
     public double getWaterDensity() {
-        
+
         return 0;
     }
 
     @Override
     public double getSteamMass() {
-        
+
         return 0;
     }
 
     @Override
     public double getSteamVolume() {
-        
+
         return 0;
     }
 
@@ -161,7 +161,7 @@ public class Dearator extends WaterSteamComponent implements Connectable, UIRead
         waterTemperature = tempC;
         waterMass = nominalWaterVolume / NPPSim.tables.getWaterDensityByTemp(tempC);
     }
-    
+
     @Override
     public void updateSteamOutflow(double flow, double tempC) {
         steamOutflow = flow;
@@ -173,7 +173,7 @@ public class Dearator extends WaterSteamComponent implements Connectable, UIRead
         steamMass = inflowData[0];
         steamTemperature = inflowData[1];
         steamInflow = flow;
-        
+
     }
 
     @Override

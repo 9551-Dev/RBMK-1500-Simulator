@@ -11,7 +11,7 @@ import java.awt.Color;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.plaf.metal.MetalLookAndFeel; //TODO
+import javax.swing.plaf.metal.MetalLookAndFeel; 
 import org.netbeans.swing.laf.dark.*;
 
 import static com.darwish.nppsim.NPPSim.mcc;
@@ -35,7 +35,7 @@ public class UI extends javax.swing.JFrame implements Serializable {
         hush = true;
         try {
             javax.swing.UIManager.setLookAndFeel(new DarkMetalLookAndFeel());
-            //UI.BACKGROUND = new Color(115, 53, 0); //TODO
+            //UI.BACKGROUND = new Color(115, 53, 0); 
             //javax.swing.UIManager.setLookAndFeel(new MetalLookAndFeel());
         } catch (UnsupportedLookAndFeelException e) {
             e.printStackTrace();

@@ -356,7 +356,7 @@ class FuelChannel extends Channel implements Connectable, UIReadable {
         waterVolume = specificDensityWater * waterMass;
         waterOutflow = (waterVolume - volume) / specificDensityWater;
         if (waterOutflow < 0) {
-            // TODO
+            
             waterOutflow /= thermalPower == 0 ? 1 : thermalPower * 1000;
         }
 
