@@ -9,19 +9,29 @@ import static com.darwish.nppsim.NPPSim.condensate2B;
 import static com.darwish.nppsim.NPPSim.core;
 import static com.darwish.nppsim.NPPSim.dearatorValves;
 import static com.darwish.nppsim.NPPSim.mainFeederValves;
+import static com.darwish.nppsim.NPPSim.mcc;
 import static com.darwish.nppsim.NPPSim.msvLoop1;
 import static com.darwish.nppsim.NPPSim.msvLoop2;
 import static com.darwish.nppsim.NPPSim.pcs;
 import static com.darwish.nppsim.NPPSim.sdv_a;
 import static com.darwish.nppsim.NPPSim.sdv_c;
-import java.io.Serializable;
-import java.util.ArrayList;
-import static com.darwish.nppsim.NPPSim.mcc;
 import static com.darwish.nppsim.NPPSim.tg1;
 import static com.darwish.nppsim.NPPSim.tg2;
+
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+@JsonIdentityInfo(
+    generator = ObjectIdGenerators.PropertyGenerator.class,
+    property = "c_atc"
+)
 public class AutoControl extends Component {
+    private long c_atc;
     ArrayList<String> eventLog = new ArrayList<>();
     ArrayList<OutflowWaterLevelControl> condenserWaterLevelControl = new ArrayList<>();
     ArrayList<InflowWaterLevelControl> dearatorWaterControl = new ArrayList<>();
@@ -220,6 +230,13 @@ public class AutoControl extends Component {
         automaticRodController.update();
     }
 
+    @JsonAutoDetect(
+        fieldVisibility = JsonAutoDetect.Visibility.ANY,
+        getterVisibility = JsonAutoDetect.Visibility.NONE,
+        setterVisibility = JsonAutoDetect.Visibility.NONE,
+        isGetterVisibility = JsonAutoDetect.Visibility.NONE,
+        creatorVisibility = JsonAutoDetect.Visibility.NONE
+    )
     class InflowWaterLevelControl implements Serializable {
         WaterValve[] valveArray;
         Connectable target;
@@ -306,6 +323,13 @@ public class AutoControl extends Component {
 
     }
 
+    @JsonAutoDetect(
+        fieldVisibility = JsonAutoDetect.Visibility.ANY,
+        getterVisibility = JsonAutoDetect.Visibility.NONE,
+        setterVisibility = JsonAutoDetect.Visibility.NONE,
+        isGetterVisibility = JsonAutoDetect.Visibility.NONE,
+        creatorVisibility = JsonAutoDetect.Visibility.NONE
+    )
     class InletSteamPressureControl implements Serializable {
         SteamValve[] valveArray;
         Connectable target;
@@ -393,6 +417,13 @@ public class AutoControl extends Component {
         }
     }
 
+    @JsonAutoDetect(
+        fieldVisibility = JsonAutoDetect.Visibility.ANY,
+        getterVisibility = JsonAutoDetect.Visibility.NONE,
+        setterVisibility = JsonAutoDetect.Visibility.NONE,
+        isGetterVisibility = JsonAutoDetect.Visibility.NONE,
+        creatorVisibility = JsonAutoDetect.Visibility.NONE
+    )
     class AZ1Control implements Serializable {
         private boolean tripped = false;
         boolean persistentReactivity = false;
@@ -473,6 +504,13 @@ public class AutoControl extends Component {
         }
     }
 
+    @JsonAutoDetect(
+        fieldVisibility = JsonAutoDetect.Visibility.ANY,
+        getterVisibility = JsonAutoDetect.Visibility.NONE,
+        setterVisibility = JsonAutoDetect.Visibility.NONE,
+        isGetterVisibility = JsonAutoDetect.Visibility.NONE,
+        creatorVisibility = JsonAutoDetect.Visibility.NONE
+    )
     class FASRControl implements Serializable {
         private boolean tripped = false, sequenceLock = false;
         private ArrayList<FASRChannel> channels = new ArrayList<>();
@@ -545,6 +583,13 @@ public class AutoControl extends Component {
         }
     }
 
+    @JsonAutoDetect(
+        fieldVisibility = JsonAutoDetect.Visibility.ANY,
+        getterVisibility = JsonAutoDetect.Visibility.NONE,
+        setterVisibility = JsonAutoDetect.Visibility.NONE,
+        isGetterVisibility = JsonAutoDetect.Visibility.NONE,
+        creatorVisibility = JsonAutoDetect.Visibility.NONE
+    )
     class AutomaticRodController implements Serializable {
         private double setpoint = 0.0;
         double ro, roSetpoint, thermalPower, averagePower;
@@ -685,6 +730,13 @@ public class AutoControl extends Component {
         eventLog.add(NPPMath.formatSecondsToDaysAndTime(simulationTime, false) + "  " + event);
     }
 
+    @JsonAutoDetect(
+        fieldVisibility = JsonAutoDetect.Visibility.ANY,
+        getterVisibility = JsonAutoDetect.Visibility.NONE,
+        setterVisibility = JsonAutoDetect.Visibility.NONE,
+        isGetterVisibility = JsonAutoDetect.Visibility.NONE,
+        creatorVisibility = JsonAutoDetect.Visibility.NONE
+    )
     class FluidAutomaticRodController implements Serializable {
         private double setpoint = 0.0;
         double ro, roSetpoint, thermalPower, averagePower;

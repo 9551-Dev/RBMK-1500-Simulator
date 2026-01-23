@@ -4,14 +4,34 @@ import static com.darwish.nppsim.NPPSim.autoControl;
 import java.awt.Color;
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+
 interface ChannelUIUpdatable {
     void updateTableValues();
 }
 
+@JsonAutoDetect(
+    fieldVisibility = JsonAutoDetect.Visibility.ANY,
+    getterVisibility = JsonAutoDetect.Visibility.NONE,
+    setterVisibility = JsonAutoDetect.Visibility.NONE,
+    isGetterVisibility = JsonAutoDetect.Visibility.NONE,
+    creatorVisibility = JsonAutoDetect.Visibility.NONE
+)
+@JsonIdentityInfo(
+    generator = ObjectIdGenerators.PropertyGenerator.class,
+    property = "channel_ui_data_component"
+)
 class ChannelUIData implements Serializable {
+    private long channel_ui_data_component;
     protected String positionString = "00-00";
     protected String name = "Channel";
+    @JsonIgnore
     protected java.awt.Color UIBackgroundColor = new Color(235, 235, 160), UISelectedColor = Color.WHITE;
+    @JsonIgnore
     protected java.awt.Color UISelsynColor = new Color(245, 245, 160);
     protected Object tableData[][];
     protected static java.text.DecimalFormat sf = new java.text.DecimalFormat("0.####E0");
@@ -33,6 +53,7 @@ class ChannelUIData implements Serializable {
         this.name = name;
     }
 }
+
 
 abstract class Channel implements ChannelUIUpdatable, Serializable {
     protected ChannelUIData uiData = new ChannelUIData();

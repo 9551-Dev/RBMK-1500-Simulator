@@ -3,11 +3,22 @@ package com.darwish.nppsim;
 import static com.darwish.nppsim.NPPSim.autoControl;
 import static com.darwish.nppsim.NPPSim.core;
 import static com.darwish.nppsim.NPPSim.mcc;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+@JsonIdentityInfo(
+    generator = ObjectIdGenerators.PropertyGenerator.class,
+    property = "mcc_component"
+)
 public class MCC extends Component {
+    private long mcc_component;
     final SeparatorDrum drum1, drum2;
     final MCPPressureHeader pHeader1, pHeader2;
     final SimpleSuctionHeader sHeader1, sHeader2;
@@ -251,6 +262,13 @@ public class MCC extends Component {
         }
     }
 
+    @JsonAutoDetect(
+        fieldVisibility = JsonAutoDetect.Visibility.ANY,
+        getterVisibility = JsonAutoDetect.Visibility.NONE,
+        setterVisibility = JsonAutoDetect.Visibility.NONE,
+        isGetterVisibility = JsonAutoDetect.Visibility.NONE,
+        creatorVisibility = JsonAutoDetect.Visibility.NONE
+    )
     protected class SteamWaterPipe implements Serializable {
         private final FuelChannel source;
         private final Connectable drain;
@@ -408,6 +426,7 @@ public class MCC extends Component {
         }
 
         @Override
+        @JsonIgnore
         public double getWaterMass() {
             throw new UnsupportedOperationException("Not supported yet."); // Generated from
                                                                            // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody

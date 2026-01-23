@@ -1,7 +1,18 @@
 package com.darwish.nppsim;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+@JsonIdentityInfo(
+    generator = ObjectIdGenerators.PropertyGenerator.class,
+    property = "dearator_component"
+)
 public class Dearator extends WaterSteamComponent implements Connectable, UIReadable {
-    final SteamValve steamInlet, steamOutlet;
+    private long dearator_component;
+    @JsonBackReference("valve-dearator")
+    final SteamValve steamInlet;
+    final SteamValve steamOutlet;
     private final double volume = 193.0;
     private final double nominalWaterVolume;
     private double initialSteamMass; // this would be air in reality

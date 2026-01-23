@@ -3,6 +3,21 @@ package com.darwish.nppsim;
 import static com.darwish.nppsim.NPPSim.stateArray;
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+@JsonAutoDetect(
+    fieldVisibility = JsonAutoDetect.Visibility.ANY,
+    getterVisibility = JsonAutoDetect.Visibility.NONE,
+    setterVisibility = JsonAutoDetect.Visibility.NONE,
+    isGetterVisibility = JsonAutoDetect.Visibility.NONE,
+    creatorVisibility = JsonAutoDetect.Visibility.NONE
+)
+@JsonIdentityInfo(
+    generator = ObjectIdGenerators.StringIdGenerator.class,
+    property = "@id"
+)
 abstract class Component implements Serializable {
     public Component() {
         if (stateArray != null) {
@@ -64,6 +79,13 @@ abstract class WaterSteamComponent extends Component {
     }
 }
 
+@JsonAutoDetect(
+    fieldVisibility = JsonAutoDetect.Visibility.ANY,
+    getterVisibility = JsonAutoDetect.Visibility.NONE,
+    setterVisibility = JsonAutoDetect.Visibility.NONE,
+    isGetterVisibility = JsonAutoDetect.Visibility.NONE,
+    creatorVisibility = JsonAutoDetect.Visibility.NONE
+)
 abstract class WaterSteamSubComponent implements Serializable {
     protected double waterInflow, waterInflowRate;
     protected double waterOutflow, waterOutflowRate;

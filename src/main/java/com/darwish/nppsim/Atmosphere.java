@@ -1,6 +1,15 @@
 package com.darwish.nppsim;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+@JsonIdentityInfo(
+    generator = ObjectIdGenerators.PropertyGenerator.class,
+    property = "c_atm"
+)
+
 public class Atmosphere extends WaterSteamComponent implements Connectable {
+    private long c_atm;
 
     public Atmosphere(double waterTemp) {
         waterTemperature = waterTemp;

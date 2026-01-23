@@ -1,14 +1,22 @@
 package com.darwish.nppsim;
 
-import java.util.ArrayList;
-
 import static com.darwish.nppsim.NPPSim.atmosphere;
+import static com.darwish.nppsim.NPPSim.dearators;
 import static com.darwish.nppsim.NPPSim.feedwaterMixer1;
 import static com.darwish.nppsim.NPPSim.feedwaterMixer2;
-import static com.darwish.nppsim.NPPSim.dearators;
 import static com.darwish.nppsim.NPPSim.mcc;
 
+import java.util.ArrayList;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+@JsonIdentityInfo(
+    generator = ObjectIdGenerators.PropertyGenerator.class,
+    property = "pcs_component"
+)
 public class PCS extends Component {
+    private long pcs_component;
     WaterWaterHeatExchanger regenerator1, regenerator2, pcsCooler1, pcsCooler2;
     Tank demineralizedWaterTank;
     pcsMockupValve pcsValve;

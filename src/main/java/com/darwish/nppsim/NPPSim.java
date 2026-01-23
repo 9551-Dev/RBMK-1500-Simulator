@@ -2,13 +2,23 @@ package com.darwish.nppsim;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.apache.commons.lang3.exception.ExceptionUtils;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 public class NPPSim {
     static UI ui;
@@ -549,21 +559,26 @@ public class NPPSim {
         return stateArray;
     }
 
+
     public static void save(File file) {
         boolean wasPaused = isPaused();
         try {
-            FileOutputStream fout = new FileOutputStream(file);
-            ObjectOutputStream oos = new ObjectOutputStream(fout);
-            setPaused(true);
             while (updating) {
                 Thread.sleep(5);
             }
-            oos.writeObject(stateArray);
+
+            setPaused(true);
+
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.disable(SerializationFeature.INDENT_OUTPUT);
+
+            // Minimal type info - just add class names
+            mapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+
+            mapper.writeValue(file, stateArray);
+
             setPaused(wasPaused);
-            oos.flush();
-            fout.flush();
-            oos.close();
-            fout.close();
+
         } catch (Exception e) {
             new ErrorWindow("Error Saving IC", ExceptionUtils.getStackTrace(e), true).setVisible(true);
             setPaused(wasPaused);
@@ -572,18 +587,17 @@ public class NPPSim {
 
     public static void load(File file) {
         Loader.loader.setLoading(false);
-        try (
-                FileInputStream fin = new FileInputStream(file);
-                ObjectInputStream ois = new ObjectInputStream(fin);) {
-            Object data_object = ois.readObject();
-            if (data_object instanceof List<?>) {
-                @SuppressWarnings("unchecked")
-                List<Serializable> read = (List<Serializable>) data_object;
-                ois.close();
-                fin.close();
-                endSimulation();
-                Loader.simulation = new NPPSim(read);
-            }
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+
+            // Same as save
+            mapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+
+            List<Serializable> read = mapper.readValue(file, new TypeReference<List<Serializable>>() {});
+
+            endSimulation();
+            Loader.simulation = new NPPSim(read);
+
         } catch (Exception e) {
             new ErrorWindow("Error Loading IC", ExceptionUtils.getStackTrace(e), true).setVisible(true);
         }

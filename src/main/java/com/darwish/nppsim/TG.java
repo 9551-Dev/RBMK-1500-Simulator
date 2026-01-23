@@ -9,7 +9,16 @@ import static com.darwish.nppsim.NPPSim.mcc;
 import static com.darwish.nppsim.NPPSim.tg1;
 import static com.darwish.nppsim.NPPSim.tg2;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+@JsonIdentityInfo(
+    generator = ObjectIdGenerators.PropertyGenerator.class,
+    property = "tg_component"
+)
 class TG extends WaterSteamComponent implements Connectable {
+    private long tg_component;
     final Condenser condenser;
     private double lastStepSteamInflow = 0.0;
     // private double casingTemp, turbineTemp, load;
@@ -141,24 +150,28 @@ class TG extends WaterSteamComponent implements Connectable {
     }
 
     @Override
+    @JsonIgnore
     public double getSteamDensity() {
 
         throw new UnsupportedOperationException("Unimplemented method 'getSteamDensity'");
     }
 
     @Override
+    @JsonIgnore
     public double getWaterDensity() {
 
         throw new UnsupportedOperationException("Unimplemented method 'getWaterDensity'");
     }
 
     @Override
+    @JsonIgnore
     public double getSteamMass() {
 
         throw new UnsupportedOperationException("Unimplemented method 'getSteamMass'");
     }
 
     @Override
+    @JsonIgnore
     public double getSteamVolume() {
 
         throw new UnsupportedOperationException("Unimplemented method 'getSteamVolume'");
@@ -170,6 +183,7 @@ class TG extends WaterSteamComponent implements Connectable {
     }
 
     @Override
+    @JsonIgnore
     public void updateSteamOutflow(double flow, double tempC) {
 
         throw new UnsupportedOperationException("Unimplemented method 'updateSteamOutFlow'");
@@ -183,12 +197,14 @@ class TG extends WaterSteamComponent implements Connectable {
     }
 
     @Override
+    @JsonIgnore
     public void updateWaterOutflow(double flow, double tempC) {
 
         throw new UnsupportedOperationException("Unimplemented method 'updateWaterOutFlow'");
     }
 
     @Override
+    @JsonIgnore
     public void updateWaterInflow(double flow, double tempC) {
 
         throw new UnsupportedOperationException("Unimplemented method 'updateWaterInFlow'");
@@ -250,6 +266,7 @@ class TG extends WaterSteamComponent implements Connectable {
     }
 
     @Override
+    @JsonIgnore
     public double getWaterMass() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from
                                                                        // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -437,6 +454,7 @@ class Condenser extends WaterSteamSubComponent implements Connectable, UIReadabl
     }
 
     @Override
+    @JsonIgnore
     public void updateWaterInflow(double flow, double tempC) {
 
         throw new UnsupportedOperationException("Unimplemented method 'getWaterInflowRate'");

@@ -5,6 +5,12 @@ package com.darwish.nppsim;
 import static com.darwish.nppsim.NPPSim.atmosphere;
 import static com.darwish.nppsim.NPPSim.mcc;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 interface Connectable {
     // methods required for connectors
     double getPressure();
@@ -35,7 +41,12 @@ interface Connectable {
     void updateWaterInflow(double flow, double tempC);
 }
 
+@JsonIdentityInfo(
+    generator = ObjectIdGenerators.PropertyGenerator.class,
+    property = "water_valve_component"
+)
 class WaterValve extends Component {
+    private long water_valve_component;
     private final double cV; // Cv cumber of valve
     private final double FL = 0.9;
     final Connectable source, drain;
@@ -107,9 +118,17 @@ class WaterValve extends Component {
     }
 }
 
+
+@JsonIdentityInfo(
+    generator = ObjectIdGenerators.PropertyGenerator.class,
+    property = "steam_valve_component"
+)
 class SteamValve extends Component {
+    private long steam_valve_component;
     private final double cV; // Cv cumber of valve
-    final Connectable source, drain;
+    final Connectable source;
+    @JsonManagedReference("valve-dearator")
+    final Connectable drain;
     private final float speed; // valve position travel per tick (50 ms)
     private float position = 0.0f; // valve position, 0.0 is closed, 1.0 is open;
     private int state = 1; // valve state, 0 is closing, 1 neutral, 2 opening
@@ -212,7 +231,12 @@ class SteamValve extends Component {
     }
 }
 
+@JsonIdentityInfo(
+    generator = ObjectIdGenerators.PropertyGenerator.class,
+    property = "pump_component"
+)
 class Pump extends Component {
+    private long pump_component;
     WaterValve dischargeValve = new WaterValve(200, 20, atmosphere, atmosphere); // dummy valve
     protected final float ratedRPM; // max rated rpm
     protected final float ratedFlow; // flow at max rpm m3/s
@@ -232,6 +256,7 @@ class Pump extends Component {
     protected boolean isCavitating = false;
     protected boolean active = false;
     protected Connectable source;
+    @JsonBackReference("header-pump")
     protected Connectable drain;
 
     /**
@@ -438,7 +463,12 @@ class MCCPump extends Pump {
  * This is a special type of header where drains can be supplied by multiple
  * sources without generating flow between sources
  **/
+@JsonIdentityInfo(
+    generator = ObjectIdGenerators.PropertyGenerator.class,
+    property = "one_way_steam_header_component"
+)
 class OneWaySteamHeader extends WaterSteamComponent implements Connectable, UIReadable {
+    private long one_way_steam_header_component;
     private double steamDensity = Loader.tables.getSteamDensityByPressure(pressure);
     Connectable[] sources;
 
@@ -470,6 +500,7 @@ class OneWaySteamHeader extends WaterSteamComponent implements Connectable, UIRe
     }
 
     @Override
+    @JsonIgnore
     public double getWaterLevel() {
         throw new UnsupportedOperationException("Unimplemented method 'getWaterLevel'");
     }
@@ -480,18 +511,21 @@ class OneWaySteamHeader extends WaterSteamComponent implements Connectable, UIRe
     }
 
     @Override
+    @JsonIgnore
     public double getWaterDensity() {
 
         throw new UnsupportedOperationException("Unimplemented method 'getWaterDensity'");
     }
 
     @Override
+    @JsonIgnore
     public double getSteamMass() {
 
         throw new UnsupportedOperationException("Unimplemented method 'getSteamMass'");
     }
 
     @Override
+    @JsonIgnore
     public double getSteamVolume() {
 
         throw new UnsupportedOperationException("Unimplemented method 'getSteamVolume'");
@@ -503,24 +537,28 @@ class OneWaySteamHeader extends WaterSteamComponent implements Connectable, UIRe
     }
 
     @Override
+    @JsonIgnore
     public void updateSteamInflow(double flow, double tempC) {
 
         throw new UnsupportedOperationException("Unimplemented method 'updateSteamInFlow'");
     }
 
     @Override
+    @JsonIgnore
     public void updateWaterOutflow(double flow, double tempC) {
 
         throw new UnsupportedOperationException("Unimplemented method 'updateWaterOutFlow'");
     }
 
     @Override
+    @JsonIgnore
     public void updateWaterInflow(double flow, double tempC) {
 
         throw new UnsupportedOperationException("Unimplemented method 'updateWaterInFlow'");
     }
 
     @Override
+    @JsonIgnore
     public double getWaterMass() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from
                                                                        // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -564,7 +602,12 @@ class Ejector extends SteamValve {
  * a Boolean value is flipped each time the method is called to process the 2
  * inputs
  */
+@JsonIdentityInfo(
+    generator = ObjectIdGenerators.PropertyGenerator.class,
+    property = "water_water_heat_exchanger_component"
+)
 class WaterWaterHeatExchanger extends WaterSteamComponent implements Connectable {
+    private long water_water_heat_exchanger_component;
     private final float efficiency;
     private final double ratedFlow1, ratedFlow2;
     private double waterInflowTemperature1 = 20.0, waterOutflowTemperature1 = 20.0, waterMass1 = 0.0;
@@ -651,42 +694,49 @@ class WaterWaterHeatExchanger extends WaterSteamComponent implements Connectable
     }
 
     @Override
+    @JsonIgnore
     public double getSteamDensity() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from
                                                                        // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
+    @JsonIgnore
     public double getWaterDensity() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from
                                                                        // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
+    @JsonIgnore
     public double getSteamMass() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from
                                                                        // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
+    @JsonIgnore
     public double getSteamVolume() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from
                                                                        // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
+    @JsonIgnore
     public void updateSteamOutflow(double flow, double tempC) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from
                                                                        // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
+    @JsonIgnore
     public void updateSteamInflow(double flow, double tempC) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from
                                                                        // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
+    @JsonIgnore
     public void updateWaterOutflow(double flow, double tempC) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from
                                                                        // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -703,6 +753,7 @@ class WaterWaterHeatExchanger extends WaterSteamComponent implements Connectable
     }
 
     @Override
+    @JsonIgnore
     public double getWaterMass() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from
                                                                        // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody

@@ -3,16 +3,28 @@ package com.darwish.nppsim;
 import static com.darwish.nppsim.NPPSim.atmosphere;
 import static com.darwish.nppsim.NPPSim.tg1;
 import static com.darwish.nppsim.NPPSim.tg2;
+
 import java.util.ArrayList;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 /**
  * This is a pressure header where one or multiple pumps supply one or multiple
  * components
  **/
+@JsonIdentityInfo(
+    generator = ObjectIdGenerators.PropertyGenerator.class,
+    property = "pressure_header_component"
+)
 class PressureHeader extends WaterSteamComponent implements Connectable, UIReadable {
+    private long pressure_header_component;
     private double zeroHeadFlow = 0, zeroFlowHead = 0;
     protected double waterMass = 0.0;
     private double waterDensity = Loader.tables.getWaterDensityByTemp(waterTemperature);
+    @JsonManagedReference("header-pump")
     Pump[] sources;
 
     public PressureHeader(Pump[] sources) {
@@ -66,6 +78,7 @@ class PressureHeader extends WaterSteamComponent implements Connectable, UIReada
     }
 
     @Override
+    @JsonIgnore
     public double getSteamDensity() {
 
         throw new UnsupportedOperationException("Unimplemented method 'getSteamDensity'");
@@ -77,24 +90,28 @@ class PressureHeader extends WaterSteamComponent implements Connectable, UIReada
     }
 
     @Override
+    @JsonIgnore
     public double getSteamMass() {
 
         throw new UnsupportedOperationException("Unimplemented method 'getSteamMass'");
     }
 
     @Override
+    @JsonIgnore
     public double getSteamVolume() {
 
         throw new UnsupportedOperationException("Unimplemented method 'getSteamVolume'");
     }
 
     @Override
+    @JsonIgnore
     public void updateSteamOutflow(double flow, double tempC) {
 
         throw new UnsupportedOperationException("Unimplemented method 'updateSteamOutFlow'");
     }
 
     @Override
+    @JsonIgnore
     public void updateSteamInflow(double flow, double tempC) {
 
         throw new UnsupportedOperationException("Unimplemented method 'updateSteamInFlow'");
@@ -153,7 +170,12 @@ class SimplifiedCondensateHeader extends PressureHeader { // greatly simplified 
  * a pressure header where drain.waterInflow is determined by this.waterInflow
  * drains can be isolated by their respective valve in isolationValveArray
  */
+@JsonIdentityInfo(
+    generator = ObjectIdGenerators.PropertyGenerator.class,
+    property = "simple_pressure_header_component"
+)
 class SimplePressureHeader extends WaterSteamComponent implements Connectable, UIReadable {
+    private long simple_pressure_header_component;
     protected double waterInflowTemperature = 20, waterDensity = Loader.tables.getWaterDensityByTemp(waterTemperature);
     private float totalValvePositions = 0.0f;
     double initialWaterMass;
@@ -196,38 +218,45 @@ class SimplePressureHeader extends WaterSteamComponent implements Connectable, U
     }
 
     @Override
+    @JsonIgnore
     public double getSteamDensity() {
         throw new UnsupportedOperationException("Unimplemented method 'getSteamDensity'");
     }
 
     @Override
+    @JsonIgnore
     public double getWaterDensity() {
         return waterDensity;
     }
 
     @Override
+    @JsonIgnore
     public double getSteamMass() {
 
         throw new UnsupportedOperationException("Unimplemented method 'getSteamMass'");
     }
 
     @Override
+    @JsonIgnore
     public double getSteamVolume() {
 
         throw new UnsupportedOperationException("Unimplemented method 'getSteamVolume'");
     }
 
     @Override
+    @JsonIgnore
     public void updateSteamOutflow(double flow, double tempC) {
         throw new UnsupportedOperationException("Unimplemented method 'updateSteamOutflow'");
     }
 
     @Override
+    @JsonIgnore
     public void updateSteamInflow(double flow, double tempC) {
         throw new UnsupportedOperationException("Unimplemented method 'updateSteamInFlow'");
     }
 
     @Override
+    @JsonIgnore
     public void updateWaterOutflow(double flow, double tempC) {
         throw new UnsupportedOperationException("Unimplemented method 'updateWaterOutflow'");
     }
@@ -244,6 +273,7 @@ class SimplePressureHeader extends WaterSteamComponent implements Connectable, U
     }
 
     @Override
+    @JsonIgnore
     public double getWaterMass() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from
                                                                        // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -255,7 +285,12 @@ class SimplePressureHeader extends WaterSteamComponent implements Connectable, U
  * sources can be isolated by their respective valve in isolationValveArray
  * if there is inflow more than outflow, excess will flow back into sources
  */
+@JsonIdentityInfo(
+    generator = ObjectIdGenerators.PropertyGenerator.class,
+    property = "simple_suction_header_component"
+)
 class SimpleSuctionHeader extends WaterSteamComponent implements Connectable, UIReadable {
+    private long simple_suction_header_component;
     private double waterInflowTemperature = 20.0, waterMass;
     protected double waterDensity = Loader.tables.getWaterDensityByTemp(waterTemperature);
     private float totalValvePositions = 0.0f;
@@ -323,6 +358,7 @@ class SimpleSuctionHeader extends WaterSteamComponent implements Connectable, UI
     }
 
     @Override
+    @JsonIgnore
     public double getSteamDensity() {
         throw new UnsupportedOperationException("Unimplemented method 'getSteamDensity'");
     }
@@ -333,23 +369,27 @@ class SimpleSuctionHeader extends WaterSteamComponent implements Connectable, UI
     }
 
     @Override
+    @JsonIgnore
     public double getSteamMass() {
 
         throw new UnsupportedOperationException("Unimplemented method 'getSteamMass'");
     }
 
     @Override
+    @JsonIgnore
     public double getSteamVolume() {
 
         throw new UnsupportedOperationException("Unimplemented method 'getSteamVolume'");
     }
 
     @Override
+    @JsonIgnore
     public void updateSteamOutflow(double flow, double tempC) {
         throw new UnsupportedOperationException("Unimplemented method 'updateSteamOutflow'");
     }
 
     @Override
+    @JsonIgnore
     public void updateSteamInflow(double flow, double tempC) {
         throw new UnsupportedOperationException("Unimplemented method 'updateSteamInFlow'");
     }
@@ -380,7 +420,12 @@ class SimpleSuctionHeader extends WaterSteamComponent implements Connectable, UI
  * A water component where multiple inputs are combined into a single output.
  * pressure = drain.pressure
  **/
+@JsonIdentityInfo(
+    generator = ObjectIdGenerators.PropertyGenerator.class,
+    property = "water_mixer_component"
+)
 class WaterMixer extends WaterSteamComponent implements Connectable, UIReadable {
+    private long water_mixer_component;
     Connectable drain;
     private final double initialWaterMass;
     private double waterMass, waterInflowTemperature = 20.0;
@@ -416,6 +461,7 @@ class WaterMixer extends WaterSteamComponent implements Connectable, UIReadable 
     }
 
     @Override
+    @JsonIgnore
     public double getSteamDensity() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from
                                                                        // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -427,30 +473,35 @@ class WaterMixer extends WaterSteamComponent implements Connectable, UIReadable 
     }
 
     @Override
+    @JsonIgnore
     public double getSteamMass() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from
                                                                        // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
+    @JsonIgnore
     public double getSteamVolume() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from
                                                                        // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
+    @JsonIgnore
     public void updateSteamOutflow(double flow, double tempC) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from
                                                                        // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
+    @JsonIgnore
     public void updateSteamInflow(double flow, double tempC) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from
                                                                        // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
+    @JsonIgnore
     public void updateWaterOutflow(double flow, double tempC) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from
                                                                        // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -462,7 +513,12 @@ class WaterMixer extends WaterSteamComponent implements Connectable, UIReadable 
     }
 }
 
+@JsonIdentityInfo(
+    generator = ObjectIdGenerators.PropertyGenerator.class,
+    property = "tank_component"
+)
 class Tank extends WaterSteamComponent implements Connectable, UIReadable {
+    private long tank_component;
     private final double nominalWaterVolume;
     private double waterInflowTemperature = 20.0; // c
     private double waterVolume, waterMass;
@@ -485,6 +541,7 @@ class Tank extends WaterSteamComponent implements Connectable, UIReadable {
     }
 
     @Override
+    @JsonIgnore
     public double getSteamDensity() {
 
         throw new UnsupportedOperationException("Unimplemented method 'getSteamDensity'");
@@ -496,24 +553,28 @@ class Tank extends WaterSteamComponent implements Connectable, UIReadable {
     }
 
     @Override
+    @JsonIgnore
     public double getSteamMass() {
 
         throw new UnsupportedOperationException("Unimplemented method 'getSteamMass'");
     }
 
     @Override
+    @JsonIgnore
     public double getSteamVolume() {
 
         throw new UnsupportedOperationException("Unimplemented method 'getSteamVolume'");
     }
 
     @Override
+    @JsonIgnore
     public void updateSteamOutflow(double flow, double tempC) {
 
         throw new UnsupportedOperationException("Unimplemented method 'updateSteamOutflow'");
     }
 
     @Override
+    @JsonIgnore
     public void updateSteamInflow(double flow, double tempC) {
 
         throw new UnsupportedOperationException("Unimplemented method 'updateSteamInflow'");
